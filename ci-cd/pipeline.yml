@@ -1,0 +1,37 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t devops-lab ./docker
+
+      - name: Run container
+        run: docker run -d -p 8080:80 devops-lab
+
+      - name: Test
+        run: curl -f http://localhost:8080
+
+  terraform:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: cd terraform && terraform init
+
+      - name: Terraform Plan
+        run: cd terraform && terraform plan
