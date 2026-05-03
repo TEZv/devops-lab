@@ -8,13 +8,13 @@ terraform {
 }
 
 provider "github" {
-  # Авторизація через GITHUB_TOKEN (автоматично в Codespaces)
+  # Authorization via GITHUB_TOKEN (automatic in Codespaces)
 }
 
-# Створення репозиторію
+# Create a repository
 resource "github_repository" "example" {
   name        = "devops-practice-repo"
-  description = "Репозиторій для DevOps практики"
+  description = "A repository for DevOps practice"
   visibility  = "public"
   auto_init   = true
 }
