@@ -27,10 +27,8 @@ devops-lab/
 └── ci-cd/               # GitHub Actions workflows
 ```
 
-## План практики
+## Challenges
 
-1. **Docker basics** — створення образів, docker-compose
-2. **Terraform basics** — providers, resources, state
-3. **Kubernetes basics** — pods, deployments, services
-4. **CI/CD** — GitHub Actions pipelines
-5. **Комбіновані практикуми** — повний цикл DevOps
+👉 **[CHALLENGES.md](CHALLENGES.md)** — 15 hands-on challenges from beginner to advanced, with questions to think about and a progress tracker.
+
+Anyone can fork this repo and start practicing!
