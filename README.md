@@ -1,40 +1,40 @@
-# 🛠️ DevOps Lab — Практична лабораторія
+# 🛠️ DevOps Lab — Hands-On Practice
 
-> **Made in Ukraine** 🇺🇦 | Авторка: [TEZv](https://github.com/TEZv)
+> **Made in Ukraine** 🇺🇦 | Created by [TEZv](https://github.com/TEZv)
 
-Практичний репозиторій для вивчення DevOps-інструментів: від Docker до Kubernetes, від Terraform до CI/CD.
+A hands-on repository for learning DevOps tools: from Docker to Kubernetes, from Terraform to CI/CD.
 
-## Що включено (через Codespaces)
+## What's Included (via Codespaces)
 
-- **Docker** — контейнеризація
-- **Terraform** — інфраструктура як код (IaC)
-- **Kubernetes (Minikube)** — оркестрація контейнерів
-- **GitHub CLI** — робота з GitHub
+- **Docker** — Containerization
+- **Terraform** — Infrastructure as Code (IaC)
+- **Kubernetes (Minikube)** — Container orchestration
+- **GitHub CLI** — GitHub automation
 
-## Як почати
+## Getting Started
 
-1. Відкрийте цей репозиторій на GitHub
-2. Натисніть **Code** → **Codespaces** → **Create codespace**
-3. Зачекайте ~2-3 хвилини поки середовище збирається
-4. Готово — всі інструменти доступні у терміналі
+1. Open this repository on GitHub
+2. Click **Code** → **Codespaces** → **Create codespace**
+3. Wait ~2-3 minutes for the environment to build
+4. Ready — all tools are available in the terminal
 
-## Структура
+## Structure
 
 ```
 devops-lab/
-├── .devcontainer/       # Конфігурація Codespace
-├── terraform/           # Terraform конфіги
-├── docker/              # Dockerfile та docker-compose
-├── k8s/                 # Kubernetes маніфести
+├── .devcontainer/       # Codespace configuration
+├── terraform/           # Terraform configs
+├── docker/              # Dockerfile & docker-compose
+├── k8s/                 # Kubernetes manifests
 └── ci-cd/               # GitHub Actions workflows
 ```
 
-## Завдання
+## Challenges
 
-👉 **[CHALLENGES.md](CHALLENGES.md)** — 15 практичних завдань від початкового до просунутого рівня, з питаннями для роздумів та трекером прогресу. Усе українською 🇺🇦
+👉 **[CHALLENGES.md](CHALLENGES.md)** — 15 hands-on challenges from beginner to advanced, with questions to think about and a progress tracker.
 
-Форкайте репозиторій і починайте практикувати!
+Fork this repo and start practicing!
 
-## Ліцензія
+## License
 
-MIT — використовуйте вільно, згадуйте авторку ❤️
+MIT — use freely, credit the author ❤️
