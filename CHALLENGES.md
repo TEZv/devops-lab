@@ -27,7 +27,7 @@ Each challenge unlocks the next. Complete them all and you'll have a fully autom
 <!DOCTYPE html>
 <html>
 <head><meta charset="UTF-8"><title>DevOps Quest</title></head>
-<body style="font-family:monospace;text-align:center;padding-top:100px;background:#1a1a2e;color:#e94560">
+<body style="font-family:monospace;text-align:center;padding-top:100px;background:#1a1a2e;color:#b23a4e">
 <h1>&#x2694;&#xFE0F; DevOps Quest</h1>
 <p>Stage 1: Containerized</p>
 <p id="status">Status: Building...</p>
@@ -186,7 +186,7 @@ const fs = require('fs');
 const html = `<!DOCTYPE html>
 <html>
 <head><meta charset="UTF-8"><title>DevOps Quest</title></head>
-<body style="font-family:monospace;text-align:center;padding-top:100px;background:#1a1a2e;color:#e94560">
+<body style="font-family:monospace;text-align:center;padding-top:100px;background:#1a1a2e;color:#b23a4e">
 <h1>&#x2694;&#xFE0F; DevOps Quest</h1>
 <p>Stage 1: Containerized &#x2713;</p>
 <p>Stage 2: Multi-Stage Build &#x2713;</p>
@@ -579,7 +579,7 @@ data:
     <!DOCTYPE html>
     <html>
     <head><meta charset="UTF-8"><title>DevOps Quest</title></head>
-    <body style="font-family:monospace;text-align:center;padding-top:100px;background:#1a1a2e;color:#e94560">
+    <body style="font-family:monospace;text-align:center;padding-top:100px;background:#1a1a2e;color:#b23a4e">
     <h1>&#x2694;&#xFE0F; DevOps Quest</h1>
     <p>Stage 1: Containerized &#x2713;</p>
     <p>Stage 2: Multi-Stage Build &#x2713;</p>
