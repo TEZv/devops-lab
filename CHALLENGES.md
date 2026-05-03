@@ -11,7 +11,7 @@ Each challenge builds on previous ones.
 
 ## 🟢 Level 1: Docker
 
-### Challenge 1.1 — Build & Run
+### Challenge 1.1 — Build & Run ⏱️ ~15 min
 
 **Goal**: Understand the Docker build lifecycle.
 
@@ -27,7 +27,7 @@ The `docker/` directory contains a simple `Dockerfile` and `index.html`.
 
 ---
 
-### Challenge 1.2 — Multi-Service Docker Compose
+### Challenge 1.2 — Multi-Service Docker Compose ⏱️ ~20 min
 
 **Goal**: Connect multiple containers together.
 
@@ -43,7 +43,7 @@ Currently `docker-compose.yml` has only one service (`web`). Add a second one:
 
 ---
 
-### Challenge 1.3 — Multi-Stage Build
+### Challenge 1.3 — Multi-Stage Build ⏱️ ~30 min
 
 **Goal**: Optimize Docker images for production.
 
@@ -61,7 +61,7 @@ Create a multi-stage build that:
 
 ## 🟡 Level 2: Terraform
 
-### Challenge 2.1 — Read & Plan
+### Challenge 2.1 — Read & Plan ⏱️ ~15 min
 
 **Goal**: Understand Terraform's plan-before-apply workflow.
 
@@ -77,7 +77,7 @@ The `terraform/` directory has a basic configuration that creates a GitHub repos
 
 ---
 
-### Challenge 2.2 — Variables & Parameterization
+### Challenge 2.2 — Variables & Parameterization ⏱️ ~20 min
 
 **Goal**: Make your Terraform code reusable.
 
@@ -94,7 +94,7 @@ Currently the repository name is hardcoded. Refactor it:
 
 ---
 
-### Challenge 2.3 — Outputs
+### Challenge 2.3 — Outputs ⏱️ ~15 min
 
 **Goal**: Expose useful information after infrastructure is created.
 
@@ -108,7 +108,7 @@ Currently the repository name is hardcoded. Refactor it:
 
 ---
 
-### Challenge 2.4 — Add More Resources
+### Challenge 2.4 — Add More Resources ⏱️ ~25 min
 
 **Goal**: Compose multiple Terraform resources together.
 
@@ -126,7 +126,7 @@ Add at least one of the following to `main.tf`:
 
 ## 🔴 Level 3: Kubernetes
 
-### Challenge 3.1 — Health Checks
+### Challenge 3.1 — Health Checks ⏱️ ~20 min
 
 **Goal**: Make Kubernetes aware of your application's health.
 
@@ -142,7 +142,7 @@ The `k8s/deployment.yml` has a basic Deployment with no health checks.
 
 ---
 
-### Challenge 3.2 — Auto-Scaling
+### Challenge 3.2 — Auto-Scaling ⏱️ ~25 min
 
 **Goal**: Let Kubernetes scale your application automatically.
 
@@ -156,7 +156,7 @@ The `k8s/deployment.yml` has a basic Deployment with no health checks.
 
 ---
 
-### Challenge 3.3 — ConfigMap as Volume
+### Challenge 3.3 — ConfigMap as Volume ⏱️ ~30 min
 
 **Goal**: Separate configuration from container images.
 
@@ -174,7 +174,7 @@ Instead of baking HTML into the Docker image:
 
 ## 💀 Level 4: CI/CD
 
-### Challenge 4.1 — Extend the Pipeline
+### Challenge 4.1 — Extend the Pipeline ⏱️ ~30 min
 
 **Goal**: Build a complete CI/CD pipeline.
 
@@ -190,7 +190,7 @@ The `ci-cd/pipeline.yml` has basic build and terraform plan stages.
 
 ---
 
-### Challenge 4.2 — Manual Approval
+### Challenge 4.2 — Manual Approval ⏱️ ~25 min
 
 **Goal**: Add a safety gate before production deployments.
 
@@ -208,15 +208,15 @@ The `ci-cd/pipeline.yml` has basic build and terraform plan stages.
 
 These combine multiple tools and require creative thinking.
 
-### Bonus 1 — Terraform + Docker Provider
+### Bonus 1 — Terraform + Docker Provider ⏱️ ~45 min
 
 Use the [Terraform Docker provider](https://registry.terraform.io/providers/kreuzwerker/docker/latest) to build and run Docker containers via Terraform instead of the Docker CLI. Compare both approaches.
 
-### Bonus 2 — GitOps with ArgoCD
+### Bonus 2 — GitOps with ArgoCD ⏱️ ~60 min
 
 Install ArgoCD in your Minikube cluster and configure it to sync Kubernetes manifests from your GitHub repository. Now every `git push` triggers a deployment.
 
-### Bonus 3 — Infrastructure Tests
+### Bonus 3 — Infrastructure Tests ⏱️ ~45 min
 
 Write a test script (bash or Python) that verifies your infrastructure after `terraform apply`:
 - Can we reach the GitHub repository?
@@ -227,22 +227,24 @@ Write a test script (bash or Python) that verifies your infrastructure after `te
 
 ## 📋 Progress Tracker
 
-| Challenge | Status |
-|-----------|--------|
-| 1.1 Build & Run | ⬜ |
-| 1.2 Multi-Service Compose | ⬜ |
-| 1.3 Multi-Stage Build | ⬜ |
-| 2.1 Read & Plan | ⬜ |
-| 2.2 Variables & Parameterization | ⬜ |
-| 2.3 Outputs | ⬜ |
-| 2.4 Add More Resources | ⬜ |
-| 3.1 Health Checks | ⬜ |
-| 3.2 Auto-Scaling | ⬜ |
-| 3.3 ConfigMap as Volume | ⬜ |
-| 4.1 Extend Pipeline | ⬜ |
-| 4.2 Manual Approval | ⬜ |
-| Bonus 1 — TF + Docker | ⬜ |
-| Bonus 2 — ArgoCD | ⬜ |
-| Bonus 3 — Infra Tests | ⬜ |
+| Challenge | Time | Status |
+|-----------|------|--------|
+| 1.1 Build & Run | ~15 min | ⬜ |
+| 1.2 Multi-Service Compose | ~20 min | ⬜ |
+| 1.3 Multi-Stage Build | ~30 min | ⬜ |
+| 2.1 Read & Plan | ~15 min | ⬜ |
+| 2.2 Variables & Parameterization | ~20 min | ⬜ |
+| 2.3 Outputs | ~15 min | ⬜ |
+| 2.4 Add More Resources | ~25 min | ⬜ |
+| 3.1 Health Checks | ~20 min | ⬜ |
+| 3.2 Auto-Scaling | ~25 min | ⬜ |
+| 3.3 ConfigMap as Volume | ~30 min | ⬜ |
+| 4.1 Extend Pipeline | ~30 min | ⬜ |
+| 4.2 Manual Approval | ~25 min | ⬜ |
+| Bonus 1 — TF + Docker | ~45 min | ⬜ |
+| Bonus 2 — ArgoCD | ~60 min | ⬜ |
+| Bonus 3 — Infra Tests | ~45 min | ⬜ |
+
+**Total estimated time: ~6-7 hours** (all challenges including bonuses)
 
 Mark completed challenges with ✅ in your fork.
