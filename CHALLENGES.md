@@ -26,12 +26,12 @@ Each challenge unlocks the next. Complete them all and you'll have a fully autom
 ```html
 <!DOCTYPE html>
 <html>
-<head><title>DevOps Quest</title></head>
+<head><meta charset="UTF-8"><title>DevOps Quest</title></head>
 <body style="font-family:monospace;text-align:center;padding-top:100px;background:#1a1a2e;color:#e94560">
-<h1>⚔️ DevOps Quest</h1>
+<h1>&#x2694;&#xFE0F; DevOps Quest</h1>
 <p>Stage 1: Containerized</p>
 <p id="status">Status: Building...</p>
-<script>document.getElementById('status').textContent='Status: Live ✓';</script>
+<script>document.getElementById('status').textContent='Status: Live \u2713';</script>
 </body>
 </html>
 ```
@@ -164,11 +164,11 @@ Then create `docker/build.js`:
 const fs = require('fs');
 const html = `<!DOCTYPE html>
 <html>
-<head><title>DevOps Quest</title></head>
+<head><meta charset="UTF-8"><title>DevOps Quest</title></head>
 <body style="font-family:monospace;text-align:center;padding-top:100px;background:#1a1a2e;color:#e94560">
-<h1>⚔️ DevOps Quest</h1>
-<p>Stage 1: Containerized ✓</p>
-<p>Stage 2: Multi-Stage Build ✓</p>
+<h1>&#x2694;&#xFE0F; DevOps Quest</h1>
+<p>Stage 1: Containerized &#x2713;</p>
+<p>Stage 2: Multi-Stage Build &#x2713;</p>
 <p>Image size: optimized!</p>
 </body>
 </html>`;
@@ -557,14 +557,14 @@ data:
   index.html: |
     <!DOCTYPE html>
     <html>
-    <head><title>DevOps Quest</title></head>
+    <head><meta charset="UTF-8"><title>DevOps Quest</title></head>
     <body style="font-family:monospace;text-align:center;padding-top:100px;background:#1a1a2e;color:#e94560">
-    <h1>⚔️ DevOps Quest</h1>
-    <p>Stage 1: Containerized ✓</p>
-    <p>Stage 2: Multi-Stage Build ✓</p>
-    <p>Stage 3: Kubernetes ✓</p>
-    <p>Stage 4: ConfigMap Volume ✓</p>
-    <p>Content from ConfigMap — no rebuild needed!</p>
+    <h1>&#x2694;&#xFE0F; DevOps Quest</h1>
+    <p>Stage 1: Containerized &#x2713;</p>
+    <p>Stage 2: Multi-Stage Build &#x2713;</p>
+    <p>Stage 3: Kubernetes &#x2713;</p>
+    <p>Stage 4: ConfigMap Volume &#x2713;</p>
+    <p>Content from ConfigMap &mdash; no rebuild needed!</p>
     </body>
     </html>
 ```
