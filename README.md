@@ -1,6 +1,8 @@
-# DevOps Lab 🛠️
+# 🛠️ DevOps Lab — Практична лабораторія
 
-Практичний репозиторій для вивчення DevOps інструментів.
+> **Made in Ukraine** 🇺🇦 | Авторка: [TEZv](https://github.com/TEZv)
+
+Практичний репозиторій для вивчення DevOps-інструментів: від Docker до Kubernetes, від Terraform до CI/CD.
 
 ## Що включено (через Codespaces)
 
@@ -27,8 +29,12 @@ devops-lab/
 └── ci-cd/               # GitHub Actions workflows
 ```
 
-## Challenges
+## Завдання
 
-👉 **[CHALLENGES.md](CHALLENGES.md)** — 15 hands-on challenges from beginner to advanced, with questions to think about and a progress tracker.
+👉 **[CHALLENGES.md](CHALLENGES.md)** — 15 практичних завдань від початкового до просунутого рівня, з питаннями для роздумів та трекером прогресу. Усе українською 🇺🇦
 
-Anyone can fork this repo and start practicing!
+Форкайте репозиторій і починайте практикувати!
+
+## Ліцензія
+
+MIT — використовуйте вільно, згадуйте авторку ❤️
