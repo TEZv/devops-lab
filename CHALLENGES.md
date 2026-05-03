@@ -70,6 +70,27 @@ docker build -t devops-quest .
 docker run -d -p 8080:80 devops-quest
 ```
 
+**Troubleshooting:**
+
+| Problem | Cause | Fix |
+|---------|-------|-----|
+| `port is already allocated` | Another container is using port 8080 | `docker stop $(docker ps -q)` then re-run |
+| Page shows old content after rebuild | Old container still running, new one failed to start | Stop all containers first, then rebuild |
+| Browser shows old page | Browser cache | Hard refresh: `Ctrl+Shift+R` (or `Cmd+Shift+R` on Mac) |
+| Emoji shows as `âš"ï¸` or gibberish | Missing `charset` declaration | Make sure `<head>` includes `<meta charset="UTF-8">` |
+| Too many stopped containers eating disk | Containers not removed after stopping | `docker rm $(docker ps -aq)` to clean up |
+
+**Quick cleanup (nuclear option):**
+```bash
+# Stop ALL containers and remove them
+docker stop $(docker ps -q) 2>/dev/null
+docker rm $(docker ps -aq) 2>/dev/null
+
+# Now rebuild fresh
+docker build -t devops-quest .
+docker run -d -p 8080:80 devops-quest
+```
+
 </details>
 
 **Questions to think about**:
