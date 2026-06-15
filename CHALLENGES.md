@@ -809,6 +809,39 @@ Record audio or write bullets: Docker → Terraform → K8s → GitHub Actions. 
 
 ---
 
+## 🔍 Spot Check — "Something's Off"
+
+> **Different muscle.** Not "run the command" — spot what **fails a correctness check**: wrong probe, moving tags, secrets in git, `depends_on` myths. Try **before** opening answers.
+
+Full set (11 exercises, ~5–10 min each): **[SPOT-CHECK.md](SPOT-CHECK.md)**
+
+| # | Trap | Level | Ties to |
+|---|------|-------|---------|
+| 1 | Edit HTML but skip `docker build` | 🟦 | Challenge 1.1 |
+| 2 | `EXPOSE` ≠ port published to host | 🟦 | Challenge 1.1 |
+| 3 | `depends_on` ≠ service ready | 🟩 | Challenge 1.2 |
+| 4 | Liveness kills slow-start app | 🟨 | Challenge 3.1 |
+| 5 | `nginx:latest` in production | 🟩 | Image tags |
+| 6 | DB password in committed Compose | 🟩 | Security |
+| 7 | `terraform apply -auto-approve` wrong env | 🟨 | Challenge 2.1, 4.2 |
+| 8 | HPA without `resources.requests` | 🟨 | Challenge 3.2 |
+| 9 | `COPY . .` without `.dockerignore` | 🟩 | Challenge 1.3 |
+| 10 | `docker system prune -a` on shared runner | 🟨 | CI hygiene |
+| 11 | `kubectl delete pod` vs fix Deployment | 🟩 | Challenge 3.1 |
+
+**When to use**: after Level 1, or one per day before interviews. Passing = explain the failure mode **without** peeking.
+
+<details>
+<summary>🔧 Example — Spot Check 4 (peek only after you try)</summary>
+
+`livenessProbe` with `initialDelaySeconds: 10` on a JVM that needs 90s → kube **restarts** the pod while it's still starting.
+
+`readinessProbe` only removes traffic — use generous liveness delay or `startupProbe`, tune readiness for "can serve requests".
+
+</details>
+
+---
+
 ## 🏆 Bonus Challenges — "Master Level"
 
 *You've completed the main quest. These challenges combine multiple tools and require creative thinking.*
@@ -962,6 +995,7 @@ Optional unless targeting SRE titles. Skim SLI/SLO/error budget — enough to us
 | 5.2 Docker/K8s Live | 🟨 | ~45 min | ⬜ |
 | 5.3 Infra Case | 🟨 | ~60 min | ⬜ |
 | 5.4 Platform Pitch | 🟨 | ~30 min | ⬜ |
+| 🔍 Spot Check (11) | 🟦–🟨 | ~1.5 hr total | ⬜ |
 | Bonus 1 TF + Docker | 🟥 | ~45 min | ⬜ |
 | Bonus 2 ArgoCD | 🟥 | ~60 min | ⬜ |
 | Bonus 3 Infra Tests | 🟥 | ~45 min | ⬜ |
@@ -989,6 +1023,7 @@ Complete all challenges and your quest page will evolve:
 | 🔄 Zero-Downtime Updates | Challenge 3.3 |
 | 🤖 Full CI/CD | Challenge 4.1-4.2 |
 | 🎤 Interview Ready | Challenge 5.1-5.4 |
+| 🔍 Sharp Eyes | Spot Check ≥ 8/11 without peeking |
 | 🏆 GitOps Master | All Bonus Challenges |
 
 **You started with nothing. You ended with a fully automated platform.** 🎉

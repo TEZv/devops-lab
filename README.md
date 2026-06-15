@@ -45,12 +45,15 @@ devops-lab/
 ├── ci-cd/                 # GitHub Actions workflows
 ├── interview-sprint/        # 30-day interview prep
 ├── CAREER-LEVELS.md       # Intern → Senior badges
+├── SPOT-CHECK.md          # 🔍 "Something's off" — correctness traps (no peeking)
 └── CHALLENGES.md          # 🎮 Main quest
 ```
 
 ## Challenges
 
 👉 **[CHALLENGES.md](CHALLENGES.md)** — 15+ hands-on challenges from beginner to advanced, with questions to think about and a progress tracker.
+
+🔍 **[SPOT-CHECK.md](SPOT-CHECK.md)** — 11 "something's off" drills (rebuild amnesia, probes, secrets in git). Answer before you peek.
 
 Fork this repo and start practicing!
 
