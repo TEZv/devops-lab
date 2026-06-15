@@ -759,7 +759,14 @@ Now when the pipeline reaches the deploy stage, it will pause and wait for appro
 
 ### Challenge 5.1 — Linux Debug Live ⏱️ ~45 min · 🟨 Middle
 
-**Quest**: Timed drill from [`interview-sprint/01-Linux-Networking-Sprint-30.md`](interview-sprint/01-Linux-Networking-Sprint-30.md) — pick Day 7 or 14 mock. No hints.
+**Quest**: Timed drill from [`interview-sprint/01-Linux-Networking-Sprint-30.md`](interview-sprint/01-Linux-Networking-Sprint-30.md) — pick Day 7 or 14 mock.
+
+<details>
+<summary>🔧 Stuck? Click here for a hint</summary>
+
+Set a 45-minute timer. Pick **Day 7** or **Day 14** mock from the sprint. No LLM. Afterward, log which commands you forgot.
+
+</details>
 
 ---
 
@@ -767,17 +774,38 @@ Now when the pipeline reaches the deploy stage, it will pause and wait for appro
 
 **Quest**: Complete **C3** from [`interview-sprint/02-Docker-K8s-Live.md`](interview-sprint/02-Docker-K8s-Live.md) — explain root cause out loud.
 
+<details>
+<summary>🔧 Stuck? Click here for a hint</summary>
+
+Do scenarios **A2** (port allocated) + **B1** (CrashLoopBackOff). Narrate: symptom → command → root cause → prevention.
+
+</details>
+
 ---
 
 ### Challenge 5.3 — Infrastructure Case ⏱️ ~60 min · 🟨 Middle
 
 **Quest**: [`interview-sprint/03-Infrastructure-Case.md`](interview-sprint/03-Infrastructure-Case.md) — Case 2 or 4 on whiteboard + 3 failure modes.
 
+<details>
+<summary>🔧 Stuck? Click here for a hint</summary>
+
+Use the 5-step framework in the case file. Draw boxes before details. List 3 ways the design fails under load.
+
+</details>
+
 ---
 
 ### Challenge 5.4 — Explain Your Platform ⏱️ ~30 min · 🟨 Middle
 
 **Quest**: 5-minute pitch: what you built in Levels 1–4, how CI/CD works, what you'd do first in an outage.
+
+<details>
+<summary>🔧 Stuck? Click here for a hint</summary>
+
+Record audio or write bullets: Docker → Terraform → K8s → GitHub Actions. End with: "First thing in an outage: check recent deploys, then logs, then rollback."
+
+</details>
 
 ---
 
@@ -894,9 +922,23 @@ echo "🎉 All tests passed!"
 
 **Quest**: [`interview-sprint/04-Senior-DevOps-Additions.md`](interview-sprint/04-Senior-DevOps-Additions.md)
 
+<details>
+<summary>🔧 Stuck? Click here for a hint</summary>
+
+Mark each term in the file: can explain / need to study. Focus on GitOps + immutable infra first.
+
+</details>
+
 ### Bonus 5 — SRE Overview ⏱️ ~2 hours · 🟥 Senior
 
 **Quest**: [`interview-sprint/05-Senior-SRE-Additions.md`](interview-sprint/05-Senior-SRE-Additions.md) — optional stretch for on-call / reliability roles.
+
+<details>
+<summary>🔧 Stuck? Click here for a hint</summary>
+
+Optional unless targeting SRE titles. Skim SLI/SLO/error budget — enough to use terms correctly in interviews.
+
+</details>
 
 ---
 
