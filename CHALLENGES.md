@@ -12,13 +12,24 @@ Each challenge unlocks the next. Complete them all and you'll have a fully autom
 
 > **How to use**: Open this repo in a [GitHub Codespace](https://github.com/codespaces) — all tools are pre-installed. Start from Level 1 and work your way up.
 
+### Career levels (every challenge)
+
+| Badge | Level |
+|-------|--------|
+| 🟦 | Intern / Trainee |
+| 🟩 | Junior |
+| 🟨 | Middle |
+| 🟥 | Senior |
+
+Full guide: **[CAREER-LEVELS.md](CAREER-LEVELS.md)** · Interview track: **[interview-sprint/00-README.md](interview-sprint/00-README.md)**
+
 ---
 
 ## 🟢 Level 1: Docker — "Containerize the App"
 
 *The dev team just shipped their first web page. It's time to put it in a container.*
 
-### Challenge 1.1 — Build & Run ⏱️ ~15 min
+### Challenge 1.1 — Build & Run ⏱️ ~15 min · 🟦 Intern
 
 **Quest**: The team gave you a simple HTML page. Package it into a Docker container and serve it to the world (well, to localhost).
 
@@ -99,7 +110,7 @@ docker run -d -p 8080:80 devops-quest
 
 ---
 
-### Challenge 1.2 — Multi-Service Compose ⏱️ ~20 min
+### Challenge 1.2 — Multi-Service Compose ⏱️ ~20 min · 🟩 Junior
 
 **Quest**: The app needs a database for visitor tracking. Add Redis as a second service and connect them together.
 
@@ -159,7 +170,7 @@ docker compose up -d --build
 
 ---
 
-### Challenge 1.3 — Multi-Stage Build ⏱️ ~30 min
+### Challenge 1.3 — Multi-Stage Build ⏱️ ~30 min · 🟩 Junior
 
 **Quest**: The image is too big for production. Create a multi-stage build — build a Node.js app in stage 1, copy only the result to nginx in stage 2.
 
@@ -236,7 +247,7 @@ docker images | grep devops-quest
 
 *The startup is growing. Manual setup won't scale. It's time to define infrastructure as code.*
 
-### Challenge 2.1 — Read & Plan ⏱️ ~15 min
+### Challenge 2.1 — Read & Plan ⏱️ ~15 min · 🟩 Junior
 
 **Quest**: Before touching anything, learn to read the plan. Terraform's `plan` command shows you what *would* change — without actually changing it.
 
@@ -270,7 +281,7 @@ Read the output carefully. You'll see:
 
 ---
 
-### Challenge 2.2 — Variables & Parameterization ⏱️ ~20 min
+### Challenge 2.2 — Variables & Parameterization ⏱️ ~20 min · 🟩 Junior
 
 **Quest**: The repo name is hardcoded. Your teammate wants to reuse this config for another project. Make it configurable.
 
@@ -332,7 +343,7 @@ terraform plan -var="repo_name=my-other-project"
 
 ---
 
-### Challenge 2.3 — Outputs ⏱️ ~15 min
+### Challenge 2.3 — Outputs ⏱️ ~15 min · 🟩 Junior
 
 **Quest**: After creating infrastructure, your team needs to know where to find it. Expose the important URLs and names.
 
@@ -375,7 +386,7 @@ terraform plan
 
 ---
 
-### Challenge 2.4 — Add More Resources ⏱️ ~25 min
+### Challenge 2.4 — Add More Resources ⏱️ ~25 min · 🟨 Middle
 
 **Quest**: The team wants branch protection and issue labels. Add them to the Terraform config.
 
@@ -439,7 +450,7 @@ terraform plan
 
 *The platform is growing. It's time to deploy to Kubernetes — the industry standard for container orchestration.*
 
-### Challenge 3.1 — Health Checks ⏱️ ~20 min
+### Challenge 3.1 — Health Checks ⏱️ ~20 min · 🟨 Middle
 
 **Quest**: Your pods are running, but Kubernetes doesn't know if they're healthy. Add probes so Kubernetes can monitor and restart unhealthy pods automatically.
 
@@ -493,7 +504,7 @@ kubectl apply -f k8s/deployment.yml
 
 ---
 
-### Challenge 3.2 — Auto-Scaling ⏱️ ~25 min
+### Challenge 3.2 — Auto-Scaling ⏱️ ~25 min · 🟨 Middle
 
 **Quest**: Traffic is unpredictable. Let Kubernetes automatically add or remove pods based on load.
 
@@ -557,7 +568,7 @@ kubectl get hpa -w
 
 ---
 
-### Challenge 3.3 — ConfigMap as Volume ⏱️ ~30 min
+### Challenge 3.3 — ConfigMap as Volume ⏱️ ~30 min · 🟨 Middle
 
 **Quest**: Every time the HTML changes, you rebuild the whole image. That's slow. Instead, store the HTML in a ConfigMap and mount it as a volume — now you can update content without rebuilding.
 
@@ -628,7 +639,7 @@ kubectl edit configmap devops-quest-html
 
 *You've built everything manually. Now make it automatic — every git push triggers a full pipeline.*
 
-### Challenge 4.1 — Extend the Pipeline ⏱️ ~30 min
+### Challenge 4.1 — Extend the Pipeline ⏱️ ~30 min · 🟨 Middle
 
 **Quest**: The pipeline only builds and plans. Add a test stage and a deploy stage to make it complete.
 
@@ -701,7 +712,7 @@ Push to main and watch the pipeline run in the **Actions** tab.
 
 ---
 
-### Challenge 4.2 — Manual Approval ⏱️ ~25 min
+### Challenge 4.2 — Manual Approval ⏱️ ~25 min · 🟨 Middle
 
 **Quest**: Auto-deploy to production is risky. Add a manual approval gate — the pipeline pauses until a human says "go".
 
@@ -742,11 +753,39 @@ Now when the pipeline reaches the deploy stage, it will pause and wait for appro
 
 ---
 
+## 🟣 Level 5: Interview Ready — "Ship the Story"
+
+*DevOps Quest Inc. is hiring. You need to explain what you built — and debug under pressure.*
+
+### Challenge 5.1 — Linux Debug Live ⏱️ ~45 min · 🟨 Middle
+
+**Quest**: Timed drill from [`interview-sprint/01-Linux-Networking-Sprint-30.md`](interview-sprint/01-Linux-Networking-Sprint-30.md) — pick Day 7 or 14 mock. No hints.
+
+---
+
+### Challenge 5.2 — Docker / K8s Live ⏱️ ~45 min · 🟨 Middle
+
+**Quest**: Complete **C3** from [`interview-sprint/02-Docker-K8s-Live.md`](interview-sprint/02-Docker-K8s-Live.md) — explain root cause out loud.
+
+---
+
+### Challenge 5.3 — Infrastructure Case ⏱️ ~60 min · 🟨 Middle
+
+**Quest**: [`interview-sprint/03-Infrastructure-Case.md`](interview-sprint/03-Infrastructure-Case.md) — Case 2 or 4 on whiteboard + 3 failure modes.
+
+---
+
+### Challenge 5.4 — Explain Your Platform ⏱️ ~30 min · 🟨 Middle
+
+**Quest**: 5-minute pitch: what you built in Levels 1–4, how CI/CD works, what you'd do first in an outage.
+
+---
+
 ## 🏆 Bonus Challenges — "Master Level"
 
 *You've completed the main quest. These challenges combine multiple tools and require creative thinking.*
 
-### Bonus 1 — Terraform + Docker Provider ⏱️ ~45 min
+### Bonus 1 — Terraform + Docker Provider ⏱️ ~45 min · 🟥 Senior
 
 **Quest**: Why use Docker CLI when you can manage containers with Terraform? Use the [Terraform Docker provider](https://registry.terraform.io/providers/kreuzwerker/docker/latest) to build and run containers via Terraform. Compare both approaches.
 
@@ -785,7 +824,7 @@ resource "docker_container" "quest" {
 
 ---
 
-### Bonus 2 — GitOps with ArgoCD ⏱️ ~60 min
+### Bonus 2 — GitOps with ArgoCD ⏱️ ~60 min · 🟥 Senior
 
 **Quest**: What if Kubernetes always matched your git repo? Install ArgoCD and configure it to sync manifests from GitHub. Now every `git push` = automatic deployment.
 
@@ -810,7 +849,7 @@ Then create an ArgoCD Application that points to your GitHub repo's `k8s/` direc
 
 ---
 
-### Bonus 3 — Infrastructure Tests ⏱️ ~45 min
+### Bonus 3 — Infrastructure Tests ⏱️ ~45 min · 🟥 Senior
 
 **Quest**: How do you know your infrastructure actually works? Write a test script that verifies everything after `terraform apply`.
 
@@ -851,27 +890,43 @@ echo "🎉 All tests passed!"
 
 ---
 
+### Bonus 4 — Senior DevOps Vocabulary ⏱️ ~4 hours · 🟥 Senior
+
+**Quest**: [`interview-sprint/04-Senior-DevOps-Additions.md`](interview-sprint/04-Senior-DevOps-Additions.md)
+
+### Bonus 5 — SRE Overview ⏱️ ~2 hours · 🟥 Senior
+
+**Quest**: [`interview-sprint/05-Senior-SRE-Additions.md`](interview-sprint/05-Senior-SRE-Additions.md) — optional stretch for on-call / reliability roles.
+
+---
+
 ## 📋 Progress Tracker
 
-| Challenge | Time | Status |
-|-----------|------|--------|
-| 1.1 Build & Run | ~15 min | ⬜ |
-| 1.2 Multi-Service Compose | ~20 min | ⬜ |
-| 1.3 Multi-Stage Build | ~30 min | ⬜ |
-| 2.1 Read & Plan | ~15 min | ⬜ |
-| 2.2 Variables & Parameterization | ~20 min | ⬜ |
-| 2.3 Outputs | ~15 min | ⬜ |
-| 2.4 Add More Resources | ~25 min | ⬜ |
-| 3.1 Health Checks | ~20 min | ⬜ |
-| 3.2 Auto-Scaling | ~25 min | ⬜ |
-| 3.3 ConfigMap as Volume | ~30 min | ⬜ |
-| 4.1 Extend Pipeline | ~30 min | ⬜ |
-| 4.2 Manual Approval | ~25 min | ⬜ |
-| Bonus 1 — TF + Docker | ~45 min | ⬜ |
-| Bonus 2 — ArgoCD | ~60 min | ⬜ |
-| Bonus 3 — Infra Tests | ~45 min | ⬜ |
+| Challenge | Career | Time | Status |
+|-----------|--------|------|--------|
+| 1.1 Build & Run | 🟦 | ~15 min | ⬜ |
+| 1.2 Multi-Service Compose | 🟩 | ~20 min | ⬜ |
+| 1.3 Multi-Stage Build | 🟩 | ~30 min | ⬜ |
+| 2.1 Read & Plan | 🟩 | ~15 min | ⬜ |
+| 2.2 Variables & Parameterization | 🟩 | ~20 min | ⬜ |
+| 2.3 Outputs | 🟩 | ~15 min | ⬜ |
+| 2.4 Add More Resources | 🟨 | ~25 min | ⬜ |
+| 3.1 Health Checks | 🟨 | ~20 min | ⬜ |
+| 3.2 Auto-Scaling | 🟨 | ~25 min | ⬜ |
+| 3.3 ConfigMap as Volume | 🟨 | ~30 min | ⬜ |
+| 4.1 Extend Pipeline | 🟨 | ~30 min | ⬜ |
+| 4.2 Manual Approval | 🟨 | ~25 min | ⬜ |
+| 5.1 Linux Debug Live | 🟨 | ~45 min | ⬜ |
+| 5.2 Docker/K8s Live | 🟨 | ~45 min | ⬜ |
+| 5.3 Infra Case | 🟨 | ~60 min | ⬜ |
+| 5.4 Platform Pitch | 🟨 | ~30 min | ⬜ |
+| Bonus 1 TF + Docker | 🟥 | ~45 min | ⬜ |
+| Bonus 2 ArgoCD | 🟥 | ~60 min | ⬜ |
+| Bonus 3 Infra Tests | 🟥 | ~45 min | ⬜ |
+| Bonus 4 Senior DevOps | 🟥 | ~4 hrs | ⬜ |
+| Bonus 5 SRE | 🟥 | ~2 hrs | ⬜ |
 
-**Total estimated time: ~6-7 hours** (all challenges including bonuses)
+**Total estimated time: ~10–12 hours** (core + interview + bonuses)
 
 Mark completed challenges with ✅ in your fork.
 
@@ -891,6 +946,7 @@ Complete all challenges and your quest page will evolve:
 | 📈 Auto-Scaling | Challenge 3.2 |
 | 🔄 Zero-Downtime Updates | Challenge 3.3 |
 | 🤖 Full CI/CD | Challenge 4.1-4.2 |
+| 🎤 Interview Ready | Challenge 5.1-5.4 |
 | 🏆 GitOps Master | All Bonus Challenges |
 
 **You started with nothing. You ended with a fully automated platform.** 🎉

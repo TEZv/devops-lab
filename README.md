@@ -4,7 +4,7 @@
 
 A hands-on repository for learning DevOps: from Docker to Kubernetes, from Terraform to CI/CD.
 
-Quest format, difficulty levels, and a progress tracker — the same style as [de-lab](https://github.com/TEZv/de-lab).
+Quest format, difficulty levels, progress tracker, career badges, and interview sprint — same style as [de-lab](https://github.com/TEZv/de-lab).
 
 ## What's Included
 
@@ -43,6 +43,8 @@ devops-lab/
 ├── terraform/           # Terraform configs
 ├── k8s/                   # Kubernetes manifests
 ├── ci-cd/                 # GitHub Actions workflows
+├── interview-sprint/        # 30-day interview prep
+├── CAREER-LEVELS.md       # Intern → Senior badges
 └── CHALLENGES.md          # 🎮 Main quest
 ```
 
@@ -51,6 +53,17 @@ devops-lab/
 👉 **[CHALLENGES.md](CHALLENGES.md)** — 15+ hands-on challenges from beginner to advanced, with questions to think about and a progress tracker.
 
 Fork this repo and start practicing!
+
+## Interview Sprint
+
+Parallel track for DevOps / Platform / SRE interviews:
+
+- [`interview-sprint/00-README.md`](interview-sprint/00-README.md)
+- [`01-Linux-Networking-Sprint-30.md`](interview-sprint/01-Linux-Networking-Sprint-30.md)
+- [`02-Docker-K8s-Live.md`](interview-sprint/02-Docker-K8s-Live.md)
+- [`03-Infrastructure-Case.md`](interview-sprint/03-Infrastructure-Case.md)
+- [`04-Senior-DevOps-Additions.md`](interview-sprint/04-Senior-DevOps-Additions.md)
+- [`05-Senior-SRE-Additions.md`](interview-sprint/05-Senior-SRE-Additions.md)
 
 ## Related Labs
 
