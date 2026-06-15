@@ -812,6 +812,8 @@ Record audio or write bullets: Docker → Terraform → K8s → GitHub Actions. 
 ## 🔍 Spot Check — "Something's Off"
 
 > **Different muscle.** Not "run the command" — spot what **fails a correctness check**: wrong probe, moving tags, secrets in git, `depends_on` myths. Try **before** opening answers.
+>
+> **Quote traps** (`'` vs `"`): optional cheat sheet at the top of [SPOT-CHECK.md](SPOT-CHECK.md) — plus 30-sec extra in **#6** (YAML/Compose). No new challenge count.
 
 Full set (11 exercises, ~5–10 min each): **[SPOT-CHECK.md](SPOT-CHECK.md)**
 
@@ -822,7 +824,7 @@ Full set (11 exercises, ~5–10 min each): **[SPOT-CHECK.md](SPOT-CHECK.md)**
 | 3 | `depends_on` ≠ service ready | 🟩 | Challenge 1.2 |
 | 4 | Liveness kills slow-start app | 🟨 | Challenge 3.1 |
 | 5 | `nginx:latest` in production | 🟩 | Image tags |
-| 6 | DB password in committed Compose | 🟩 | Security |
+| 6 | Secrets in git + YAML `it's` | 🟩 | Security / syntax |
 | 7 | `terraform apply -auto-approve` wrong env | 🟨 | Challenge 2.1, 4.2 |
 | 8 | HPA without `resources.requests` | 🟨 | Challenge 3.2 |
 | 9 | `COPY . .` without `.dockerignore` | 🟩 | Challenge 1.3 |

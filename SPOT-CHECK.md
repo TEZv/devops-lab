@@ -13,6 +13,35 @@ These are **not** build exercises. A README, a pipeline, or a manifest *runs* or
 
 **Career levels** match [CAREER-LEVELS.md](CAREER-LEVELS.md). Time = thinking time.
 
+<details>
+<summary>📎 Syntax traps — <code>'</code> vs <code>"</code> (cheat sheet, not a separate challenge)</summary>
+
+| Context | Single `'...'` | Double `"..."` |
+|---------|----------------|----------------|
+| **Bash** | literal text, `$VAR` **not** expanded | `$VAR` **expanded** |
+| **docker-compose / .env** | values with spaces often need quotes | `"$VAR"` pulls from host shell when compose parses file |
+| **YAML** | `it's` breaks bare strings — quote or escape | safe for strings with `:` or special chars |
+| **Terraform** | strings in HCL use `"..."` (not SQL rules) | same — interpolation `"${var.name}"` |
+
+**Examples that bite:**
+
+```bash
+echo '$HOME'    # prints $HOME
+echo "$HOME"    # prints /home/you
+```
+
+```yaml
+# breaks — apostrophe ends the string early
+environment:
+  - MSG=it's broken
+# fix
+  - "MSG=it's fine"
+```
+
+Woven into **Spot Check 6** (Compose + `.env`).
+
+</details>
+
 ---
 
 ## Spot Check 1 — Rebuild Amnesia ⏱️ ~5 min · 🟦 Intern
@@ -199,19 +228,23 @@ Pin digest or explicit version: `nginx:1.25.3` or `nginx@sha256:…`.
 ```yaml
 environment:
   - DATABASE_URL=postgres://admin:SuperSecret123@db:5432/app
+  - MSG=it's a secret
 ```
 
-CI passes. Security review fails.
+CI passes. Security review fails. YAML parser errors on some machines.
 
 **Your task**
 
-1. What's the immediate risk?
+1. What's the immediate security risk?
 2. Two fixes (local dev + CI) that keep secrets out of git.
+3. **Syntax check (30 sec):** What's wrong with the `MSG=it's a secret` line?
 
 <details>
 <summary>✅ Check your answer</summary>
 
-Risk: credentials in **git history forever** — fork, log, screenshot leak.
+**Security:** credentials in **git history forever** — fork, log, screenshot leak.
+
+**Syntax:** bare `it's` in YAML — the `'` in `it's` **terminates** the string early → parse error or truncated value. Use double quotes: `"MSG=it's a secret"` or single-quote the whole value carefully.
 
 Fixes:
 
@@ -220,6 +253,8 @@ Fixes:
 - secret managers (Vault, cloud SM) for prod
 
 Never commit real passwords — use `.env.example` with placeholders.
+
+In `.env` files, **no spaces** around `=` (`KEY=value`). Values with spaces or `'` → wrap in quotes.
 
 </details>
 
