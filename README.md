@@ -53,7 +53,7 @@ devops-lab/
 
 👉 **[CHALLENGES.md](CHALLENGES.md)** — 15+ hands-on challenges from beginner to advanced, with questions to think about and a progress tracker.
 
-🔍 **[SPOT-CHECK.md](SPOT-CHECK.md)** — 11 "something's off" drills (rebuild amnesia, probes, secrets in git). Answer before you peek.
+🔍 **[SPOT-CHECK.md](SPOT-CHECK.md)** — 12 spot-the-bug challenges (quotes, probes, secrets…). Guess before you peek.
 
 Fork this repo and start practicing!
 

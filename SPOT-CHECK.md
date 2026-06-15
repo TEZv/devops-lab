@@ -13,38 +13,56 @@ These are **not** build exercises. A README, a pipeline, or a manifest *runs* or
 
 **Career levels** match [CAREER-LEVELS.md](CAREER-LEVELS.md). Time = thinking time.
 
-<details>
-<summary>📎 Syntax traps — <code>'</code> vs <code>"</code> (cheat sheet, not a separate challenge)</summary>
+**Quest order:** start with **#1** if Compose/YAML/bash quotes ever bit you — guess first, then peek.
 
-| Context | Single `'...'` | Double `"..."` |
-|---------|----------------|----------------|
-| **Bash** | literal text, `$VAR` **not** expanded | `$VAR` **expanded** |
-| **docker-compose / .env** | values with spaces often need quotes | `"$VAR"` pulls from host shell when compose parses file |
-| **YAML** | `it's` breaks bare strings — quote or escape | safe for strings with `:` or special chars |
-| **Terraform** | strings in HCL use `"..."` (not SQL rules) | same — interpolation `"${var.name}"` |
+---
 
-**Examples that bite:**
+## Spot Check 1 — Quote Quest: Shell, YAML, .env ⏱️ ~5 min · 🟦 Intern
+
+**Source**: One PR, three quote styles.
 
 ```bash
-echo '$HOME'    # prints $HOME
-echo "$HOME"    # prints /home/you
+# CI debug script
+echo $HOME
+echo '$HOME'
+echo "$HOME"
 ```
 
 ```yaml
-# breaks — apostrophe ends the string early
+# docker-compose.yml
 environment:
   - MSG=it's broken
-# fix
-  - "MSG=it's fine"
+  - DATABASE_URL=postgres://admin:Secret@db:5432/app
 ```
 
-Woven into **Spot Check 6** (Compose + `.env`).
+```bash
+# .env (intended)
+API_KEY=abc123
+MESSAGE=hello world
+```
+
+**Your task**
+
+1. What does each `echo` line print? (Assume `$HOME=/home/devops`.)
+2. Why does `MSG=it's broken` break YAML parsing?
+3. Fix the `MSG` line without removing the apostrophe.
+4. Why is `DATABASE_URL=...` a problem even if YAML parses fine?
+
+<details>
+<summary>✅ Check your answer</summary>
+
+1. `echo $HOME` → `/home/devops`. `echo '$HOME'` → literal `$HOME`. `echo "$HOME"` → `/home/devops`. **Single quotes** = literal; **double quotes** = expand variables (bash).
+2. Bare `it's` — the `'` in `it's` **ends** the YAML string early → syntax error or truncated value.
+3. `- "MSG=it's fine"` or quote/escape per YAML rules.
+4. **Secrets in git** — URL with password is a credential leak regardless of quotes. Use `.env` + `env_file:`, `.gitignore`, CI secrets. See **Spot Check #7**.
+
+**Remember by doing:** context decides quotes — SQL uses `'text'`; bash uses `'` vs `"` for expansion; YAML needs quotes when `'` or `:` appear.
 
 </details>
 
 ---
 
-## Spot Check 1 — Rebuild Amnesia ⏱️ ~5 min · 🟦 Intern
+## Spot Check 2 — Rebuild Amnesia ⏱️ ~5 min · 🟦 Intern
 
 **Source**: Challenge 1.1 passed yesterday. Today you edit `docker/index.html`, run:
 
@@ -79,7 +97,7 @@ docker run -d -p 8080:80 devops-quest
 
 ---
 
-## Spot Check 2 — EXPOSE Fantasy ⏱️ ~5 min · 🟦 Intern
+## Spot Check 3 — EXPOSE Fantasy ⏱️ ~5 min · 🟦 Intern
 
 **Source**: Dockerfile ends with:
 
@@ -118,7 +136,7 @@ Format: `-p hostPort:containerPort`.
 
 ---
 
-## Spot Check 3 — depends_on ≠ Ready ⏱️ ~7 min · 🟩 Junior
+## Spot Check 4 — depends_on ≠ Ready ⏱️ ~7 min · 🟩 Junior
 
 **Source**: `docker-compose.yml`:
 
@@ -155,7 +173,7 @@ Challenge 1.2 — multi-service wiring.
 
 ---
 
-## Spot Check 4 — Liveness Kills the Patient ⏱️ ~7 min · 🟨 Middle
+## Spot Check 5 — Liveness Kills the Patient ⏱️ ~7 min · 🟨 Middle
 
 **Source**: K8s deployment: Java app needs **90s** to warm up. Manifest:
 
@@ -193,7 +211,7 @@ Fix: generous **liveness** `initialDelaySeconds` (or startupProbe), tighter **re
 
 ---
 
-## Spot Check 5 — :latest Roulette ⏱️ ~5 min · 🟩 Junior
+## Spot Check 6 — :latest Roulette ⏱️ ~5 min · 🟩 Junior
 
 **Source**: Production deployment:
 
@@ -221,30 +239,27 @@ Pin digest or explicit version: `nginx:1.25.3` or `nginx@sha256:…`.
 
 ---
 
-## Spot Check 6 — Secret in Git ⏱️ ~7 min · 🟩 Junior
+## Spot Check 7 — Secret in Git ⏱️ ~7 min · 🟩 Junior
 
 **Source**: `docker-compose.yml` in the repo:
 
 ```yaml
 environment:
   - DATABASE_URL=postgres://admin:SuperSecret123@db:5432/app
-  - MSG=it's a secret
 ```
 
-CI passes. Security review fails. YAML parser errors on some machines.
+CI passes. Security review fails.
 
 **Your task**
 
 1. What's the immediate security risk?
 2. Two fixes (local dev + CI) that keep secrets out of git.
-3. **Syntax check (30 sec):** What's wrong with the `MSG=it's a secret` line?
+3. A teammate also has `MSG=it's a secret` in the same file — which Spot Check covers that quote bug?
 
 <details>
 <summary>✅ Check your answer</summary>
 
 **Security:** credentials in **git history forever** — fork, log, screenshot leak.
-
-**Syntax:** bare `it's` in YAML — the `'` in `it's` **terminates** the string early → parse error or truncated value. Use double quotes: `"MSG=it's a secret"` or single-quote the whole value carefully.
 
 Fixes:
 
@@ -254,13 +269,13 @@ Fixes:
 
 Never commit real passwords — use `.env.example` with placeholders.
 
-In `.env` files, **no spaces** around `=` (`KEY=value`). Values with spaces or `'` → wrap in quotes.
+3. **`MSG=it's...`** → **Spot Check #1** (YAML apostrophe). This challenge is about **secrets in git**, not quote rules.
 
 </details>
 
 ---
 
-## Spot Check 7 — terraform apply Autopilot ⏱️ ~7 min · 🟨 Middle
+## Spot Check 8 — terraform apply Autopilot ⏱️ ~7 min · 🟨 Middle
 
 **Source**: On-call runs:
 
@@ -292,7 +307,7 @@ Mitigations:
 
 ---
 
-## Spot Check 8 — HPA Without Fuel ⏱️ ~10 min · 🟨 Middle
+## Spot Check 9 — HPA Without Fuel ⏱️ ~10 min · 🟨 Middle
 
 **Source**: HorizontalPodAutoscaler targets CPU 50%. Deployment has:
 
@@ -330,7 +345,7 @@ Challenge 3.2 — set requests before trusting HPA.
 
 ---
 
-## Spot Check 9 — .dockerignore Oops ⏱️ ~7 min · 🟩 Junior
+## Spot Check 10 — .dockerignore Oops ⏱️ ~7 min · 🟩 Junior
 
 **Source**: Dockerfile:
 
@@ -369,7 +384,7 @@ Old image layers **still contain** the secret — you must rebuild and rotate cr
 
 ---
 
-## Spot Check 10 — prune -a on Shared Runner ⏱️ ~7 min · 🟨 Middle
+## Spot Check 11 — prune -a on Shared Runner ⏱️ ~7 min · 🟨 Middle
 
 **Source**: CI pipeline step after deploy:
 
@@ -398,7 +413,7 @@ Safer: prune dangling only (`docker image prune -f`), per-job `--rm` containers,
 
 ---
 
-## Spot Check 11 — delete pod Whack-a-Mole ⏱️ ~5 min · 🟩 Junior
+## Spot Check 12 — delete pod Whack-a-Mole ⏱️ ~5 min · 🟩 Junior
 
 **Source**: Pod crash looping. On-call runs:
 
@@ -431,17 +446,18 @@ Deleting pods is a **restart**, not a **fix** — change the Deployment spec or 
 
 | # | Topic | Level | Done |
 |---|-------|-------|------|
-| 1 | Image rebuild | 🟦 | ⬜ |
-| 2 | EXPOSE vs -p | 🟦 | ⬜ |
-| 3 | depends_on | 🟩 | ⬜ |
-| 4 | Liveness vs readiness | 🟨 | ⬜ |
-| 5 | :latest tag | 🟩 | ⬜ |
-| 6 | Secrets in git | 🟩 | ⬜ |
-| 7 | terraform apply | 🟨 | ⬜ |
-| 8 | HPA resources | 🟨 | ⬜ |
-| 9 | .dockerignore / COPY | 🟩 | ⬜ |
-| 10 | docker prune -a | 🟨 | ⬜ |
-| 11 | delete pod vs Deployment | 🟩 | ⬜ |
+| 1 | Quote quest bash/YAML/.env | 🟦 | ⬜ |
+| 2 | Image rebuild | 🟦 | ⬜ |
+| 3 | EXPOSE vs -p | 🟦 | ⬜ |
+| 4 | depends_on | 🟩 | ⬜ |
+| 5 | Liveness vs readiness | 🟨 | ⬜ |
+| 6 | :latest tag | 🟩 | ⬜ |
+| 7 | Secrets in git | 🟩 | ⬜ |
+| 8 | terraform apply | 🟨 | ⬜ |
+| 9 | HPA resources | 🟨 | ⬜ |
+| 10 | .dockerignore / COPY | 🟩 | ⬜ |
+| 11 | docker prune -a | 🟨 | ⬜ |
+| 12 | delete pod vs Deployment | 🟩 | ⬜ |
 
 Mark ✅ when you can explain each trap cold.
 
