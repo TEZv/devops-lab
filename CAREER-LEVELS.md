@@ -1,20 +1,29 @@
 # Career Levels — How to Read This Lab
 
-Both **devops-lab** and **de-lab** tag every challenge with a **target career level**.
+Both **devops-lab** (Archer) and **de-lab** (Mage) use the same **CareerTier** ladder. Interactive maps: [`interactive/`](interactive/) here · [DE Lab Gym](https://de-lab-interview-gym.web.app).
 
 | Badge | Level | Typical experience | What it means here |
 |-------|--------|-------------------|-------------------|
-| 🟦 | **Intern / Trainee** | 0–6 months | Follow steps, learn vocabulary, complete with hints |
+| 🟦 | **Intern / Apprentice** | 0–6 months | Follow steps, learn vocabulary, complete with hints |
 | 🟩 | **Junior** | ~6–18 months | Do it hands-on, explain *what* you did |
 | 🟨 | **Middle** | ~2–4 years | Design trade-offs, debug without hints |
-| 🟥 | **Senior** | 4+ years | Own architecture, SRE mindset, production incidents |
+| 🟧 | **Senior** | 4+ years | Own architecture, SRE mindset, production incidents |
+| 🟪 | **Team Lead** | lead track | Mentor delivery bars, day-1 culture, review quality |
+| ⬛ | **Head of Platform** | org track | Platform strategy, reliability roadmap, hiring bar |
 
 ## Two axes
 
 | Axis | Example | In this repo |
 |------|---------|--------------|
-| **Quest level** | 🟢 L1 Docker, 🔴 L4 CI/CD | Story order |
-| **Career level** | 🟩 Junior, 🟨 Middle | Interview / job mapping |
+| **Skill staircase** | Linux → Docker → K8s → prod habits | [`interactive/`](interactive/) + folders |
+| **Career level** | Intern → Head of Platform | Filters recommended layers |
+
+## Hero themes (sync)
+
+| Lab | Hero | Weapon |
+|-----|------|--------|
+| de-lab | Mage | Staff / orbs |
+| devops-lab | Archer | Bow / arrow |
 
 ## devops-lab focus
 
@@ -22,7 +31,7 @@ Ship containers, codify infra, orchestrate workloads, automate delivery. The int
 
 ## de-lab focus
 
-Data pipelines with product sense — see [de-lab CAREER-LEVELS](https://github.com/TEZv/de-lab/blob/main/CAREER-LEVELS.md).
+Data pipelines with product sense — see [de-lab](https://github.com/TEZv/de-lab) / [Mage Gym](https://de-lab-interview-gym.web.app).
 
 ## Interview Sprint
 
