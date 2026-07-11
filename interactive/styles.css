@@ -1149,6 +1149,23 @@ button.marked { background: var(--good); }
   align-items: center;
   margin-bottom: 12px;
 }
+.hub-bridge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px dashed var(--line);
+  background: rgba(78, 205, 196, 0.05);
+}
+.hub-bridge-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.hub-bridge-link { font-size: 13px; }
 .hub-search {
   flex: 1 1 200px;
   padding: 10px 12px;
@@ -1383,6 +1400,64 @@ button.marked { background: var(--good); }
 }
 .pl-viz-pipe-node small { display: block; font-size: 10px; color: var(--muted); }
 .pl-viz-pipe-arr { color: var(--accent2); }
+
+.pl-recall-panel {
+  margin: 12px 0 16px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--accent2) 35%, var(--line));
+  background: color-mix(in srgb, var(--accent2) 6%, var(--panel));
+}
+.pl-recall-title {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent2);
+}
+.pl-recall-intro { margin: 0 0 10px; }
+.pl-recall-tips {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pl-recall-tips li {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ink);
+  align-items: start;
+}
+.pl-recall-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent2) 20%, transparent);
+  color: var(--accent2);
+  font-size: 11px;
+  font-weight: 700;
+}
+.pl-recall-mnemonic {
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--panel);
+  border-left: 3px solid var(--accent2);
+  font-size: 13px;
+  font-weight: 600;
+}
+.pl-recall-mapref {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.pl-viz-mount-recall { margin: 8px 0 4px; }
 
 .pl-viz-mount-study { margin: 10px 0 16px; }
 .pl-viz-sql-compare .pl-viz-sql-source { margin-bottom: 12px; overflow-x: auto; }

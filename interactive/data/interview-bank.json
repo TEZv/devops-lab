@@ -1,0 +1,1054 @@
+{
+  "version": 1,
+  "updated": "2026-07-11",
+  "ethics": {
+    "ua": "Без брендів роботодавців. Архетипи DevOps/SRE + публічні патерни. DE Mage Gym — окремий data-трек.",
+    "en": "No employer brands. DevOps/SRE archetypes + public patterns. DE Mage Gym is a separate data track."
+  },
+  "archetypes": [
+    {
+      "id": "universal",
+      "sigil": "CORE",
+      "color": "#8b9cb3",
+      "glyph": "🧭",
+      "label": {
+        "ua": "Універсальне",
+        "en": "Universal"
+      }
+    },
+    {
+      "id": "platform",
+      "sigil": "IAC",
+      "color": "#e8a84b",
+      "glyph": "🏗️",
+      "label": {
+        "ua": "Platform / IaC",
+        "en": "Platform / IaC"
+      }
+    },
+    {
+      "id": "sre",
+      "sigil": "ONCALL",
+      "color": "#ff6b6b",
+      "glyph": "🛡️",
+      "label": {
+        "ua": "SRE / Prod",
+        "en": "SRE / Prod"
+      }
+    },
+    {
+      "id": "cicd",
+      "sigil": "PIPE",
+      "color": "#5b8def",
+      "glyph": "🔀",
+      "label": {
+        "ua": "Git / CI",
+        "en": "Git / CI"
+      }
+    },
+    {
+      "id": "security",
+      "sigil": "SEC",
+      "color": "#4ecdc4",
+      "glyph": "🔐",
+      "label": {
+        "ua": "Security",
+        "en": "Security"
+      }
+    },
+    {
+      "id": "startup",
+      "sigil": "PET",
+      "color": "#c77dff",
+      "glyph": "🚀",
+      "label": {
+        "ua": "Pet / Startup",
+        "en": "Pet / Startup"
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "id": "gym-01-linux-shell-devops-L0",
+      "archetype": "sre",
+      "kind": "gym",
+      "blockId": "01-linux-shell-devops",
+      "levelId": "L0",
+      "tag": "🐧 · карта",
+      "skill": "linux",
+      "difficulty": "easy",
+      "minutes": 8,
+      "title": {
+        "ua": "Shell pipeline",
+        "en": "Shell pipeline"
+      },
+      "prompt": {
+        "ua": "DevOps day-1: логи, grep, права, не rm -rf /.",
+        "en": "DevOps day-1: логи, grep, права, не rm -rf /."
+      },
+      "source": "blocks/01-linux-shell-devops.json"
+    },
+    {
+      "id": "gym-01-linux-shell-devops-L1",
+      "archetype": "sre",
+      "kind": "gym",
+      "blockId": "01-linux-shell-devops",
+      "levelId": "L1",
+      "tag": "🐧 · 1/6",
+      "skill": "linux",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "MATCH · shell ↔ сенс",
+        "en": "MATCH · shell ↔ сенс"
+      },
+      "prompt": {
+        "ua": "Базові терміни junior DevOps / SRE screen — спочатку схема chmod.",
+        "en": "Базові терміни junior DevOps / SRE screen — спочатку схема chmod."
+      },
+      "source": "blocks/01-linux-shell-devops.json"
+    },
+    {
+      "id": "gym-01-linux-shell-devops-L2",
+      "archetype": "sre",
+      "kind": "gym",
+      "blockId": "01-linux-shell-devops",
+      "levelId": "L2",
+      "tag": "🐧 · 2/6",
+      "skill": "linux",
+      "difficulty": "medium",
+      "minutes": 15,
+      "title": {
+        "ua": "grep ERROR у логу",
+        "en": "grep ERROR у логу"
+      },
+      "prompt": {
+        "ua": "Лог: INFO норма, ERROR — треба в alert. Порахуй скільки ERROR. · З app.log — лише рядки з ERROR, порахувати.",
+        "en": "Лог: INFO норма, ERROR — треба в alert. Порахуй скільки ERROR. · З app.log — лише рядки з ERROR, порахувати."
+      },
+      "source": "blocks/01-linux-shell-devops.json"
+    },
+    {
+      "id": "gym-01-linux-shell-devops-L3",
+      "archetype": "sre",
+      "kind": "gym",
+      "blockId": "01-linux-shell-devops",
+      "levelId": "L3",
+      "tag": "🐧 · 3/6",
+      "skill": "linux",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Що не так із chmod?",
+        "en": "Що не так із chmod?"
+      },
+      "prompt": {
+        "ua": "Скрипт має виконуватись, але не world-writable. · Deploy script на сервері.",
+        "en": "Скрипт має виконуватись, але не world-writable. · Deploy script на сервері."
+      },
+      "source": "blocks/01-linux-shell-devops.json"
+    },
+    {
+      "id": "gym-01-linux-shell-devops-L4",
+      "archetype": "sre",
+      "kind": "gym",
+      "blockId": "01-linux-shell-devops",
+      "levelId": "L4",
+      "tag": "🐧 · 4/6",
+      "skill": "linux",
+      "difficulty": "medium",
+      "minutes": 10,
+      "title": {
+        "ua": "find чи grep?",
+        "en": "find чи grep?"
+      },
+      "prompt": {
+        "ua": "Треба знайти всі `.log` файли в `/var/log` старші 7 днів.",
+        "en": "Треба знайти всі `.log` файли в `/var/log` старші 7 днів."
+      },
+      "source": "blocks/01-linux-shell-devops.json"
+    },
+    {
+      "id": "gym-01-linux-shell-devops-L5",
+      "archetype": "sre",
+      "kind": "gym",
+      "blockId": "01-linux-shell-devops",
+      "levelId": "L5",
+      "tag": "🐧 · 5/6",
+      "skill": "linux",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Диск 100%",
+        "en": "Диск 100%"
+      },
+      "prompt": {
+        "ua": "grep · pipes · permissions · find · prod triage",
+        "en": "grep · pipes · permissions · find · prod triage"
+      },
+      "source": "blocks/01-linux-shell-devops.json"
+    },
+    {
+      "id": "gym-01-linux-shell-devops-L6",
+      "archetype": "sre",
+      "kind": "gym",
+      "blockId": "01-linux-shell-devops",
+      "levelId": "L6",
+      "tag": "🐧 · 6/6",
+      "skill": "linux",
+      "difficulty": "medium",
+      "minutes": 10,
+      "title": {
+        "ua": "Runbook: сервіс down",
+        "en": "Runbook: сервіс down"
+      },
+      "prompt": {
+        "ua": "Розстав кроки triage.",
+        "en": "Розстав кроки triage."
+      },
+      "source": "blocks/01-linux-shell-devops.json"
+    },
+    {
+      "id": "gym-02-git-ci-devops-G0",
+      "archetype": "cicd",
+      "kind": "gym",
+      "blockId": "02-git-ci-devops",
+      "levelId": "G0",
+      "tag": "🔀 · карта",
+      "skill": "git",
+      "difficulty": "easy",
+      "minutes": 8,
+      "title": {
+        "ua": "Git flow lite",
+        "en": "Git flow lite"
+      },
+      "prompt": {
+        "ua": "DevOps + DE: код у git, зміни через PR, CI green.",
+        "en": "DevOps + DE: код у git, зміни через PR, CI green."
+      },
+      "source": "blocks/02-git-ci-devops.json"
+    },
+    {
+      "id": "gym-02-git-ci-devops-G1",
+      "archetype": "cicd",
+      "kind": "gym",
+      "blockId": "02-git-ci-devops",
+      "levelId": "G1",
+      "tag": "🔀 · 1/5",
+      "skill": "git",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "MATCH · Git/CI",
+        "en": "MATCH · Git/CI"
+      },
+      "prompt": {
+        "ua": "Терміни для screen — спочатку схема flow, не лише слова.",
+        "en": "Терміни для screen — спочатку схема flow, не лише слова."
+      },
+      "source": "blocks/02-git-ci-devops.json"
+    },
+    {
+      "id": "gym-02-git-ci-devops-G2",
+      "archetype": "cicd",
+      "kind": "gym",
+      "blockId": "02-git-ci-devops",
+      "levelId": "G2",
+      "tag": "🔀 · 2/5",
+      "skill": "git",
+      "difficulty": "medium",
+      "minutes": 15,
+      "title": {
+        "ua": "Створити feature branch",
+        "en": "Створити feature branch"
+      },
+      "prompt": {
+        "ua": "Від main — нова гілка, потім commit. · Тікет DEV-42: додати healthcheck.",
+        "en": "Від main — нова гілка, потім commit. · Тікет DEV-42: додати healthcheck."
+      },
+      "source": "blocks/02-git-ci-devops.json"
+    },
+    {
+      "id": "gym-02-git-ci-devops-G3",
+      "archetype": "cicd",
+      "kind": "gym",
+      "blockId": "02-git-ci-devops",
+      "levelId": "G3",
+      "tag": "🔀 · 3/5",
+      "skill": "git",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Що не так?",
+        "en": "Що не так?"
+      },
+      "prompt": {
+        "ua": "Пʼятниця, дедлайн.",
+        "en": "Пʼятниця, дедлайн."
+      },
+      "source": "blocks/02-git-ci-devops.json"
+    },
+    {
+      "id": "gym-02-git-ci-devops-G4",
+      "archetype": "cicd",
+      "kind": "gym",
+      "blockId": "02-git-ci-devops",
+      "levelId": "G4",
+      "tag": "🔀 · 4/5",
+      "skill": "git",
+      "difficulty": "medium",
+      "minutes": 10,
+      "title": {
+        "ua": "CI pipeline",
+        "en": "CI pipeline"
+      },
+      "prompt": {
+        "ua": "Типовий GitHub Actions для Python repo.",
+        "en": "Типовий GitHub Actions для Python repo."
+      },
+      "source": "blocks/02-git-ci-devops.json"
+    },
+    {
+      "id": "gym-02-git-ci-devops-G5",
+      "archetype": "cicd",
+      "kind": "gym",
+      "blockId": "02-git-ci-devops",
+      "levelId": "G5",
+      "tag": "🔀 · 5/5",
+      "skill": "git",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "CI failed на PR",
+        "en": "CI failed на PR"
+      },
+      "prompt": {
+        "ua": "branch · PR · merge · pipeline · no force push main",
+        "en": "branch · PR · merge · pipeline · no force push main"
+      },
+      "source": "blocks/02-git-ci-devops.json"
+    },
+    {
+      "id": "gym-03-docker-devops-D0",
+      "archetype": "startup",
+      "kind": "gym",
+      "blockId": "03-docker-devops",
+      "levelId": "D0",
+      "tag": "🐳 · карта",
+      "skill": "docker",
+      "difficulty": "easy",
+      "minutes": 8,
+      "title": {
+        "ua": "Image → container",
+        "en": "Image → container"
+      },
+      "prompt": {
+        "ua": "Docker на інтервʼю: не магія, а ізольований процес + FS snapshot.",
+        "en": "Docker на інтервʼю: не магія, а ізольований процес + FS snapshot."
+      },
+      "source": "blocks/03-docker-devops.json"
+    },
+    {
+      "id": "gym-03-docker-devops-D1",
+      "archetype": "startup",
+      "kind": "gym",
+      "blockId": "03-docker-devops",
+      "levelId": "D1",
+      "tag": "🐳 · 1/6",
+      "skill": "docker",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "MATCH · Docker",
+        "en": "MATCH · Docker"
+      },
+      "prompt": {
+        "ua": "Терміни container world — спочатку image vs container.",
+        "en": "Терміни container world — спочатку image vs container."
+      },
+      "source": "blocks/03-docker-devops.json"
+    },
+    {
+      "id": "gym-03-docker-devops-D2",
+      "archetype": "startup",
+      "kind": "gym",
+      "blockId": "03-docker-devops",
+      "levelId": "D2",
+      "tag": "🐳 · 2/6",
+      "skill": "docker",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Що не так у Dockerfile?",
+        "en": "Що не так у Dockerfile?"
+      },
+      "prompt": {
+        "ua": "Security + reproducibility. · Python ETL для prod.",
+        "en": "Security + reproducibility. · Python ETL для prod."
+      },
+      "source": "blocks/03-docker-devops.json"
+    },
+    {
+      "id": "gym-03-docker-devops-D3",
+      "archetype": "startup",
+      "kind": "gym",
+      "blockId": "03-docker-devops",
+      "levelId": "D3",
+      "tag": "🐳 · 3/6",
+      "skill": "docker",
+      "difficulty": "medium",
+      "minutes": 15,
+      "title": {
+        "ua": "CMD vs ENTRYPOINT",
+        "en": "CMD vs ENTRYPOINT"
+      },
+      "prompt": {
+        "ua": "ENTRYPOINT фіксує python app.py; CMD — default date arg. · Контейнер запускає ETL скрипт з аргументом --date.",
+        "en": "ENTRYPOINT фіксує python app.py; CMD — default date arg. · Контейнер запускає ETL скрипт з аргументом --date."
+      },
+      "source": "blocks/03-docker-devops.json"
+    },
+    {
+      "id": "gym-03-docker-devops-D4",
+      "archetype": "startup",
+      "kind": "gym",
+      "blockId": "03-docker-devops",
+      "levelId": "D4",
+      "tag": "🐳 · 4/6",
+      "skill": "docker",
+      "difficulty": "medium",
+      "minutes": 10,
+      "title": {
+        "ua": "compose чи k8s?",
+        "en": "compose чи k8s?"
+      },
+      "prompt": {
+        "ua": "Локально: app + Postgres для розробки. 2 devs, без HA.",
+        "en": "Локально: app + Postgres для розробки. 2 devs, без HA."
+      },
+      "source": "blocks/03-docker-devops.json"
+    },
+    {
+      "id": "gym-03-docker-devops-D5",
+      "archetype": "startup",
+      "kind": "gym",
+      "blockId": "03-docker-devops",
+      "levelId": "D5",
+      "tag": "🐳 · 5/6",
+      "skill": "docker",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Image pull failed",
+        "en": "Image pull failed"
+      },
+      "prompt": {
+        "ua": "image · layer · Dockerfile trap · CMD/ENTRYPOINT · compose",
+        "en": "image · layer · Dockerfile trap · CMD/ENTRYPOINT · compose"
+      },
+      "source": "blocks/03-docker-devops.json"
+    },
+    {
+      "id": "gym-03-docker-devops-D6",
+      "archetype": "startup",
+      "kind": "gym",
+      "blockId": "03-docker-devops",
+      "levelId": "D6",
+      "tag": "🐳 · 6/6",
+      "skill": "docker",
+      "difficulty": "medium",
+      "minutes": 10,
+      "title": {
+        "ua": "Build → run",
+        "en": "Build → run"
+      },
+      "prompt": {
+        "ua": "Розстав кроки першого docker deploy.",
+        "en": "Розстав кроки першого docker deploy."
+      },
+      "source": "blocks/03-docker-devops.json"
+    },
+    {
+      "id": "gym-04-terraform-devops-T0",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "04-terraform-devops",
+      "levelId": "T0",
+      "tag": "🏗️ · карта",
+      "skill": "iac",
+      "difficulty": "easy",
+      "minutes": 8,
+      "title": {
+        "ua": "Terraform ritual",
+        "en": "Terraform ritual"
+      },
+      "prompt": {
+        "ua": "Middle DevOps: HCL описує бажаний стан → plan показує diff → apply міняє cloud. Bridge з DE cloud IAM.",
+        "en": "Middle DevOps: HCL описує бажаний стан → plan показує diff → apply міняє cloud. Bridge з DE cloud IAM."
+      },
+      "source": "blocks/04-terraform-devops.json"
+    },
+    {
+      "id": "gym-04-terraform-devops-T1",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "04-terraform-devops",
+      "levelId": "T1",
+      "tag": "🏗️ · 1/7",
+      "skill": "iac",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "MATCH · Terraform ↔ сенс",
+        "en": "MATCH · Terraform ↔ сенс"
+      },
+      "prompt": {
+        "ua": "Терміни IaC screen — спочатку plan vs apply, не стрілки в повітрі.",
+        "en": "Терміни IaC screen — спочатку plan vs apply, не стрілки в повітрі."
+      },
+      "source": "blocks/04-terraform-devops.json"
+    },
+    {
+      "id": "gym-04-terraform-devops-T2",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "04-terraform-devops",
+      "levelId": "T2",
+      "tag": "🏗️ · 2/7",
+      "skill": "iac",
+      "difficulty": "medium",
+      "minutes": 15,
+      "title": {
+        "ua": "S3 bucket resource",
+        "en": "S3 bucket resource"
+      },
+      "prompt": {
+        "ua": "Terraform створює S3 bucket для raw ingest. Назва в HCL = resource label (не ARN). · Pet project: bronze lake bucket. Bridge з DE cloud storage.",
+        "en": "Terraform створює S3 bucket для raw ingest. Назва в HCL = resource label (не ARN). · Pet project: bronze lake bucket. Bridge з DE cloud storage."
+      },
+      "source": "blocks/04-terraform-devops.json"
+    },
+    {
+      "id": "gym-04-terraform-devops-T3",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "04-terraform-devops",
+      "levelId": "T3",
+      "tag": "🏗️ · 3/7",
+      "skill": "iac",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Що не так у IAM policy?",
+        "en": "Що не так у IAM policy?"
+      },
+      "prompt": {
+        "ua": "Роль має читати лише acme-bronze-raw/*, не весь account. · ETL role для читання bronze bucket.",
+        "en": "Роль має читати лише acme-bronze-raw/*, не весь account. · ETL role для читання bronze bucket."
+      },
+      "source": "blocks/04-terraform-devops.json"
+    },
+    {
+      "id": "gym-04-terraform-devops-T4",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "04-terraform-devops",
+      "levelId": "T4",
+      "tag": "🏗️ · 4/7",
+      "skill": "iac",
+      "difficulty": "medium",
+      "minutes": 10,
+      "title": {
+        "ua": "Де тримати state?",
+        "en": "Де тримати state?"
+      },
+      "prompt": {
+        "ua": "Команда з 4 DevOps, один pet AWS account, shared modules.",
+        "en": "Команда з 4 DevOps, один pet AWS account, shared modules."
+      },
+      "source": "blocks/04-terraform-devops.json"
+    },
+    {
+      "id": "gym-04-terraform-devops-T5",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "04-terraform-devops",
+      "levelId": "T5",
+      "tag": "🏗️ · 5/7",
+      "skill": "iac",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Drift: bucket policy змінили в консолі",
+        "en": "Drift: bucket policy змінили в консолі"
+      },
+      "prompt": {
+        "ua": "plan · apply · state · drift · IAM least privilege · remote backend",
+        "en": "plan · apply · state · drift · IAM least privilege · remote backend"
+      },
+      "source": "blocks/04-terraform-devops.json"
+    },
+    {
+      "id": "gym-04-terraform-devops-T6",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "04-terraform-devops",
+      "levelId": "T6",
+      "tag": "🏗️ · 6/7",
+      "skill": "iac",
+      "difficulty": "medium",
+      "minutes": 10,
+      "title": {
+        "ua": "PR workflow Terraform",
+        "en": "PR workflow Terraform"
+      },
+      "prompt": {
+        "ua": "Розстав кроки зміни інфраструктури в команді.",
+        "en": "Розстав кроки зміни інфраструктури в команді."
+      },
+      "source": "blocks/04-terraform-devops.json"
+    },
+    {
+      "id": "gym-04-terraform-devops-T7",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "04-terraform-devops",
+      "levelId": "T7",
+      "tag": "🏗️ · 7/7",
+      "skill": "iac",
+      "difficulty": "medium",
+      "minutes": 15,
+      "title": {
+        "ua": "Output для DE pipeline",
+        "en": "Output для DE pipeline"
+      },
+      "prompt": {
+        "ua": "Terraform output bronze_bucket_name → CI кладе в Airflow / env для DE ingest DAG. · Після apply ETL має знати bucket name.",
+        "en": "Terraform output bronze_bucket_name → CI кладе в Airflow / env для DE ingest DAG. · Після apply ETL має знати bucket name."
+      },
+      "source": "blocks/04-terraform-devops.json"
+    },
+    {
+      "id": "gym-05-k8s-devops-K0",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "05-k8s-devops",
+      "levelId": "K0",
+      "tag": "☸️ · карта",
+      "skill": "k8s",
+      "difficulty": "easy",
+      "minutes": 8,
+      "title": {
+        "ua": "Deployment → Pod",
+        "en": "Deployment → Pod"
+      },
+      "prompt": {
+        "ua": "Middle DevOps: не весь CKA — але Pod/Service/Deployment на інтервʼю must-have.",
+        "en": "Middle DevOps: не весь CKA — але Pod/Service/Deployment на інтервʼю must-have."
+      },
+      "source": "blocks/05-k8s-devops.json"
+    },
+    {
+      "id": "gym-05-k8s-devops-K1",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "05-k8s-devops",
+      "levelId": "K1",
+      "tag": "☸️ · 1/7",
+      "skill": "k8s",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "MATCH · K8s objects",
+        "en": "MATCH · K8s objects"
+      },
+      "prompt": {
+        "ua": "Терміни — спочатку хто кого «тримає».",
+        "en": "Терміни — спочатку хто кого «тримає»."
+      },
+      "source": "blocks/05-k8s-devops.json"
+    },
+    {
+      "id": "gym-05-k8s-devops-K2",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "05-k8s-devops",
+      "levelId": "K2",
+      "tag": "☸️ · 2/7",
+      "skill": "k8s",
+      "difficulty": "medium",
+      "minutes": 15,
+      "title": {
+        "ua": "Deployment snippet",
+        "en": "Deployment snippet"
+      },
+      "prompt": {
+        "ua": "apiVersion apps/v1, kind Deployment, selector.matchLabels = template labels. · 3 replicas app v1.0.0, label app=web.",
+        "en": "apiVersion apps/v1, kind Deployment, selector.matchLabels = template labels. · 3 replicas app v1.0.0, label app=web."
+      },
+      "source": "blocks/05-k8s-devops.json"
+    },
+    {
+      "id": "gym-05-k8s-devops-K3",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "05-k8s-devops",
+      "levelId": "K3",
+      "tag": "☸️ · 3/7",
+      "skill": "k8s",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Probe trap",
+        "en": "Probe trap"
+      },
+      "prompt": {
+        "ua": "App слухає :8080/health, але…",
+        "en": "App слухає :8080/health, але…"
+      },
+      "source": "blocks/05-k8s-devops.json"
+    },
+    {
+      "id": "gym-05-k8s-devops-K4",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "05-k8s-devops",
+      "levelId": "K4",
+      "tag": "☸️ · 4/7",
+      "skill": "k8s",
+      "difficulty": "medium",
+      "minutes": 10,
+      "title": {
+        "ua": "Deployment чи StatefulSet?",
+        "en": "Deployment чи StatefulSet?"
+      },
+      "prompt": {
+        "ua": "Postgres у K8s: стабільний network ID + persistent volume per replica.",
+        "en": "Postgres у K8s: стабільний network ID + persistent volume per replica."
+      },
+      "source": "blocks/05-k8s-devops.json"
+    },
+    {
+      "id": "gym-05-k8s-devops-K5",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "05-k8s-devops",
+      "levelId": "K5",
+      "tag": "☸️ · 5/7",
+      "skill": "k8s",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "CrashLoopBackOff",
+        "en": "CrashLoopBackOff"
+      },
+      "prompt": {
+        "ua": "Pod · Service · Deployment · probe trap · CrashLoop · kubectl triage",
+        "en": "Pod · Service · Deployment · probe trap · CrashLoop · kubectl triage"
+      },
+      "source": "blocks/05-k8s-devops.json"
+    },
+    {
+      "id": "gym-05-k8s-devops-K6",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "05-k8s-devops",
+      "levelId": "K6",
+      "tag": "☸️ · 6/7",
+      "skill": "k8s",
+      "difficulty": "medium",
+      "minutes": 10,
+      "title": {
+        "ua": "Kubectl triage",
+        "en": "Kubectl triage"
+      },
+      "prompt": {
+        "ua": "Pod не Ready. Розстав кроки.",
+        "en": "Pod не Ready. Розстав кроки."
+      },
+      "source": "blocks/05-k8s-devops.json"
+    },
+    {
+      "id": "gym-06-prod-devops-R0",
+      "archetype": "sre",
+      "kind": "gym",
+      "blockId": "06-prod-devops",
+      "levelId": "R0",
+      "tag": "🛡️ · карта",
+      "skill": "prod",
+      "difficulty": "easy",
+      "minutes": 8,
+      "title": {
+        "ua": "SRE triangle",
+        "en": "SRE triangle"
+      },
+      "prompt": {
+        "ua": "Senior DevOps/SRE: метрики → алерти → runbook → postmortem. Bridge з DE governance E6.",
+        "en": "Senior DevOps/SRE: метрики → алерти → runbook → postmortem. Bridge з DE governance E6."
+      },
+      "source": "blocks/06-prod-devops.json"
+    },
+    {
+      "id": "gym-06-prod-devops-R1",
+      "archetype": "sre",
+      "kind": "gym",
+      "blockId": "06-prod-devops",
+      "levelId": "R1",
+      "tag": "🛡️ · 1/6",
+      "skill": "prod",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "MATCH · prod ↔ сенс",
+        "en": "MATCH · prod ↔ сенс"
+      },
+      "prompt": {
+        "ua": "On-call screen — спочатку схема SRE triangle.",
+        "en": "On-call screen — спочатку схема SRE triangle."
+      },
+      "source": "blocks/06-prod-devops.json"
+    },
+    {
+      "id": "gym-06-prod-devops-R2",
+      "archetype": "sre",
+      "kind": "gym",
+      "blockId": "06-prod-devops",
+      "levelId": "R2",
+      "tag": "🛡️ · 2/6",
+      "skill": "prod",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Pager о 3:00",
+        "en": "Pager о 3:00"
+      },
+      "prompt": {
+        "ua": "SLI/SLO · on-call · runbook · postmortem · bridge DE governance",
+        "en": "SLI/SLO · on-call · runbook · postmortem · bridge DE governance"
+      },
+      "source": "blocks/06-prod-devops.json"
+    },
+    {
+      "id": "gym-06-prod-devops-R3",
+      "archetype": "sre",
+      "kind": "gym",
+      "blockId": "06-prod-devops",
+      "levelId": "R3",
+      "tag": "🛡️ · 3/6",
+      "skill": "prod",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Alert fatigue",
+        "en": "Alert fatigue"
+      },
+      "prompt": {
+        "ua": "Команда ігнорує Slack #alerts.",
+        "en": "Команда ігнорує Slack #alerts."
+      },
+      "source": "blocks/06-prod-devops.json"
+    },
+    {
+      "id": "gym-06-prod-devops-R4",
+      "archetype": "sre",
+      "kind": "gym",
+      "blockId": "06-prod-devops",
+      "levelId": "R4",
+      "tag": "🛡️ · 4/6",
+      "skill": "prod",
+      "difficulty": "medium",
+      "minutes": 10,
+      "title": {
+        "ua": "Incident runbook",
+        "en": "Incident runbook"
+      },
+      "prompt": {
+        "ua": "Той самий ritual що DE governance E6 — ack → scope → mitigate → comms. · P1: deploy broke prod API. Розстав кроки.",
+        "en": "Той самий ritual що DE governance E6 — ack → scope → mitigate → comms. · P1: deploy broke prod API. Розстав кроки."
+      },
+      "source": "blocks/06-prod-devops.json"
+    },
+    {
+      "id": "gym-06-prod-devops-R5",
+      "archetype": "sre",
+      "kind": "gym",
+      "blockId": "06-prod-devops",
+      "levelId": "R5",
+      "tag": "🛡️ · 5/6",
+      "skill": "prod",
+      "difficulty": "medium",
+      "minutes": 15,
+      "title": {
+        "ua": "Postmortem header",
+        "en": "Postmortem header"
+      },
+      "prompt": {
+        "ua": "Фіксуємо timeline, impact, root cause, action items — без імен «винуватців». · Після stabilize — документ для команди.",
+        "en": "Фіксуємо timeline, impact, root cause, action items — без імен «винуватців». · Після stabilize — документ для команди."
+      },
+      "source": "blocks/06-prod-devops.json"
+    },
+    {
+      "id": "ops-linux-triage",
+      "archetype": "sre",
+      "skill": "linux",
+      "difficulty": "medium",
+      "minutes": 20,
+      "title": {
+        "ua": "Linux: disk full triage",
+        "en": "Linux: disk full triage"
+      },
+      "prompt": {
+        "ua": "df -h, du, /var/log — вголос 3 кроки без rm -rf.",
+        "en": "df -h, du, /var/log — 3 steps aloud, no rm -rf."
+      },
+      "source": "interview-sprint/01-Linux-Networking-Sprint-30.md",
+      "kind": "stub",
+      "resources": [
+        {
+          "label": "DevOps Quest MD",
+          "url": "https://github.com/TEZv/devops-lab/blob/main/CHALLENGES.md"
+        },
+        {
+          "label": "DE Cloud (bridge)",
+          "url": "https://de-lab-interview-gym.web.app/#/block/13-cloud-storage-de/A0"
+        }
+      ]
+    },
+    {
+      "id": "ops-dockerfile-review",
+      "archetype": "startup",
+      "skill": "docker",
+      "difficulty": "medium",
+      "minutes": 25,
+      "title": {
+        "ua": "Dockerfile review: non-root + pin tag",
+        "en": "Dockerfile review: non-root + pin tag"
+      },
+      "prompt": {
+        "ua": "Знайди :latest і USER root. Запропонуй fix.",
+        "en": "Find :latest and USER root. Propose fix."
+      },
+      "source": "interview-sprint/02-Docker-K8s-Live.md",
+      "kind": "stub",
+      "resources": [
+        {
+          "label": "DevOps Quest MD",
+          "url": "https://github.com/TEZv/devops-lab/blob/main/CHALLENGES.md"
+        },
+        {
+          "label": "DE Cloud (bridge)",
+          "url": "https://de-lab-interview-gym.web.app/#/block/13-cloud-storage-de/A0"
+        }
+      ]
+    },
+    {
+      "id": "ops-terraform-plan",
+      "archetype": "platform",
+      "skill": "iac",
+      "difficulty": "medium",
+      "minutes": 30,
+      "title": {
+        "ua": "Terraform: plan vs apply на дошці",
+        "en": "Terraform: plan vs apply on whiteboard"
+      },
+      "prompt": {
+        "ua": "Намалюй .tf → plan → apply → state. Де drift?",
+        "en": "Draw .tf → plan → apply → state. Where is drift?"
+      },
+      "source": "interview-sprint/03-Infrastructure-Case.md",
+      "kind": "stub",
+      "resources": [
+        {
+          "label": "DevOps Quest MD",
+          "url": "https://github.com/TEZv/devops-lab/blob/main/CHALLENGES.md"
+        },
+        {
+          "label": "DE Cloud (bridge)",
+          "url": "https://de-lab-interview-gym.web.app/#/block/13-cloud-storage-de/A0"
+        }
+      ]
+    },
+    {
+      "id": "ops-k8s-crashloop",
+      "archetype": "platform",
+      "skill": "k8s",
+      "difficulty": "hard",
+      "minutes": 35,
+      "title": {
+        "ua": "K8s: CrashLoopBackOff triage",
+        "en": "K8s: CrashLoopBackOff triage"
+      },
+      "prompt": {
+        "ua": "describe + logs + probe. Без delete namespace.",
+        "en": "describe + logs + probe. No delete namespace."
+      },
+      "source": "interview-sprint/02-Docker-K8s-Live.md",
+      "kind": "stub",
+      "resources": [
+        {
+          "label": "DevOps Quest MD",
+          "url": "https://github.com/TEZv/devops-lab/blob/main/CHALLENGES.md"
+        },
+        {
+          "label": "DE Cloud (bridge)",
+          "url": "https://de-lab-interview-gym.web.app/#/block/13-cloud-storage-de/A0"
+        }
+      ]
+    },
+    {
+      "id": "ops-incident-comms",
+      "archetype": "sre",
+      "skill": "prod",
+      "difficulty": "medium",
+      "minutes": 20,
+      "title": {
+        "ua": "Incident: comms template",
+        "en": "Incident: comms template"
+      },
+      "prompt": {
+        "ua": "3 речення для #incidents: impact, action, ETA.",
+        "en": "3 sentences for #incidents: impact, action, ETA."
+      },
+      "source": "CHALLENGES.md",
+      "kind": "stub",
+      "resources": [
+        {
+          "label": "DevOps Quest MD",
+          "url": "https://github.com/TEZv/devops-lab/blob/main/CHALLENGES.md"
+        },
+        {
+          "label": "DE Cloud (bridge)",
+          "url": "https://de-lab-interview-gym.web.app/#/block/13-cloud-storage-de/A0"
+        }
+      ]
+    },
+    {
+      "id": "ops-iam-least-priv",
+      "archetype": "security",
+      "skill": "iac",
+      "difficulty": "medium",
+      "minutes": 25,
+      "title": {
+        "ua": "IAM: Action * Resource * trap",
+        "en": "IAM: Action * Resource * trap"
+      },
+      "prompt": {
+        "ua": "Перепиши policy на один S3 prefix read-only.",
+        "en": "Rewrite policy to one S3 prefix read-only."
+      },
+      "source": "blocks/04-terraform-devops.json",
+      "kind": "stub",
+      "resources": [
+        {
+          "label": "DevOps Quest MD",
+          "url": "https://github.com/TEZv/devops-lab/blob/main/CHALLENGES.md"
+        },
+        {
+          "label": "DE Cloud (bridge)",
+          "url": "https://de-lab-interview-gym.web.app/#/block/13-cloud-storage-de/A0"
+        }
+      ]
+    }
+  ]
+}

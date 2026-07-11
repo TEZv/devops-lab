@@ -165,6 +165,15 @@
       "tag": "🐧 · 6/6",
       "title": "Runbook: сервіс down",
       "instruction": "Розстав кроки triage.",
+      "recallTips": [
+        "Ack alert",
+        "systemctl status",
+        "tail logs",
+        "disk / memory",
+        "restart / rollback",
+        "post in #incidents"
+      ],
+      "recallMapRef": "📍 Карта: L0 «Shell pipeline» у шарі Linux.",
       "items": [
         "Check alert + acknowledge",
         "systemctl status service",

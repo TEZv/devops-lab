@@ -100,6 +100,15 @@
       "tag": "🔀 · 4/5",
       "title": "CI pipeline",
       "instruction": "Типовий GitHub Actions для Python repo.",
+      "recallTips": [
+        "Checkout",
+        "Setup runtime",
+        "Install deps",
+        "Lint",
+        "Test",
+        "Report on PR"
+      ],
+      "recallMapRef": "📍 Карта: G0 «Git flow lite» + pipeline на G1 MATCH.",
       "items": [
         "Checkout code",
         "Setup Python",

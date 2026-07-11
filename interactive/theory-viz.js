@@ -156,11 +156,11 @@
       headers: spec.headers || ['name', 'score', 'RANK()', 'DENSE_RANK()', 'ROW_NUMBER()'],
       rows: spec.rows || [
         ['Ana', '90', '1', '1', '1'],
-        ['Bob', '90', '2', '2', '2'],
-        ['Cal', '80', '4', '3', '3'],
-        ['Dan', '80', '4', '3', '4'],
+        ['Bob', '90', '1', '1', '2'],
+        ['Cal', '80', '3', '2', '3'],
+        ['Dan', '80', '3', '2', '4'],
       ],
-      highlight: spec.highlight || [2, 3],
+      highlight: spec.highlight || [0, 1, 2, 3],
     });
     wrap.appendChild(tableWrap);
     const legend = el('div', 'pl-viz-rank-legend');

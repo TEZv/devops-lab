@@ -165,6 +165,15 @@
       "tag": "🐧 · 6/6",
       "title": "Runbook: service down",
       "instruction": "Order triage steps.",
+      "recallTips": [
+        "Ack alert",
+        "systemctl status",
+        "tail logs",
+        "disk / memory",
+        "restart / rollback",
+        "post in #incidents"
+      ],
+      "recallMapRef": "📍 Map: L0 «Shell pipeline» in Linux layer.",
       "items": [
         "Check alert + acknowledge",
         "systemctl status service",

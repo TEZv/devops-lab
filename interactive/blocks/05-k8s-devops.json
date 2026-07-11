@@ -1,0 +1,178 @@
+{
+  "id": "05-k8s-devops",
+  "title": "K8s-lite",
+  "subtitle": "Pod · Service · Deployment · probe trap · CrashLoop · kubectl triage",
+  "levels": [
+    {
+      "id": "K0",
+      "type": "theory",
+      "tag": "☸️ · карта",
+      "title": "Deployment → Pod",
+      "instruction": "Middle DevOps: не весь CKA — але Pod/Service/Deployment на інтервʼю must-have.",
+      "viz": {
+        "type": "pipelineH",
+        "nodes": [
+          { "label": "Deployment", "hint": "desired state", "color": "#5b8def" },
+          { "label": "ReplicaSet", "hint": "keeps N pods", "color": "#4ecdc4" },
+          { "label": "Pod", "hint": "1+ containers", "color": "#3d9a6a" },
+          { "label": "Service", "hint": "stable IP/DNS", "color": "#e8a84b" },
+          { "label": "Ingress", "hint": "HTTP route", "color": "#c77dff" }
+        ]
+      },
+      "bullets": [
+        "Pod — найменша одиниця; часто не чіпають напряму в prod",
+        "Service — стабільна адреса до набору Pod (selector labels)",
+        "Deployment — rolling update, rollback, replicas"
+      ],
+      "recallTips": [
+        "Deployment керує ReplicaSet → Pod",
+        "Service selector = labels на Pod template",
+        "kubectl describe pod — Events + probe failures"
+      ]
+    },
+    {
+      "id": "K1",
+      "type": "match_pairs",
+      "tag": "☸️ · 1/7",
+      "title": "MATCH · K8s objects",
+      "instruction": "Терміни — спочатку хто кого «тримає».",
+      "studyIntro": "<strong>Крок 1.</strong> Deployment = бажаний стан. Pod = процес. Service = адреса.",
+      "studyViz": {
+        "type": "splitCompare",
+        "columns": [
+          {
+            "title": "Pod (runtime)",
+            "color": "#3d9a6a",
+            "items": [
+              "1+ containers",
+              "ephemeral — може померти",
+              "kubectl logs pod/name",
+              "IP змінюється при restart"
+            ]
+          },
+          {
+            "title": "Service (stable front)",
+            "color": "#e8a84b",
+            "items": [
+              "ClusterIP / LoadBalancer",
+              "selector: app=myapp",
+              "traffic → healthy pods",
+              "не замінює Deployment"
+            ]
+          }
+        ]
+      },
+      "pairs": [
+        { "left": "Pod", "right": "Найменша runnable одиниця (containers)", "studyHint": "↑ Pod" },
+        { "left": "Deployment", "right": "Desired replicas + rolling update", "studyHint": "↑ K0 pipeline" },
+        { "left": "Service", "right": "Стабільна адреса до Pod по labels", "studyHint": "↑ Service" },
+        { "left": "ConfigMap", "right": "Non-secret config як env/volume", "studyHint": "" },
+        { "left": "livenessProbe", "right": "Restart якщо процес «мертвий»", "studyHint": "" }
+      ]
+    },
+    {
+      "id": "K2",
+      "type": "fill_blanks",
+      "tag": "☸️ · 2/7",
+      "title": "Deployment snippet",
+      "instruction": "3 replicas app v1.0.0, label app=web.",
+      "mission": {
+        "emoji": "📄",
+        "title": "YAML minimum",
+        "brief": "apiVersion apps/v1, kind Deployment, selector.matchLabels = template labels.",
+        "ask": "Заповни replicas і label key."
+      },
+      "recallTips": [
+        "spec.replicas — скільки Pod",
+        "selector.matchLabels має = template.metadata.labels",
+        "image tag pin — не :latest"
+      ],
+      "template": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: web\nspec:\n  replicas: ____\n  selector:\n    matchLabels:\n      app: ____\n  template:\n    metadata:\n      labels:\n        app: ____",
+      "answers": ["3", "web", "web"],
+      "wordBank": ["3", "web", "api", "latest", "1"],
+      "hints": ["Три інстанси.", "Label app=web у selector і template."]
+    },
+    {
+      "id": "K3",
+      "type": "whats_wrong",
+      "tag": "☸️ · 3/7",
+      "title": "Probe trap",
+      "instruction": "App слухає :8080/health, але…",
+      "buggyCode": "livenessProbe:\n  httpGet:\n    path: /health\n    port: 80\n  initialDelaySeconds: 0\n  periodSeconds: 1",
+      "prompt": "Чому Pod CrashLoop?",
+      "options": [
+        "port 80 ≠ app на 8080 + initialDelay 0 — probe fail → kill → loop",
+        "livenessProbe заборонений",
+        "periodSeconds має бути 0",
+        "path /health завжди неправильний"
+      ],
+      "correctIndex": 0,
+      "explainOk": "readiness = traffic; liveness = restart. Порти й delay мають збігатись з app.",
+      "explanation": "На інтервʼю: describe pod → Events → probe failed."
+    },
+    {
+      "id": "K4",
+      "type": "multi_choice",
+      "tag": "☸️ · 4/7",
+      "title": "Deployment чи StatefulSet?",
+      "instruction": "Postgres у K8s: стабільний network ID + persistent volume per replica.",
+      "question": "Найдоречніший workload controller?",
+      "options": [
+        "StatefulSet + PVC (stable pod name, ordered deploy)",
+        "Bare Pod без controller",
+        "CronJob",
+        "Deployment без volume — дані в emptyDir"
+      ],
+      "correctIndex": 0,
+      "explanation": "Stateless app → Deployment. Stateful DB → StatefulSet або managed DB outside K8s."
+    },
+    {
+      "id": "K5",
+      "type": "scenario",
+      "tag": "☸️ · 5/7",
+      "title": "CrashLoopBackOff",
+      "emoji": "☸️",
+      "scene": "kubectl get pods: myapp-xxx CrashLoopBackOff. Deploy 10 хв тому.",
+      "bestIndex": 0,
+      "choices": [
+        {
+          "label": "kubectl describe pod + logs (--previous) → probe/config/image/env",
+          "feedback": "Стандартний K8s triage."
+        },
+        {
+          "label": "kubectl delete namespace",
+          "feedback": "Ні."
+        },
+        {
+          "label": "Збільшити replicas до 100",
+          "feedback": "Не лікує crash."
+        }
+      ]
+    },
+    {
+      "id": "K6",
+      "type": "drag_order",
+      "tag": "☸️ · 6/7",
+      "title": "Kubectl triage",
+      "instruction": "Pod не Ready. Розстав кроки.",
+      "studyViz": {
+        "type": "pipelineH",
+        "nodes": [
+          { "label": "get pods", "hint": "status", "color": "#8b9cb3" },
+          { "label": "describe", "hint": "Events", "color": "#5b8def" },
+          { "label": "logs", "hint": "app", "color": "#4ecdc4" },
+          { "label": "fix YAML", "hint": "probe/image", "color": "#3d9a6a" },
+          { "label": "rollout status", "hint": "verify", "color": "#e8a84b" }
+        ]
+      },
+      "recallMapRef": "📍 Карта: K0 «Deployment → Pod» у шарі K8s.",
+      "items": [
+        "kubectl get pods -l app=myapp",
+        "kubectl describe pod <name>",
+        "kubectl logs <name> [--previous]",
+        "Fix Deployment manifest / ConfigMap",
+        "kubectl rollout status deployment/myapp"
+      ]
+    }
+  ]
+}

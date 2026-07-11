@@ -115,8 +115,7 @@
       titleEn: 'K8s-lite',
       skill: 'k8s',
       mode: 'practice',
-      blocks: [],
-      soon: true,
+      blocks: ['05-k8s-devops'],
     },
     {
       n: 6,
@@ -126,8 +125,7 @@
       titleEn: 'Production habits',
       skill: 'prod',
       mode: 'both',
-      blocks: [],
-      soon: true,
+      blocks: ['06-prod-devops'],
     },
   ];
 

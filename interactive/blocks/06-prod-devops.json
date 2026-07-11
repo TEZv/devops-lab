@@ -1,0 +1,159 @@
+{
+  "id": "06-prod-devops",
+  "title": "Production habits",
+  "subtitle": "SLI/SLO · on-call · runbook · postmortem · bridge DE governance",
+  "levels": [
+    {
+      "id": "R0",
+      "type": "theory",
+      "tag": "🛡️ · карта",
+      "title": "SRE triangle",
+      "instruction": "Senior DevOps/SRE: метрики → алерти → runbook → postmortem. Bridge з DE governance E6.",
+      "viz": {
+        "type": "splitCompare",
+        "columns": [
+          {
+            "title": "SLI / SLO / SLA",
+            "color": "#5b8def",
+            "items": [
+              "SLI = що вимірюємо (latency, errors)",
+              "SLO = ціль (99.9% < 300ms)",
+              "SLA = контракт з клієнтом (часто мʼякше SLO)"
+            ]
+          },
+          {
+            "title": "Incident loop",
+            "color": "#ff6b6b",
+            "items": [
+              "Alert → ack → triage",
+              "Mitigate → comms",
+              "Root cause → fix",
+              "Blameless postmortem"
+            ]
+          }
+        ]
+      },
+      "bullets": [
+        "Alert без runbook = panic",
+        "Error budget — коли можна ship швидше / коли freeze",
+        "DE mart stale = той самий triage що empty dashboard"
+      ]
+    },
+    {
+      "id": "R1",
+      "type": "match_pairs",
+      "tag": "🛡️ · 1/6",
+      "title": "MATCH · prod ↔ сенс",
+      "instruction": "On-call screen — спочатку схема SRE triangle.",
+      "studyIntro": "<strong>Крок 1.</strong> SLI вимірює. SLO ціль. Runbook — що робити руками.",
+      "studyViz": {
+        "type": "layerStack",
+        "title": "Від метрики до дії",
+        "layers": [
+          { "label": "SLI metric", "sublabel": "latency p99, error rate", "color": "#5b8def", "icon": "📊" },
+          { "label": "Alert rule", "sublabel": "threshold / burn rate", "color": "#e8a84b", "icon": "🔔" },
+          { "label": "Runbook", "sublabel": "kubectl / rollback steps", "color": "#3d9a6a", "icon": "📋" },
+          { "label": "Postmortem", "sublabel": "timeline + action items", "color": "#c77dff", "icon": "📝" }
+        ]
+      },
+      "pairs": [
+        { "left": "SLI", "right": "Вимірюваний сигнал (errors, latency)", "studyHint": "↑ шар 1" },
+        { "left": "SLO", "right": "Цільовий рівень SLI за період", "studyHint": "↑ R0 left" },
+        { "left": "Error budget", "right": "Скільки «поганого» дозволено до порушення SLO", "studyHint": "" },
+        { "left": "Runbook", "right": "Покрокові дії при alert (не ad-hoc)", "studyHint": "↑ шар 3" },
+        { "left": "Blameless postmortem", "right": "Timeline + fix system, не «хто винен»", "studyHint": "↑ шар 4" }
+      ]
+    },
+    {
+      "id": "R2",
+      "type": "scenario",
+      "tag": "🛡️ · 2/6",
+      "title": "Pager о 3:00",
+      "emoji": "📟",
+      "scene": "Critical: API error rate 8% (SLO 99.9%). Ти on-call. Перші 5 хв?",
+      "bestIndex": 0,
+      "choices": [
+        {
+          "label": "Ack alert → runbook: dashboard + recent deploy → mitigate (rollback/scale) → post у #incidents",
+          "feedback": "SRE ritual."
+        },
+        {
+          "label": "Вимкнути алерти до ранку",
+          "feedback": "Ховає проблему."
+        },
+        {
+          "label": "Чекати поки само пройде",
+          "feedback": "SLO burn."
+        }
+      ]
+    },
+    {
+      "id": "R3",
+      "type": "whats_wrong",
+      "tag": "🛡️ · 3/6",
+      "title": "Alert fatigue",
+      "instruction": "Команда ігнорує Slack #alerts.",
+      "buggyCode": "Alert: CPU > 50% on staging\nAlert: Pod restarted once (self-healed)\nAlert: Disk 70% (threshold 90%)\nPager: ALL channels, severity=page",
+      "prompt": "Головна проблема process?",
+      "options": [
+        "Шумні алерти без SLO + все на pager = fatigue → пропускають справжній P1",
+        "CPU 50% завжди критично",
+        "Staging не можна моніторити",
+        "Потрібно більше алертів"
+      ],
+      "correctIndex": 0,
+      "explainOk": "Page лише on SLO burn / user impact. Решта — ticket або dashboard.",
+      "explanation": "Як DE governance: alert на symptom + runbook link."
+    },
+    {
+      "id": "R4",
+      "type": "drag_order",
+      "tag": "🛡️ · 4/6",
+      "title": "Incident runbook",
+      "instruction": "P1: deploy broke prod API. Розстав кроки.",
+      "mission": {
+        "emoji": "🚑",
+        "title": "P1 API down",
+        "brief": "Той самий ritual що DE governance E6 — ack → scope → mitigate → comms."
+      },
+      "recallTips": [
+        "Ack + incident lead",
+        "Scope: deploy? dependency?",
+        "Mitigate: rollback / feature flag",
+        "Comms з ETA",
+        "Postmortem після stabilize"
+      ],
+      "recallMapRef": "📍 Bridge: DE Lab governance · Incident runbook (E6).",
+      "items": [
+        "Ack alert + assign incident lead",
+        "Check last deploy + error dashboard",
+        "Rollback or scale / toggle feature",
+        "Verify SLI recovered",
+        "Update #incidents with ETA + customer impact",
+        "Schedule blameless postmortem"
+      ]
+    },
+    {
+      "id": "R5",
+      "type": "fill_blanks",
+      "tag": "🛡️ · 5/6",
+      "title": "Postmortem header",
+      "instruction": "Після stabilize — документ для команди.",
+      "mission": {
+        "emoji": "📝",
+        "title": "Blameless PM",
+        "brief": "Фіксуємо timeline, impact, root cause, action items — без імен «винуватців».",
+        "ask": "Заповни ключові секції."
+      },
+      "recallTips": [
+        "Timeline — хвилини, не емоції",
+        "Root cause — system fix",
+        "Action items — owner + due date"
+      ],
+      "template": "## Summary\nImpact: ____ users / ____ min downtime\n\n## Timeline\n- T+0: alert ____\n- T+15: rollback ____\n\n## Root cause\n____ (system, not person)\n\n## Action items\n1. ____",
+      "answers": ["API", "mitigate", "fired", "deploy", "Missing runbook for rollback"],
+      "wordBank": ["API", "mitigate", "fired", "deploy", "Missing runbook for rollback", "junior"],
+      "hints": ["Impact — хто постраждав.", "Root cause — процес/система."]
+    }
+  ]
+}

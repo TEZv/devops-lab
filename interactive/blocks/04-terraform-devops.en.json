@@ -176,6 +176,7 @@
       "tag": "🏗️ · 6/7",
       "title": "PR workflow Terraform",
       "instruction": "Order infrastructure change steps in a team.",
+      "recallMapRef": "📍 Map: T0 «Terraform ritual» in IaC layer.",
       "items": [
         "Edit .tf in feature branch",
         "terraform fmt + validate locally",

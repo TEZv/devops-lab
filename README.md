@@ -21,7 +21,10 @@ npx --yes serve -p 8780
 | 2 Git/CI | `02-git-ci-devops` |
 | 3 Docker | `03-docker-devops` |
 | 4 IaC | `04-terraform-devops` |
-| 5–6 | soon (K8s, prod) |
+| 5 K8s-lite | `05-k8s-devops` |
+| 6 Prod habits | `06-prod-devops` |
+
+**Ops Interview Arena:** `#/interview` — усі drills + sprint stubs (47 tasks).
 
 Hands-on: **`CHALLENGES.md`**
 

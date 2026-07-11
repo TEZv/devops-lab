@@ -164,6 +164,14 @@
       "tag": "🐳 · 6/6",
       "title": "Build → run",
       "instruction": "Order first docker deploy steps.",
+      "recallTips": [
+        "Dockerfile",
+        "build with pinned tag",
+        "local smoke run",
+        "push registry",
+        "deploy pinned tag"
+      ],
+      "recallMapRef": "📍 Map: D0 «Image → container» layers.",
       "items": [
         "Write Dockerfile",
         "docker build -t myapp:1.0.0 .",

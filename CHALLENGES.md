@@ -26,7 +26,16 @@
 2. **Remote state** — S3 backend + DynamoDB lock
 3. **plan → PR → apply** — drift triage якщо хтось клікнув у console
 
-## Level 5+ (soon)
+## Level 5 — K8s-lite
 
-- K8s-lite: Deployment + Service diagram
-- Incident runbook (bridge з DE governance E6)
+1. **Deployment + Service** — 3 replicas, label `app=web`, ClusterIP
+2. **Probe trap** — liveness port/path match app (не CrashLoop)
+3. **kubectl triage** — get → describe → logs → fix YAML → rollout status
+4. Gym: [шар 5](https://devops-lab-gym.web.app/#/block/05-k8s-devops/K0)
+
+## Level 6 — Production habits
+
+1. **SLI/SLO** — error rate + latency; error budget перед risky deploy
+2. **On-call** — ack → runbook → mitigate → #incidents
+3. **Postmortem** — blameless timeline + action items (bridge [DE governance E6](https://de-lab-interview-gym.web.app))
+4. Gym: [шар 6](https://devops-lab-gym.web.app/#/block/06-prod-devops/R0) · [Ops Interview Arena](https://devops-lab-gym.web.app/#/interview)

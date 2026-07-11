@@ -1,5 +1,5 @@
 const STORAGE_KEY = 'devops-lab-interactive-v1';
-const BUILD = '20260711c';
+const BUILD = '20260711g';
 const GYM_URL = 'https://devops-lab-gym.web.app';
 const DE_LAB_URL = 'https://de-lab-interview-gym.web.app';
 const OPS_QUEST_MD = 'https://github.com/TEZv/devops-lab/blob/main/CHALLENGES.md';
@@ -11,6 +11,8 @@ const BLOCK_REGISTRY = [
   { id: '02-git-ci-devops', ready: true, skill: 'git' },
   { id: '03-docker-devops', ready: true, skill: 'docker' },
   { id: '04-terraform-devops', ready: true, skill: 'iac' },
+  { id: '05-k8s-devops', ready: true, skill: 'k8s' },
+  { id: '06-prod-devops', ready: true, skill: 'prod' },
 ];
 
 const ROADS = [];
@@ -68,6 +70,16 @@ function parseRoute() {
   if (!parts.length) return { view: 'home' };
   if (parts[0] === 'block') return { view: 'block', blockId: parts[1], levelId: parts[2] || null };
   if (parts[0] === 'share') return { view: 'share' };
+  if (parts[0] === 'interview') {
+    if (parts[1] === 'task') return { view: 'interview', taskId: parts[2] || null, q };
+    const arch = parts[1];
+    const known = ['universal', 'platform', 'sre', 'cicd', 'security', 'startup'];
+    return {
+      view: 'interview',
+      archetype: known.includes(arch) ? arch : null,
+      q,
+    };
+  }
   return { view: 'home' };
 }
 
@@ -368,7 +380,8 @@ function renderHeroCabin() {
         <p class="hero-tip">${t('heroTip')}</p>
         <div class="skill-orb-row">${orbs}</div>
         <div class="hero-actions">
-          <a class="nav-pill hub-cta" href="${DE_LAB_URL}" target="_blank" rel="noopener">${t('btnDeLab')}</a>
+          <a class="nav-pill hub-cta" href="#/interview">${t('btnInterviewHub')}</a>
+          <a class="nav-pill" href="${DE_LAB_URL}" target="_blank" rel="noopener">${t('btnDeLab')}</a>
           <button type="button" class="ghost" id="btn-share">${t('btnShare')}</button>
         </div>
       </div>
@@ -735,11 +748,16 @@ async function render() {
   const route = parseRoute();
   if (route.view === 'home') renderHome(root);
   else if (route.view === 'share') renderShare(root);
-  else await renderBlock(root, route.blockId, route.levelId);
+  else if (route.view === 'interview' && window.InterviewHub) {
+    await InterviewHub.render(root, route);
+  } else await renderBlock(root, route.blockId, route.levelId);
 }
 
 window.loadProgress = loadProgress;
 
 window.addEventListener('hashchange', render);
-window.addEventListener('site:langchange', () => { render(); });
+window.addEventListener('site:langchange', () => {
+  if (window.InterviewHub) InterviewHub.clearCache();
+  render();
+});
 render();

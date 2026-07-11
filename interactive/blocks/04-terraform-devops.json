@@ -176,6 +176,17 @@
       "tag": "🏗️ · 6/7",
       "title": "PR workflow Terraform",
       "instruction": "Розстав кроки зміни інфраструктури в команді.",
+      "studyViz": {
+        "type": "pipelineH",
+        "nodes": [
+          { "label": "edit .tf", "hint": "branch", "color": "#8b9cb3" },
+          { "label": "fmt+validate", "hint": "local", "color": "#5b8def" },
+          { "label": "plan in PR", "hint": "review", "color": "#4ecdc4" },
+          { "label": "merge", "hint": "approve", "color": "#3d9a6a" },
+          { "label": "apply", "hint": "lock", "color": "#e8a84b" }
+        ]
+      },
+      "recallMapRef": "📍 Карта: T0 «Terraform ritual» у шарі IaC.",
       "items": [
         "Edit .tf in feature branch",
         "terraform fmt + validate locally",

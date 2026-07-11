@@ -145,6 +145,8 @@
       wrap.appendChild(note);
     }
 
+    appendRecallPanel(wrap, level);
+
     const actions = document.createElement('div');
     actions.className = 'pl-actions';
     const mark = document.createElement('button');
@@ -412,8 +414,62 @@
     root.appendChild(brief);
   }
 
+  /** Cheat-sheet panel before checks: map, viz, numbered tips (Пригадати). */
+  function appendRecallPanel(parent, level) {
+    const hasViz = level.studyViz || (level.studyVizs && level.studyVizs.length);
+    const tips = level.recallTips;
+    const intro = level.recallIntro || level.studyIntro;
+    if (!intro && !hasViz && !tips?.length && !level.recallMnemonic && !level.recallMapRef) return;
+
+    const box = document.createElement('div');
+    box.className = 'pl-recall-panel';
+    const title = document.createElement('p');
+    title.className = 'pl-recall-title';
+    title.textContent = ui('recallTitle');
+    box.appendChild(title);
+    if (intro) {
+      const h = document.createElement('p');
+      h.className = 'pl-tip pl-recall-intro';
+      h.innerHTML = intro;
+      box.appendChild(h);
+    }
+    if (hasViz && global.TheoryViz) {
+      const specs = level.studyVizs || (level.studyViz ? [level.studyViz] : []);
+      specs.forEach((vizSpec) => {
+        const vizBox = document.createElement('div');
+        vizBox.className = 'pl-viz-mount pl-viz-mount-recall';
+        TheoryViz.mount(vizBox, vizSpec);
+        box.appendChild(vizBox);
+      });
+    }
+    if (tips?.length) {
+      const ul = document.createElement('ul');
+      ul.className = 'pl-recall-tips';
+      tips.forEach((t, i) => {
+        const li = document.createElement('li');
+        li.innerHTML = `<span class="pl-recall-num">${i + 1}</span><span>${escapeHtml(t)}</span>`;
+        ul.appendChild(li);
+      });
+      box.appendChild(ul);
+    }
+    if (level.recallMnemonic) {
+      const m = document.createElement('p');
+      m.className = 'pl-recall-mnemonic';
+      m.textContent = level.recallMnemonic;
+      box.appendChild(m);
+    }
+    if (level.recallMapRef) {
+      const r = document.createElement('p');
+      r.className = 'pl-recall-mapref';
+      r.textContent = level.recallMapRef;
+      box.appendChild(r);
+    }
+    parent.appendChild(box);
+  }
+
   function mountPickRows(root, level, onComplete) {
     mountMissionBrief(root, level);
+    appendRecallPanel(root, level);
     const selected = new Set();
     const need = (level.rows || []).filter((r) => r.correct).map((r) => String(r.id));
     const feedback = document.createElement('p');
@@ -474,6 +530,7 @@
 
   function mountFillBlanks(root, level, onComplete) {
     mountMissionBrief(root, level);
+    appendRecallPanel(root, level);
     const answers = level.answers || [];
     const filled = answers.map(() => '');
     let activeSlot = 0;
@@ -608,6 +665,8 @@
   }
 
   function mountDragOrder(root, level, onComplete) {
+    mountMissionBrief(root, level);
+    appendRecallPanel(root, level);
     const order = shuffle(level.items);
     const list = document.createElement('div');
     list.className = 'pl-drag-list';
@@ -845,6 +904,7 @@
 
   function mountWhatsWrong(root, level, onComplete) {
     mountMissionBrief(root, level);
+    appendRecallPanel(root, level);
     const wrap = document.createElement('div');
     wrap.className = 'pl-whats-wrong';
     if (level.viz && global.TheoryViz) {
@@ -897,6 +957,7 @@
 
   function mountMultiChoice(root, level, onComplete) {
     mountMissionBrief(root, level);
+    appendRecallPanel(root, level);
     const wrap = document.createElement('div');
     wrap.className = 'pl-mc';
     if (level.viz && global.TheoryViz) {
