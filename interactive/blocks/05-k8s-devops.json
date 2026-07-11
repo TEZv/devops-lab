@@ -28,7 +28,8 @@
         "Deployment керує ReplicaSet → Pod",
         "Service selector = labels на Pod template",
         "kubectl describe pod — Events + probe failures"
-      ]
+      ],
+      "recallMapRef": "📍 Bridge: DE Lab cloud · A0 lake zones (workloads + object storage)."
     },
     {
       "id": "K1",

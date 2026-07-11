@@ -208,6 +208,7 @@
         "caption": "DevOps IaC + DE orchestration — one chain."
       },
       "controlTip": "Output chain above.",
+      "recallMapRef": "📍 Bridge: DE Lab orchestration · O2 DAG (S3KeySensor → bronze/).",
       "template": "output \"bronze_bucket_name\" {\n  value = aws_s3_bucket.____.bucket\n}",
       "answers": ["bronze_lake"],
       "wordBank": ["bronze_lake", "silver_curated", "main", "etl"],

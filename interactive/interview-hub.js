@@ -7,6 +7,8 @@
   const DE_BRIDGE_LINKS = [
     { href: `${DE_GYM}/#/interview`, labelKey: 'hubBridgeDeArena' },
     { href: `${DE_GYM}/#/block/17-governance-ops-de/E6`, labelKey: 'hubBridgeDeGov' },
+    { href: `${DE_GYM}/#/block/14-orchestration-de/O2`, labelKey: 'hubBridgeDeOrch' },
+    { href: `${DE_GYM}/#/block/13-cloud-storage-de/A0`, labelKey: 'hubBridgeDeCloud' },
   ];
 
   function lang() {
