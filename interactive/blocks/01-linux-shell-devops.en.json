@@ -1,0 +1,178 @@
+{
+  "id": "01-linux-shell-devops",
+  "title": "Linux & shell",
+  "subtitle": "grep · pipes · permissions · find · prod triage",
+  "levels": [
+    {
+      "id": "L0",
+      "type": "theory",
+      "tag": "🐧 · map",
+      "title": "Shell pipeline",
+      "instruction": "DevOps day-1: logs, grep, permissions, not rm -rf /.",
+      "viz": {
+        "type": "pipelineH",
+        "nodes": [
+          { "label": "log file", "hint": "raw text", "color": "#8b9cb3" },
+          { "label": "grep | awk", "hint": "filter", "color": "#4ecdc4" },
+          { "label": "wc -l", "hint": "count", "color": "#5b8def" },
+          { "label": "alert", "hint": "if threshold", "color": "#ff6b6b" }
+        ]
+      },
+      "bullets": [
+        "`|` — stdout → stdin of next command",
+        "`chmod` — rwx for owner/group/other (755 ≠ 777)",
+        "On interviews: `less`/`tail` first, then grep — not cat 10GB"
+      ]
+    },
+    {
+      "id": "L1",
+      "type": "match_pairs",
+      "tag": "🐧 · 1/6",
+      "title": "MATCH · shell ↔ meaning",
+      "instruction": "Junior DevOps / SRE screen basics — chmod schema first.",
+      "studyIntro": "<strong>Step 1 · see the difference.</strong> 755 vs 777 on deploy.sh — why world-writable is a hole. Then pairs.",
+      "studyViz": {
+        "type": "splitCompare",
+        "columns": [
+          {
+            "title": "chmod 755 deploy.sh ✓",
+            "color": "#3d9a6a",
+            "items": [
+              "owner: rwx (read/write/execute)",
+              "group: r-x (read + execute only)",
+              "other: r-x",
+              "not everyone can REPLACE the script"
+            ]
+          },
+          {
+            "title": "chmod 777 deploy.sh ✗",
+            "color": "#ff6b6b",
+            "items": [
+              "owner: rwx",
+              "group: rwx",
+              "other: rwx — anyone can EDIT the file",
+              "trojan deploy script = RCE / backdoor"
+            ]
+          }
+        ]
+      },
+      "pairs": [
+        { "left": "grep pattern file", "right": "Find lines by regex/text", "studyHint": "↑ pipeline L0" },
+        { "left": "chmod 755 script.sh", "right": "rwx owner, rx group/other", "studyHint": "↑ 755 column" },
+        { "left": "tail -f app.log", "right": "Follow log in real time" },
+        { "left": "echo $? ", "right": "Exit code of last command" },
+        { "left": "sudo -u deploy", "right": "Run as user deploy" }
+      ]
+    },
+    {
+      "id": "L2",
+      "type": "fill_blanks",
+      "tag": "🐧 · 2/6",
+      "title": "grep ERROR in log",
+      "instruction": "From app.log — only ERROR lines, count them.",
+      "mission": {
+        "emoji": "📜",
+        "title": "Incident triage",
+        "brief": "Log: INFO is normal, ERROR needs alert. Count ERROR rows.",
+        "ask": "Fill the pipeline."
+      },
+      "sampleTable": {
+        "headers": ["line", "level", "count?"],
+        "rows": [
+          ["1", "INFO", "—"],
+          ["2", "ERROR", "✓"],
+          ["3", "INFO", "—"],
+          ["4", "ERROR", "✓"]
+        ],
+        "columnGlossary": {
+          "line": "Line number in log",
+          "level": "INFO / ERROR / WARN",
+          "count?": "Included in grep ERROR?"
+        },
+        "caption": "Expect 2 ERROR lines."
+      },
+      "controlTip": "Table above.",
+      "template": "grep '____' app.log | wc -____",
+      "answers": ["ERROR", "l"],
+      "wordBank": ["ERROR", "l", "c", "INFO", "grep"],
+      "hints": ["Pattern ERROR in quotes.", "wc -l = line count."]
+    },
+    {
+      "id": "L3",
+      "type": "whats_wrong",
+      "tag": "🐧 · 3/6",
+      "title": "What is wrong with chmod?",
+      "instruction": "Deploy script on server.",
+      "mission": {
+        "emoji": "🔓",
+        "title": "Security review",
+        "brief": "Script must run, but not be world-writable."
+      },
+      "buggyCode": "# deploy.sh must run\nchmod 777 deploy.sh\n./deploy.sh",
+      "prompt": "Main risk?",
+      "options": [
+        "777 = everyone can write → trojan deploy script",
+        "777 is required for bash",
+        "cannot chmod deploy.sh",
+        "need chmod 000"
+      ],
+      "correctIndex": 0,
+      "explainOk": "755 or 750: execute for who needs it, write only owner.",
+      "explanation": "On interviews: least privilege on FS like IAM."
+    },
+    {
+      "id": "L4",
+      "type": "multi_choice",
+      "tag": "🐧 · 4/6",
+      "title": "find or grep?",
+      "instruction": "Find all `.log` files in `/var/log` older than 7 days.",
+      "question": "Best command?",
+      "options": [
+        "find /var/log -name '*.log' -mtime +7",
+        "grep '*.log' /var/log",
+        "cat /var/log/*",
+        "ls -la"
+      ],
+      "correctIndex": 0,
+      "explanation": "find — filesystem; grep — file contents."
+    },
+    {
+      "id": "L5",
+      "type": "scenario",
+      "tag": "🐧 · 5/6",
+      "title": "Disk 100%",
+      "emoji": "💾",
+      "scene": "Alert: disk full on app server. First step?",
+      "bestIndex": 0,
+      "choices": [
+        {
+          "label": "df -h + du on large dirs (/var/log, /tmp) — find what grows",
+          "feedback": "Classic SRE triage."
+        },
+        {
+          "label": "reboot without diagnosis",
+          "feedback": "May hide root cause."
+        },
+        {
+          "label": "rm -rf /",
+          "feedback": "Never."
+        }
+      ]
+    },
+    {
+      "id": "L6",
+      "type": "drag_order",
+      "tag": "🐧 · 6/6",
+      "title": "Runbook: service down",
+      "instruction": "Order triage steps.",
+      "items": [
+        "Check alert + acknowledge",
+        "systemctl status service",
+        "tail last 200 lines log",
+        "Check disk / memory",
+        "Restart or rollback",
+        "Post in #incidents"
+      ]
+    }
+  ]
+}

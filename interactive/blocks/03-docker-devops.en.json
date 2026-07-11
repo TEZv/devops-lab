@@ -1,0 +1,177 @@
+{
+  "id": "03-docker-devops",
+  "title": "Docker",
+  "subtitle": "image · layer · Dockerfile trap · CMD/ENTRYPOINT · compose",
+  "levels": [
+    {
+      "id": "D0",
+      "type": "theory",
+      "tag": "🐳 · map",
+      "title": "Image → container",
+      "instruction": "Docker on interviews: isolated process + FS snapshot, not magic.",
+      "viz": {
+        "type": "layerStack",
+        "title": "Image layers (simplified)",
+        "layers": [
+          { "label": "base image", "sublabel": "debian / alpine", "color": "#8b9cb3", "icon": "📦" },
+          { "label": "deps", "sublabel": "pip install", "color": "#5b8def", "icon": "📚" },
+          { "label": "app code", "sublabel": "COPY . /app", "color": "#4ecdc4", "icon": "📄" },
+          { "label": "container", "sublabel": "running process", "color": "#e8a84b", "icon": "▶️" }
+        ]
+      },
+      "bullets": [
+        "Image immutable; container — instance",
+        "`:latest` in prod — trap (non-reproducible deploy)",
+        "Non-root USER in Dockerfile — security baseline"
+      ]
+    },
+    {
+      "id": "D1",
+      "type": "match_pairs",
+      "tag": "🐳 · 1/6",
+      "title": "MATCH · Docker",
+      "instruction": "Container world terms — image vs container first.",
+      "studyIntro": "<strong>Step 1 · see layers.</strong> Image = frozen recipe. Container = running process. Then pairs.",
+      "studyViz": {
+        "type": "splitCompare",
+        "columns": [
+          {
+            "title": "Image (immutable)",
+            "color": "#5b8def",
+            "items": [
+              "Dockerfile → layers",
+              "myapp:1.0.0 — pin tag",
+              "push to registry",
+              "not «alive» — FS snapshot"
+            ]
+          },
+          {
+            "title": "Container (runtime)",
+            "color": "#e8a84b",
+            "items": [
+              "docker run = instance",
+              "process + thin writable layer",
+              "stop/start/restart",
+              "remove container — image stays"
+            ]
+          }
+        ]
+      },
+      "pairs": [
+        { "left": "Dockerfile", "right": "Recipe for image", "studyHint": "↑ image" },
+        { "left": "docker build -t name:tag .", "right": "Build image from context", "studyHint": "↑ image" },
+        { "left": "ENTRYPOINT", "right": "Main container command", "studyHint": "↑ container" },
+        { "left": "CMD", "right": "Default args / command (override)", "studyHint": "↑ container" },
+        { "left": "docker compose up", "right": "Multi-container local stack" }
+      ]
+    },
+    {
+      "id": "D2",
+      "type": "whats_wrong",
+      "tag": "🐳 · 2/6",
+      "title": "What is wrong in Dockerfile?",
+      "instruction": "Python ETL for prod.",
+      "mission": {
+        "emoji": "🐳",
+        "title": "Image review",
+        "brief": "Security + reproducibility."
+      },
+      "buggyCode": "FROM python:latest\nRUN pip install pandas\nCOPY . /app\nWORKDIR /app\nUSER root\nCMD python app.py",
+      "prompt": "Two main problems?",
+      "options": [
+        ":latest + root USER — non-reproducible and unsafe image",
+        "WORKDIR forbidden",
+        "pandas cannot run in Docker",
+        "CMD must always be ENTRYPOINT"
+      ],
+      "correctIndex": 0,
+      "explainOk": "Pin base tag/digest; USER non-root; multi-stage if needed.",
+      "explanation": "On interviews name both: tag + user."
+    },
+    {
+      "id": "D3",
+      "type": "fill_blanks",
+      "tag": "🐳 · 3/6",
+      "title": "CMD vs ENTRYPOINT",
+      "instruction": "Container runs ETL script with --date arg.",
+      "mission": {
+        "emoji": "⚙️",
+        "title": "Dockerfile tail",
+        "brief": "ENTRYPOINT fixes python app.py; CMD — default date arg.",
+        "ask": "Fill the directives."
+      },
+      "sampleTable": {
+        "headers": ["directive", "role", "override?"],
+        "rows": [
+          ["ENTRYPOINT", "python app.py — always", "hard to change"],
+          ["CMD", "default --date yesterday", "docker run … arg overrides"]
+        ],
+        "columnGlossary": {
+          "directive": "Last lines of Dockerfile",
+          "role": "What runs on docker run",
+          "override?": "CMD yes, ENTRYPOINT rarely"
+        },
+        "caption": "On interviews: ENTRYPOINT = what we run; CMD = default args."
+      },
+      "controlTip": "ENTRYPOINT/CMD table above.",
+      "template": "ENTRYPOINT [\"python\", \"app.py\"]\n____ [\"--date\", \"____\"]",
+      "answers": ["CMD", "yesterday"],
+      "wordBank": ["CMD", "ENTRYPOINT", "yesterday", "today", "RUN"],
+      "hints": ["Default args — CMD.", "Literal example for interview."]
+    },
+    {
+      "id": "D4",
+      "type": "multi_choice",
+      "tag": "🐳 · 4/6",
+      "title": "compose or k8s?",
+      "instruction": "Locally: app + Postgres for dev. 2 devs, no HA.",
+      "question": "Simplest start?",
+      "options": [
+        "docker compose — 2 services in yaml, one `up`",
+        "Kubernetes cluster on laptop day 1",
+        "SSH to prod and manual install postgres",
+        "VM per developer without containers"
+      ],
+      "correctIndex": 0,
+      "explanation": "Compose = dev/pet; K8s when you need orchestration at scale."
+    },
+    {
+      "id": "D5",
+      "type": "scenario",
+      "tag": "🐳 · 5/6",
+      "title": "Image pull failed",
+      "emoji": "📦",
+      "scene": "Deploy: cannot pull image `myapp:latest`. Worked yesterday.",
+      "bestIndex": 0,
+      "choices": [
+        {
+          "label": "`:latest` changed / registry glitch — pin digest or semver tag; check registry auth",
+          "feedback": "Why :latest is an anti-pattern."
+        },
+        {
+          "label": "Delete production",
+          "feedback": "No."
+        },
+        {
+          "label": "Ignore — will pass",
+          "feedback": "Deploy blocked."
+        }
+      ]
+    },
+    {
+      "id": "D6",
+      "type": "drag_order",
+      "tag": "🐳 · 6/6",
+      "title": "Build → run",
+      "instruction": "Order first docker deploy steps.",
+      "items": [
+        "Write Dockerfile",
+        "docker build -t myapp:1.0.0 .",
+        "docker run --rm -e ENV=prod myapp:1.0.0",
+        "Smoke test health endpoint",
+        "Push image to registry",
+        "Deploy pinned tag to server/orchestrator"
+      ]
+    }
+  ]
+}

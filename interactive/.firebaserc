@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "earning-app-bytezv"
+  },
+  "targets": {
+    "earning-app-bytezv": {
+      "hosting": {
+        "devops-gym": [
+          "devops-lab-gym"
+        ]
+      }
+    }
+  }
+}

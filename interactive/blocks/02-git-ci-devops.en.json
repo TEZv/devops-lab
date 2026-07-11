@@ -1,0 +1,136 @@
+{
+  "id": "02-git-ci-devops",
+  "title": "Git / CI",
+  "subtitle": "branch · PR · merge · pipeline · no force push main",
+  "levels": [
+    {
+      "id": "G0",
+      "type": "theory",
+      "tag": "🔀 · map",
+      "title": "Git flow lite",
+      "instruction": "DevOps + DE: code in git, changes via PR, CI green.",
+      "flow": [
+        { "title": "Branch", "desc": "feature/fix off main" },
+        { "title": "Commit", "desc": "small atomic changes" },
+        { "title": "PR", "desc": "review + CI" },
+        { "title": "Merge", "desc": "only green + approve" }
+      ],
+      "bullets": [
+        "main/master — protected branch",
+        "CI = automated test/lint on push/PR",
+        "force push main — red flag on interviews"
+      ]
+    },
+    {
+      "id": "G1",
+      "type": "match_pairs",
+      "tag": "🔀 · 1/5",
+      "title": "MATCH · Git/CI",
+      "instruction": "Screen terms — flow diagram first, not words alone.",
+      "studyIntro": "<strong>Step 1 · see the ritual.</strong> main is protected — changes only via branch → PR → CI. Then pairs.",
+      "studyViz": {
+        "type": "pipelineH",
+        "nodes": [
+          { "label": "feature branch", "hint": "no push to main", "color": "#5b8def" },
+          { "label": "Pull Request", "hint": "human review", "color": "#4ecdc4" },
+          { "label": "CI pipeline", "hint": "lint + test green", "color": "#3d9a6a" },
+          { "label": "merge → main", "hint": "protected branch", "color": "#e8a84b" }
+        ]
+      },
+      "pairs": [
+        { "left": "Pull Request", "right": "Merge request + review", "studyHint": "↑ step 2" },
+        { "left": "CI pipeline", "right": "Auto tests on every push", "studyHint": "↑ step 3" },
+        { "left": "git merge --no-ff", "right": "Keeps merge commit (history)" },
+        { "left": "Protected branch", "right": "main without direct push", "studyHint": "↑ step 1+4" },
+        { "left": "Rebase", "right": "Rewrite commits on top of main (careful)" }
+      ]
+    },
+    {
+      "id": "G2",
+      "type": "fill_blanks",
+      "tag": "🔀 · 2/5",
+      "title": "Create feature branch",
+      "instruction": "Ticket DEV-42: add healthcheck.",
+      "mission": {
+        "emoji": "🌿",
+        "title": "Git ritual",
+        "brief": "From main — new branch, then commit.",
+        "ask": "Fill the commands."
+      },
+      "sampleTable": {
+        "headers": ["branch", "who merges", "CI"],
+        "rows": [
+          ["main", "only via PR", "must be green"],
+          ["feature/DEV-42", "you → PR", "on every push"]
+        ],
+        "columnGlossary": {
+          "branch": "main = prod truth; feature/* = your work",
+          "who merges": "no direct push to main",
+          "CI": "auto tests before merge"
+        },
+        "caption": "Same ritual as DE Lab U6."
+      },
+      "controlTip": "Ritual table above.",
+      "template": "git checkout ____\ngit pull origin main\ngit checkout -b ____/DEV-42-healthcheck",
+      "answers": ["main", "feature"],
+      "wordBank": ["main", "master", "feature", "fix", "develop"],
+      "hints": ["Base — main.", "Prefix feature/ — convention."]
+    },
+    {
+      "id": "G3",
+      "type": "whats_wrong",
+      "tag": "🔀 · 3/5",
+      "title": "What is wrong?",
+      "instruction": "Friday, deadline.",
+      "buggyCode": "git checkout main\ngit add .\ngit commit -m \"fix everything\"\ngit push origin main --force",
+      "prompt": "Main process mistake?",
+      "options": [
+        "Direct push + force to main without PR/CI/review",
+        "commit message too short",
+        "git add . forbidden",
+        "main does not exist"
+      ],
+      "correctIndex": 0,
+      "explainOk": "Feature branch → PR → CI green → merge.",
+      "explanation": "Same ritual as DE Lab U6."
+    },
+    {
+      "id": "G4",
+      "type": "drag_order",
+      "tag": "🔀 · 4/5",
+      "title": "CI pipeline",
+      "instruction": "Typical GitHub Actions for Python repo.",
+      "items": [
+        "Checkout code",
+        "Setup Python",
+        "pip install -r requirements.txt",
+        "Run lint (ruff/flake8)",
+        "Run pytest",
+        "Report status on PR"
+      ]
+    },
+    {
+      "id": "G5",
+      "type": "scenario",
+      "tag": "🔀 · 5/5",
+      "title": "CI failed on PR",
+      "emoji": "🔴",
+      "scene": "Your PR is red: pytest 2 failed. What do you do?",
+      "bestIndex": 0,
+      "choices": [
+        {
+          "label": "Read CI log → fix on same feature branch → push → CI rerun",
+          "feedback": "Standard dev loop."
+        },
+        {
+          "label": "Merge anyway — fix in prod",
+          "feedback": "Breaks main."
+        },
+        {
+          "label": "Disable CI",
+          "feedback": "Unsafe."
+        }
+      ]
+    }
+  ]
+}

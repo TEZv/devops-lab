@@ -1,0 +1,216 @@
+{
+  "id": "04-terraform-devops",
+  "title": "IaC · Terraform",
+  "subtitle": "plan · apply · state · drift · IAM least privilege · remote backend",
+  "levels": [
+    {
+      "id": "T0",
+      "type": "theory",
+      "tag": "🏗️ · map",
+      "title": "Terraform ritual",
+      "instruction": "Middle DevOps: HCL describes desired state → plan shows diff → apply changes cloud. Bridge with DE cloud IAM.",
+      "viz": {
+        "type": "pipelineH",
+        "nodes": [
+          { "label": "Write .tf", "hint": "HCL resources", "color": "#8b9cb3" },
+          { "label": "terraform plan", "hint": "read-only preview", "color": "#5b8def" },
+          { "label": "PR review", "hint": "team approves diff", "color": "#4ecdc4" },
+          { "label": "terraform apply", "hint": "real changes", "color": "#3d9a6a" },
+          { "label": "state file", "hint": "tracks reality", "color": "#e8a84b" }
+        ]
+      },
+      "bullets": [
+        "plan ≠ apply: see +/~/− first, then change cloud",
+        "State = «what already exists» — without it Terraform «forgets»",
+        "Remote state (S3 + lock) — team does not break each other's apply",
+        "Least privilege IAM — like DE Lab cloud A3, not `*` on everything"
+      ]
+    },
+    {
+      "id": "T1",
+      "type": "match_pairs",
+      "tag": "🏗️ · 1/7",
+      "title": "MATCH · Terraform ↔ meaning",
+      "instruction": "IaC screen terms — plan vs apply first, not arrows in the void.",
+      "studyIntro": "<strong>Step 1 · see the diff.</strong> plan = preview without changes. apply = real resources + state. Then pairs.",
+      "studyVizs": [
+        {
+          "type": "splitCompare",
+          "columns": [
+            {
+              "title": "terraform plan",
+              "color": "#5b8def",
+              "items": [
+                "read-only preview",
+                "+ create / ~ update / − destroy",
+                "cloud does NOT change",
+                "paste in PR for review"
+              ]
+            },
+            {
+              "title": "terraform apply",
+              "color": "#3d9a6a",
+              "items": [
+                "executes changes in AWS/Azure/GCP",
+                "updates terraform.tfstate",
+                "after approve / merge",
+                "error → partial state (triage needed)"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "layerStack",
+          "title": "State file — Terraform «memory»",
+          "layers": [
+            { "label": "your .tf", "sublabel": "desired config (HCL)", "color": "#5b8def", "icon": "📝" },
+            { "label": "terraform.tfstate", "sublabel": "actual resource IDs", "color": "#e8a84b", "icon": "💾" },
+            { "label": "real cloud", "sublabel": "S3 bucket, IAM role…", "color": "#3d9a6a", "icon": "☁️" }
+          ]
+        }
+      ],
+      "pairs": [
+        { "left": "terraform plan", "right": "Preview diff without cloud changes", "studyHint": "↑ plan column" },
+        { "left": "terraform apply", "right": "Apply changes + update state", "studyHint": "↑ apply column" },
+        { "left": "terraform.tfstate", "right": "File «what already exists» (resource IDs)", "studyHint": "↑ state layer" },
+        { "left": "Remote backend", "right": "Shared state in S3 + lock (DynamoDB)", "studyHint": "↑ team apply" },
+        { "left": "Drift", "right": "Someone changed cloud manually — ≠ state", "studyHint": "↑ plan shows ~" }
+      ]
+    },
+    {
+      "id": "T2",
+      "type": "fill_blanks",
+      "tag": "🏗️ · 2/7",
+      "title": "S3 bucket resource",
+      "instruction": "Pet project: bronze lake bucket. Bridge with DE cloud storage.",
+      "mission": {
+        "emoji": "📂",
+        "title": "Lake bronze bucket",
+        "brief": "Terraform creates S3 bucket for raw ingest. HCL name = resource label (not ARN).",
+        "ask": "Fill resource type and label."
+      },
+      "sampleTable": {
+        "headers": ["HCL label", "cloud object", "DE zone"],
+        "rows": [
+          ["aws_s3_bucket.bronze_lake", "S3 bucket acme-bronze", "bronze / raw"],
+          ["aws_iam_role.etl_reader", "IAM role for Spark", "least privilege read"]
+        ],
+        "columnGlossary": {
+          "HCL label": "resource TYPE.NAME in .tf",
+          "cloud object": "What appears after apply",
+          "DE zone": "Same lake as DE Lab layer 7"
+        },
+        "caption": "resource «aws_s3_bucket» + label «bronze_lake» — Terraform knows ID after apply."
+      },
+      "controlTip": "HCL → cloud table above.",
+      "template": "resource \"____\" \"____\" {\n  bucket = \"acme-bronze-raw\"\n  tags = { env = \"prod\", zone = \"bronze\" }\n}",
+      "answers": ["aws_s3_bucket", "bronze_lake"],
+      "wordBank": ["aws_s3_bucket", "bronze_lake", "aws_instance", "main", "silver"],
+      "hints": ["S3 = aws_s3_bucket.", "Label = your identifier in module."]
+    },
+    {
+      "id": "T3",
+      "type": "whats_wrong",
+      "tag": "🏗️ · 3/7",
+      "title": "What is wrong in IAM policy?",
+      "instruction": "ETL role to read bronze bucket.",
+      "mission": {
+        "emoji": "🔐",
+        "title": "Least privilege review",
+        "brief": "Role should read only acme-bronze-raw/*, not whole account."
+      },
+      "buggyCode": "resource \"aws_iam_role_policy\" \"etl\" {\n  policy = jsonencode({\n    Statement = [{\n      Effect   = \"Allow\"\n      Action   = \"*\"\n      Resource = \"*\"\n    }]\n  })\n}",
+      "prompt": "Main risk?",
+      "options": [
+        "Action * + Resource * = admin on whole account",
+        "jsonencode forbidden in Terraform",
+        "ETL cannot have IAM role",
+        "Need Effect = Deny always"
+      ],
+      "correctIndex": 0,
+      "explainOk": "s3:GetObject on arn:…:bucket/acme-bronze-raw/* — like DE cloud IAM trap.",
+      "explanation": "On interviews: name least privilege + concrete ARN."
+    },
+    {
+      "id": "T4",
+      "type": "multi_choice",
+      "tag": "🏗️ · 4/7",
+      "title": "Where to keep state?",
+      "instruction": "Team of 4 DevOps, one pet AWS account, shared modules.",
+      "question": "Best state practice?",
+      "options": [
+        "Remote backend: S3 + DynamoDB lock — one truth for team",
+        "terraform.tfstate in everyone's Downloads/",
+        "Commit state to public GitHub",
+        "Delete state after apply"
+      ],
+      "correctIndex": 0,
+      "explanation": "Local state = race + loss. Remote + lock = Middle standard."
+    },
+    {
+      "id": "T5",
+      "type": "scenario",
+      "tag": "🏗️ · 5/7",
+      "title": "Drift: bucket policy changed in console",
+      "emoji": "⚠️",
+      "scene": "terraform plan shows ~ update on bucket policy. Yesterday apply was green. Someone clicked in AWS Console.",
+      "bestIndex": 0,
+      "choices": [
+        {
+          "label": "Do not blind apply: find who/why changed → revert in console or fix .tf and apply",
+          "feedback": "Drift triage — standard platform ritual."
+        },
+        {
+          "label": "terraform apply -auto-approve without reading diff",
+          "feedback": "May break prod policy."
+        },
+        {
+          "label": "Delete state and start over",
+          "feedback": "Terraform «forgets» resources — worse."
+        }
+      ]
+    },
+    {
+      "id": "T6",
+      "type": "drag_order",
+      "tag": "🏗️ · 6/7",
+      "title": "PR workflow Terraform",
+      "instruction": "Order infrastructure change steps in a team.",
+      "items": [
+        "Edit .tf in feature branch",
+        "terraform fmt + validate locally",
+        "terraform plan → paste output in PR",
+        "Teammate review diff",
+        "Merge after approve",
+        "CI/CD terraform apply (or manual with lock)"
+      ]
+    },
+    {
+      "id": "T7",
+      "type": "fill_blanks",
+      "tag": "🏗️ · 7/7",
+      "title": "Output for DE pipeline",
+      "instruction": "After apply ETL needs bucket name.",
+      "mission": {
+        "emoji": "🔗",
+        "title": "Output → Airflow variable",
+        "brief": "Terraform output bronze_bucket_name → CI sets Airflow / env for DE ingest DAG.",
+        "ask": "Fill output block."
+      },
+      "sampleTable": {
+        "headers": ["step", "who", "what passes"],
+        "rows": [
+          ["apply", "Terraform", "output bronze_bucket_name"],
+          ["CI sync", "GitHub Actions", "→ Airflow Variable"],
+          ["DAG run", "DE Lab orch", "S3KeySensor on bronze/"]
+        ],
+        "caption": "DevOps IaC + DE orchestration — one chain."
+      },
+      "controlTip": "Output chain above.",
+      "template": "output \"bronze_bucket_name\" {\n  value = aws_s3_bucket.____.bucket\n}",
+      "answers": ["bronze_lake"],
+      "wordBank": ["bronze_lake", "silver_curated", "main", "etl"],
+      "hints": ["Same label as resource aws_s3_bucket.bronze_lake."]
+    }
+  ]
+}
