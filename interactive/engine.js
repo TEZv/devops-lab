@@ -712,6 +712,118 @@
     root.append(list, check, feedback);
   }
 
+  function mountDragBuckets(root, level, onComplete) {
+    mountMissionBrief(root, level);
+    appendRecallPanel(root, level);
+
+    const wrap = document.createElement('div');
+    wrap.className = 'pl-bucket-wrap';
+    if (level.instruction) {
+      const tip = document.createElement('p');
+      tip.className = 'pl-tip';
+      tip.textContent = level.bucketTip || level.instruction;
+      wrap.appendChild(tip);
+    }
+
+    const pool = document.createElement('div');
+    pool.className = 'pl-bucket-pool';
+    pool.dataset.bucket = '';
+    const poolLabel = document.createElement('p');
+    poolLabel.className = 'pl-bucket-pool-label';
+    poolLabel.textContent = ui('bucketPool');
+    wrap.appendChild(poolLabel);
+
+    const board = document.createElement('div');
+    board.className = 'pl-bucket-board';
+
+    const buckets = level.buckets || [];
+    const items = shuffle([...(level.items || [])]);
+    const chipById = {};
+
+    function makeChip(item) {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'pl-bucket-chip';
+      chip.draggable = true;
+      chip.textContent = item.text;
+      chip.dataset.id = item.id || item.text;
+      chip.dataset.correct = item.bucket;
+      chipById[chip.dataset.id] = chip;
+      chip.addEventListener('dragstart', (e) => {
+        chip.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', chip.dataset.id);
+        e.dataTransfer.effectAllowed = 'move';
+      });
+      chip.addEventListener('dragend', () => chip.classList.remove('dragging'));
+      return chip;
+    }
+
+    function wireDrop(zone) {
+      zone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        zone.classList.add('drag-over');
+      });
+      zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+      zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zone.classList.remove('drag-over');
+        const id = e.dataTransfer.getData('text/plain');
+        const chip = chipById[id];
+        if (chip) zone.appendChild(chip);
+      });
+    }
+
+    wireDrop(pool);
+    items.forEach((it) => pool.appendChild(makeChip(it)));
+    wrap.appendChild(pool);
+
+    buckets.forEach((b) => {
+      const col = document.createElement('div');
+      col.className = 'pl-bucket-col';
+      col.style.setProperty('--hub', b.color || '#5b8def');
+      col.innerHTML = `<div class="pl-bucket-head"><span>${escapeHtml(b.icon || '◇')}</span><strong>${escapeHtml(b.title)}</strong>${b.hint ? `<small>${escapeHtml(b.hint)}</small>` : ''}</div>`;
+      const drop = document.createElement('div');
+      drop.className = 'pl-bucket-drop';
+      drop.dataset.bucket = b.id;
+      wireDrop(drop);
+      col.appendChild(drop);
+      board.appendChild(col);
+    });
+    wrap.appendChild(board);
+
+    const feedback = document.createElement('p');
+    feedback.className = 'pl-feedback';
+    const check = document.createElement('button');
+    check.type = 'button';
+    check.textContent = ui('btnCheckBuckets');
+    check.addEventListener('click', () => {
+      let ok = true;
+      let placed = 0;
+      Object.values(chipById).forEach((chip) => {
+        const zone = chip.parentElement;
+        const inBucket = zone?.classList.contains('pl-bucket-drop');
+        if (!inBucket) {
+          ok = false;
+          chip.classList.remove('ok', 'bad');
+          return;
+        }
+        placed += 1;
+        const correct = chip.dataset.correct === zone.dataset.bucket;
+        chip.classList.toggle('ok', correct);
+        chip.classList.toggle('bad', !correct);
+        if (!correct) ok = false;
+      });
+      if (placed < Object.keys(chipById).length) ok = false;
+      feedback.textContent = ok ? ui('bucketOk') : ui('bucketFail');
+      if (ok) {
+        toast(root, ui('bucketToast'), true);
+        if (onComplete) onComplete(level.id);
+      }
+    });
+    wrap.append(check, feedback);
+    root.appendChild(wrap);
+  }
+
   function mountMatch(root, level, onComplete) {
     const PAIR_COLORS = ['#3d9a6a', '#e8a84b', '#5b8def', '#c77dff', '#4ecdc4', '#ff6b6b'];
     const wrap = document.createElement('div');
@@ -1035,6 +1147,9 @@
         break;
       case 'drag_order':
         mountDragOrder(body, level, onComplete);
+        break;
+      case 'drag_buckets':
+        mountDragBuckets(body, level, onComplete);
         break;
       case 'match_pairs':
         mountMatch(body, level, onComplete);

@@ -13,10 +13,26 @@
         {
           "type": "pipelineH",
           "nodes": [
-            { "label": "🌿 branch", "hint": "off main", "color": "#5b8def" },
-            { "label": "💬 commit", "hint": "small steps", "color": "#4ecdc4" },
-            { "label": "👀 PR+CI", "hint": "review+tests", "color": "#3d9a6a" },
-            { "label": "✅ merge", "hint": "green only", "color": "#e8a84b" }
+            {
+              "label": "🌿 branch",
+              "hint": "off main",
+              "color": "#5b8def"
+            },
+            {
+              "label": "💬 commit",
+              "hint": "small steps",
+              "color": "#4ecdc4"
+            },
+            {
+              "label": "👀 PR+CI",
+              "hint": "review+tests",
+              "color": "#3d9a6a"
+            },
+            {
+              "label": "✅ merge",
+              "hint": "green only",
+              "color": "#e8a84b"
+            }
           ]
         },
         {
@@ -44,6 +60,48 @@
       ]
     },
     {
+      "id": "G0b",
+      "type": "drag_buckets",
+      "tag": "🔀 · drag",
+      "title": "Drag: do vs dont",
+      "buckets": [
+        {
+          "id": "do",
+          "icon": "✅",
+          "title": "Do",
+          "color": "#3d9a6a"
+        },
+        {
+          "id": "dont",
+          "icon": "⛔",
+          "title": "Don't",
+          "color": "#ff6b6b"
+        }
+      ],
+      "items": [
+        {
+          "text": "feature branch PR",
+          "bucket": "do"
+        },
+        {
+          "text": "green CI before merge",
+          "bucket": "do"
+        },
+        {
+          "text": "force push main",
+          "bucket": "dont"
+        },
+        {
+          "text": "commit straight to main",
+          "bucket": "dont"
+        }
+      ],
+      "recallTips": [
+        "PR+CI",
+        "no force main"
+      ]
+    },
+    {
       "id": "G1",
       "type": "match_pairs",
       "tag": "🔀 · 1/5",
@@ -53,18 +111,52 @@
       "studyViz": {
         "type": "pipelineH",
         "nodes": [
-          { "label": "feature branch", "hint": "no push to main", "color": "#5b8def" },
-          { "label": "Pull Request", "hint": "human review", "color": "#4ecdc4" },
-          { "label": "CI pipeline", "hint": "lint + test green", "color": "#3d9a6a" },
-          { "label": "merge → main", "hint": "protected branch", "color": "#e8a84b" }
+          {
+            "label": "feature branch",
+            "hint": "no push to main",
+            "color": "#5b8def"
+          },
+          {
+            "label": "Pull Request",
+            "hint": "human review",
+            "color": "#4ecdc4"
+          },
+          {
+            "label": "CI pipeline",
+            "hint": "lint + test green",
+            "color": "#3d9a6a"
+          },
+          {
+            "label": "merge → main",
+            "hint": "protected branch",
+            "color": "#e8a84b"
+          }
         ]
       },
       "pairs": [
-        { "left": "Pull Request", "right": "Merge request + review", "studyHint": "↑ step 2" },
-        { "left": "CI pipeline", "right": "Auto tests on every push", "studyHint": "↑ step 3" },
-        { "left": "git merge --no-ff", "right": "Keeps merge commit (history)" },
-        { "left": "Protected branch", "right": "main without direct push", "studyHint": "↑ step 1+4" },
-        { "left": "Rebase", "right": "Rewrite commits on top of main (careful)" }
+        {
+          "left": "Pull Request",
+          "right": "Merge request + review",
+          "studyHint": "↑ step 2"
+        },
+        {
+          "left": "CI pipeline",
+          "right": "Auto tests on every push",
+          "studyHint": "↑ step 3"
+        },
+        {
+          "left": "git merge --no-ff",
+          "right": "Keeps merge commit (history)"
+        },
+        {
+          "left": "Protected branch",
+          "right": "main without direct push",
+          "studyHint": "↑ step 1+4"
+        },
+        {
+          "left": "Rebase",
+          "right": "Rewrite commits on top of main (careful)"
+        }
       ]
     },
     {
@@ -80,10 +172,22 @@
         "ask": "Fill the commands."
       },
       "sampleTable": {
-        "headers": ["branch", "who merges", "CI"],
+        "headers": [
+          "branch",
+          "who merges",
+          "CI"
+        ],
         "rows": [
-          ["main", "only via PR", "must be green"],
-          ["feature/DEV-42", "you → PR", "on every push"]
+          [
+            "main",
+            "only via PR",
+            "must be green"
+          ],
+          [
+            "feature/DEV-42",
+            "you → PR",
+            "on every push"
+          ]
         ],
         "columnGlossary": {
           "branch": "main = prod truth; feature/* = your work",
@@ -94,9 +198,21 @@
       },
       "controlTip": "Ritual table above.",
       "template": "git checkout ____\ngit pull origin main\ngit checkout -b ____/DEV-42-healthcheck",
-      "answers": ["main", "feature"],
-      "wordBank": ["main", "master", "feature", "fix", "develop"],
-      "hints": ["Base — main.", "Prefix feature/ — convention."]
+      "answers": [
+        "main",
+        "feature"
+      ],
+      "wordBank": [
+        "main",
+        "master",
+        "feature",
+        "fix",
+        "develop"
+      ],
+      "hints": [
+        "Base — main.",
+        "Prefix feature/ — convention."
+      ]
     },
     {
       "id": "G3",

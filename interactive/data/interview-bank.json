@@ -83,8 +83,28 @@
         "en": "Shell pipeline"
       },
       "prompt": {
-        "ua": "DevOps day-1: логи, grep, права, не rm -rf /.",
-        "en": "DevOps day-1: логи, grep, права, не rm -rf /."
+        "ua": "DevOps day-1: логи → filter → count → alert. Не rm -rf /.",
+        "en": "DevOps day-1: логи → filter → count → alert. Не rm -rf /."
+      },
+      "source": "blocks/01-linux-shell-devops.json"
+    },
+    {
+      "id": "gym-01-linux-shell-devops-L0b",
+      "archetype": "sre",
+      "kind": "gym",
+      "blockId": "01-linux-shell-devops",
+      "levelId": "L0b",
+      "tag": "🐧 · drag",
+      "skill": "linux",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Перетягни: safe vs дірка",
+        "en": "Перетягни: safe vs дірка"
+      },
+      "prompt": {
+        "ua": "grep · pipes · permissions · find · prod triage",
+        "en": "grep · pipes · permissions · find · prod triage"
       },
       "source": "blocks/01-linux-shell-devops.json"
     },
@@ -223,8 +243,28 @@
         "en": "Git flow lite"
       },
       "prompt": {
-        "ua": "DevOps + DE: код у git, зміни через PR, CI green.",
-        "en": "DevOps + DE: код у git, зміни через PR, CI green."
+        "ua": "Код у git → зміни через PR → CI green. Один ритуал.",
+        "en": "Код у git → зміни через PR → CI green. Один ритуал."
+      },
+      "source": "blocks/02-git-ci-devops.json"
+    },
+    {
+      "id": "gym-02-git-ci-devops-G0b",
+      "archetype": "cicd",
+      "kind": "gym",
+      "blockId": "02-git-ci-devops",
+      "levelId": "G0b",
+      "tag": "🔀 · drag",
+      "skill": "git",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Перетягни: робимо vs ні",
+        "en": "Перетягни: робимо vs ні"
+      },
+      "prompt": {
+        "ua": "branch · PR · merge · pipeline · no force push main",
+        "en": "branch · PR · merge · pipeline · no force push main"
       },
       "source": "blocks/02-git-ci-devops.json"
     },
@@ -343,8 +383,28 @@
         "en": "Image → container"
       },
       "prompt": {
-        "ua": "Docker на інтервʼю: не магія, а ізольований процес + FS snapshot.",
-        "en": "Docker на інтервʼю: не магія, а ізольований процес + FS snapshot."
+        "ua": "Image = рецепт (заморожений). Container = запущений процес.",
+        "en": "Image = рецепт (заморожений). Container = запущений процес."
+      },
+      "source": "blocks/03-docker-devops.json"
+    },
+    {
+      "id": "gym-03-docker-devops-D0b",
+      "archetype": "startup",
+      "kind": "gym",
+      "blockId": "03-docker-devops",
+      "levelId": "D0b",
+      "tag": "🐳 · drag",
+      "skill": "docker",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Перетягни: image vs container",
+        "en": "Перетягни: image vs container"
+      },
+      "prompt": {
+        "ua": "image · layer · Dockerfile trap · CMD/ENTRYPOINT · compose",
+        "en": "image · layer · Dockerfile trap · CMD/ENTRYPOINT · compose"
       },
       "source": "blocks/03-docker-devops.json"
     },
@@ -483,8 +543,28 @@
         "en": "Terraform ritual"
       },
       "prompt": {
-        "ua": "Middle DevOps: HCL описує бажаний стан → plan показує diff → apply міняє cloud. Bridge з DE cloud IAM.",
-        "en": "Middle DevOps: HCL описує бажаний стан → plan показує diff → apply міняє cloud. Bridge з DE cloud IAM."
+        "ua": "HCL = бажаний стан. Plan = диф. Apply = реальність. State = памʼять.",
+        "en": "HCL = бажаний стан. Plan = диф. Apply = реальність. State = памʼять."
+      },
+      "source": "blocks/04-terraform-devops.json"
+    },
+    {
+      "id": "gym-04-terraform-devops-T0b",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "04-terraform-devops",
+      "levelId": "T0b",
+      "tag": "🏗️ · drag",
+      "skill": "iac",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Перетягни: plan / apply / state",
+        "en": "Перетягни: plan / apply / state"
+      },
+      "prompt": {
+        "ua": "plan · apply · state · drift · IAM least privilege · remote backend",
+        "en": "plan · apply · state · drift · IAM least privilege · remote backend"
       },
       "source": "blocks/04-terraform-devops.json"
     },
@@ -643,8 +723,28 @@
         "en": "Deployment → Pod"
       },
       "prompt": {
-        "ua": "Middle DevOps: не весь CKA — але Pod/Service/Deployment на інтервʼю must-have.",
-        "en": "Middle DevOps: не весь CKA — але Pod/Service/Deployment на інтервʼю must-have."
+        "ua": "Хто кого тримає: Deployment → ReplicaSet → Pod; Service = двері.",
+        "en": "Хто кого тримає: Deployment → ReplicaSet → Pod; Service = двері."
+      },
+      "source": "blocks/05-k8s-devops.json"
+    },
+    {
+      "id": "gym-05-k8s-devops-K0b",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "05-k8s-devops",
+      "levelId": "K0b",
+      "tag": "☸️ · drag",
+      "skill": "k8s",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Перетягни роль K8s",
+        "en": "Перетягни роль K8s"
+      },
+      "prompt": {
+        "ua": "Pod · Service · Deployment · probe trap · CrashLoop · kubectl triage",
+        "en": "Pod · Service · Deployment · probe trap · CrashLoop · kubectl triage"
       },
       "source": "blocks/05-k8s-devops.json"
     },
@@ -783,8 +883,28 @@
         "en": "SRE triangle"
       },
       "prompt": {
-        "ua": "Senior DevOps/SRE: метрики → алерти → runbook → postmortem. Bridge з DE governance E6.",
-        "en": "Senior DevOps/SRE: метрики → алерти → runbook → postmortem. Bridge з DE governance E6."
+        "ua": "Метрики → алерти → runbook → postmortem. Той самий мʼяз, що DE governance E6.",
+        "en": "Метрики → алерти → runbook → postmortem. Той самий мʼяз, що DE governance E6."
+      },
+      "source": "blocks/06-prod-devops.json"
+    },
+    {
+      "id": "gym-06-prod-devops-R0b",
+      "archetype": "sre",
+      "kind": "gym",
+      "blockId": "06-prod-devops",
+      "levelId": "R0b",
+      "tag": "🛡️ · drag",
+      "skill": "prod",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Перетягни термін у сімʼю SRE",
+        "en": "Перетягни термін у сімʼю SRE"
+      },
+      "prompt": {
+        "ua": "Куди живе кожен термін: вимірюємо / ціль / дія?",
+        "en": "Куди живе кожен термін: вимірюємо / ціль / дія?"
       },
       "source": "blocks/06-prod-devops.json"
     },

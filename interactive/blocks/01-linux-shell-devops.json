@@ -13,10 +13,26 @@
         {
           "type": "pipelineH",
           "nodes": [
-            { "label": "📄 log", "hint": "raw text", "color": "#8b9cb3" },
-            { "label": "🔎 grep|awk", "hint": "filter", "color": "#4ecdc4" },
-            { "label": "🔢 wc -l", "hint": "count", "color": "#5b8def" },
-            { "label": "🚨 alert", "hint": "threshold", "color": "#ff6b6b" }
+            {
+              "label": "📄 log",
+              "hint": "raw text",
+              "color": "#8b9cb3"
+            },
+            {
+              "label": "🔎 grep|awk",
+              "hint": "filter",
+              "color": "#4ecdc4"
+            },
+            {
+              "label": "🔢 wc -l",
+              "hint": "count",
+              "color": "#5b8def"
+            },
+            {
+              "label": "🚨 alert",
+              "hint": "threshold",
+              "color": "#ff6b6b"
+            }
           ]
         },
         {
@@ -30,8 +46,14 @@
               "color": "#3d9a6a",
               "hint": "owner rwx · group/other r-x",
               "rows": [
-                { "ok": true, "text": "ти запускаєш deploy.sh" },
-                { "ok": false, "text": "чужий не перезапише скрипт" }
+                {
+                  "ok": true,
+                  "text": "ти запускаєш deploy.sh"
+                },
+                {
+                  "ok": false,
+                  "text": "чужий не перезапише скрипт"
+                }
               ]
             },
             {
@@ -41,8 +63,14 @@
               "color": "#ff6b6b",
               "hint": "world-writable",
               "rows": [
-                { "ok": false, "text": "будь-хто може підмінити" },
-                { "ok": false, "text": "red flag на інтервʼю" }
+                {
+                  "ok": false,
+                  "text": "будь-хто може підмінити"
+                },
+                {
+                  "ok": false,
+                  "text": "red flag на інтервʼю"
+                }
               ]
             },
             {
@@ -51,8 +79,14 @@
               "badge": "prod",
               "color": "#e8a84b",
               "rows": [
-                { "ok": true, "text": "tail/less → потім grep" },
-                { "ok": false, "text": "cat 10GB у термінал" }
+                {
+                  "ok": true,
+                  "text": "tail/less → потім grep"
+                },
+                {
+                  "ok": false,
+                  "text": "cat 10GB у термінал"
+                }
               ]
             }
           ],
@@ -65,6 +99,48 @@
         "755 ≠ 777",
         "спочатку less/tail, потім grep"
       ]
+    },
+    {
+      "id": "L0b",
+      "type": "drag_buckets",
+      "tag": "🐧 · drag",
+      "title": "Перетягни: safe vs дірка",
+      "buckets": [
+        {
+          "id": "safe",
+          "icon": "🔐",
+          "title": "755 safe",
+          "color": "#3d9a6a"
+        },
+        {
+          "id": "hole",
+          "icon": "☠️",
+          "title": "777 hole",
+          "color": "#ff6b6b"
+        }
+      ],
+      "items": [
+        {
+          "text": "пише лише owner",
+          "bucket": "safe"
+        },
+        {
+          "text": "group/other execute",
+          "bucket": "safe"
+        },
+        {
+          "text": "будь-хто перезапише скрипт",
+          "bucket": "hole"
+        },
+        {
+          "text": "interview red flag",
+          "bucket": "hole"
+        }
+      ],
+      "recallTips": [
+        "755 ≠ 777"
+      ],
+      "recallMapRef": "📍 Карта: L0 shell."
     },
     {
       "id": "L1",
@@ -99,11 +175,28 @@
         ]
       },
       "pairs": [
-        { "left": "grep pattern file", "right": "Пошук рядків за regex/текстом", "studyHint": "↑ pipeline L0" },
-        { "left": "chmod 755 script.sh", "right": "rwx owner, rx group/other", "studyHint": "↑ 755 колонка" },
-        { "left": "tail -f app.log", "right": "Follow лог у реальному часі" },
-        { "left": "echo $? ", "right": "Exit code останньої команди" },
-        { "left": "sudo -u deploy", "right": "Запуск від імені користувача deploy" }
+        {
+          "left": "grep pattern file",
+          "right": "Пошук рядків за regex/текстом",
+          "studyHint": "↑ pipeline L0"
+        },
+        {
+          "left": "chmod 755 script.sh",
+          "right": "rwx owner, rx group/other",
+          "studyHint": "↑ 755 колонка"
+        },
+        {
+          "left": "tail -f app.log",
+          "right": "Follow лог у реальному часі"
+        },
+        {
+          "left": "echo $? ",
+          "right": "Exit code останньої команди"
+        },
+        {
+          "left": "sudo -u deploy",
+          "right": "Запуск від імені користувача deploy"
+        }
       ]
     },
     {
@@ -119,12 +212,32 @@
         "ask": "Заповни pipeline."
       },
       "sampleTable": {
-        "headers": ["line", "level", "count?"],
+        "headers": [
+          "line",
+          "level",
+          "count?"
+        ],
         "rows": [
-          ["1", "INFO", "—"],
-          ["2", "ERROR", "✓"],
-          ["3", "INFO", "—"],
-          ["4", "ERROR", "✓"]
+          [
+            "1",
+            "INFO",
+            "—"
+          ],
+          [
+            "2",
+            "ERROR",
+            "✓"
+          ],
+          [
+            "3",
+            "INFO",
+            "—"
+          ],
+          [
+            "4",
+            "ERROR",
+            "✓"
+          ]
         ],
         "columnGlossary": {
           "line": "Номер рядка в логу",
@@ -135,9 +248,21 @@
       },
       "controlTip": "Таблиця — вище.",
       "template": "grep '____' app.log | wc -____",
-      "answers": ["ERROR", "l"],
-      "wordBank": ["ERROR", "l", "c", "INFO", "grep"],
-      "hints": ["Патерн ERROR у лапках.", "wc -l = line count."]
+      "answers": [
+        "ERROR",
+        "l"
+      ],
+      "wordBank": [
+        "ERROR",
+        "l",
+        "c",
+        "INFO",
+        "grep"
+      ],
+      "hints": [
+        "Патерн ERROR у лапках.",
+        "wc -l = line count."
+      ]
     },
     {
       "id": "L3",

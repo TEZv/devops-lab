@@ -8,36 +8,168 @@
       "type": "theory",
       "tag": "🛡️ · карта",
       "title": "SRE triangle",
-      "instruction": "Senior DevOps/SRE: метрики → алерти → runbook → postmortem. Bridge з DE governance E6.",
-      "viz": {
-        "type": "splitCompare",
-        "columns": [
-          {
-            "title": "SLI / SLO / SLA",
-            "color": "#5b8def",
-            "items": [
-              "SLI = що вимірюємо (latency, errors)",
-              "SLO = ціль (99.9% < 300ms)",
-              "SLA = контракт з клієнтом (часто мʼякше SLO)"
-            ]
-          },
-          {
-            "title": "Incident loop",
-            "color": "#ff6b6b",
-            "items": [
-              "Alert → ack → triage",
-              "Mitigate → comms",
-              "Root cause → fix",
-              "Blameless postmortem"
-            ]
-          }
-        ]
-      },
-      "bullets": [
-        "Alert без runbook = panic",
-        "Error budget — коли можна ship швидше / коли freeze",
-        "DE mart stale = той самий triage що empty dashboard"
+      "instruction": "Метрики → алерти → runbook → postmortem. Той самий мʼяз, що DE governance E6.",
+      "vizs": [
+        {
+          "type": "layerStack",
+          "title": "Від сигналу до навчання",
+          "layers": [
+            {
+              "label": "SLI",
+              "sublabel": "що вимірюємо",
+              "color": "#5b8def",
+              "icon": "📊"
+            },
+            {
+              "label": "SLO",
+              "sublabel": "ціль (99.9%)",
+              "color": "#e8a84b",
+              "icon": "🎯"
+            },
+            {
+              "label": "Alert",
+              "sublabel": "burn / impact",
+              "color": "#ff6b6b",
+              "icon": "🔔"
+            },
+            {
+              "label": "Runbook",
+              "sublabel": "кроки руками",
+              "color": "#3d9a6a",
+              "icon": "📋"
+            },
+            {
+              "label": "Postmortem",
+              "sublabel": "чиним систему",
+              "color": "#c77dff",
+              "icon": "📝"
+            }
+          ]
+        },
+        {
+          "type": "conceptCards",
+          "title": "Образи для інтервʼю",
+          "cards": [
+            {
+              "icon": "📊",
+              "title": "SLI",
+              "badge": "сигнал",
+              "color": "#5b8def",
+              "rows": [
+                {
+                  "ok": true,
+                  "text": "latency / errors"
+                },
+                {
+                  "ok": false,
+                  "text": "відчуття"
+                }
+              ]
+            },
+            {
+              "icon": "📜",
+              "title": "SLA",
+              "badge": "контракт",
+              "color": "#8b9cb3",
+              "rows": [
+                {
+                  "ok": true,
+                  "text": "обіцянка клієнту"
+                },
+                {
+                  "ok": true,
+                  "text": "часто мʼякше SLO"
+                }
+              ]
+            },
+            {
+              "icon": "🧯",
+              "title": "Alert",
+              "badge": "page",
+              "color": "#ff6b6b",
+              "rows": [
+                {
+                  "ok": true,
+                  "text": "user impact"
+                },
+                {
+                  "ok": false,
+                  "text": "CPU 50% staging page"
+                }
+              ]
+            }
+          ],
+          "footnote": "SLI=спідометр · SLO=ліміт · SLA=квиток клієнту · runbook=GPS."
+        }
+      ],
+      "bullets": [],
+      "recallTips": [
+        "SLI→SLO→alert",
+        "alert без runbook = panic",
+        "blameless PM"
       ]
+    },
+    {
+      "id": "R0b",
+      "type": "drag_buckets",
+      "tag": "🛡️ · drag",
+      "title": "Перетягни термін у сімʼю SRE",
+      "instruction": "Куди живе кожен термін: вимірюємо / ціль / дія?",
+      "buckets": [
+        {
+          "id": "measure",
+          "icon": "📊",
+          "title": "Вимір",
+          "hint": "SLI",
+          "color": "#5b8def"
+        },
+        {
+          "id": "target",
+          "icon": "🎯",
+          "title": "Ціль / контракт",
+          "hint": "SLO · SLA",
+          "color": "#e8a84b"
+        },
+        {
+          "id": "action",
+          "icon": "📋",
+          "title": "Дія",
+          "hint": "runbook · PM",
+          "color": "#3d9a6a"
+        }
+      ],
+      "items": [
+        {
+          "text": "error rate %",
+          "bucket": "measure"
+        },
+        {
+          "text": "latency p99",
+          "bucket": "measure"
+        },
+        {
+          "text": "99.9% uptime goal",
+          "bucket": "target"
+        },
+        {
+          "text": "customer SLA refund",
+          "bucket": "target"
+        },
+        {
+          "text": "rollback steps doc",
+          "bucket": "action"
+        },
+        {
+          "text": "blameless timeline",
+          "bucket": "action"
+        }
+      ],
+      "recallTips": [
+        "SLI=вимір",
+        "SLO/SLA=ціль",
+        "runbook/PM=дія"
+      ],
+      "recallMapRef": "📍 Карта: R0 SRE triangle."
     },
     {
       "id": "R1",
@@ -50,18 +182,58 @@
         "type": "layerStack",
         "title": "Від метрики до дії",
         "layers": [
-          { "label": "SLI metric", "sublabel": "latency p99, error rate", "color": "#5b8def", "icon": "📊" },
-          { "label": "Alert rule", "sublabel": "threshold / burn rate", "color": "#e8a84b", "icon": "🔔" },
-          { "label": "Runbook", "sublabel": "kubectl / rollback steps", "color": "#3d9a6a", "icon": "📋" },
-          { "label": "Postmortem", "sublabel": "timeline + action items", "color": "#c77dff", "icon": "📝" }
+          {
+            "label": "SLI metric",
+            "sublabel": "latency p99, error rate",
+            "color": "#5b8def",
+            "icon": "📊"
+          },
+          {
+            "label": "Alert rule",
+            "sublabel": "threshold / burn rate",
+            "color": "#e8a84b",
+            "icon": "🔔"
+          },
+          {
+            "label": "Runbook",
+            "sublabel": "kubectl / rollback steps",
+            "color": "#3d9a6a",
+            "icon": "📋"
+          },
+          {
+            "label": "Postmortem",
+            "sublabel": "timeline + action items",
+            "color": "#c77dff",
+            "icon": "📝"
+          }
         ]
       },
       "pairs": [
-        { "left": "SLI", "right": "Вимірюваний сигнал (errors, latency)", "studyHint": "↑ шар 1" },
-        { "left": "SLO", "right": "Цільовий рівень SLI за період", "studyHint": "↑ R0 left" },
-        { "left": "Error budget", "right": "Скільки «поганого» дозволено до порушення SLO", "studyHint": "" },
-        { "left": "Runbook", "right": "Покрокові дії при alert (не ad-hoc)", "studyHint": "↑ шар 3" },
-        { "left": "Blameless postmortem", "right": "Timeline + fix system, не «хто винен»", "studyHint": "↑ шар 4" }
+        {
+          "left": "SLI",
+          "right": "Вимірюваний сигнал (errors, latency)",
+          "studyHint": "↑ шар 1"
+        },
+        {
+          "left": "SLO",
+          "right": "Цільовий рівень SLI за період",
+          "studyHint": "↑ R0 left"
+        },
+        {
+          "left": "Error budget",
+          "right": "Скільки «поганого» дозволено до порушення SLO",
+          "studyHint": ""
+        },
+        {
+          "left": "Runbook",
+          "right": "Покрокові дії при alert (не ad-hoc)",
+          "studyHint": "↑ шар 3"
+        },
+        {
+          "left": "Blameless postmortem",
+          "right": "Timeline + fix system, не «хто винен»",
+          "studyHint": "↑ шар 4"
+        }
       ]
     },
     {
@@ -156,9 +328,25 @@
         "Action items — owner + due date"
       ],
       "template": "## Summary\nImpact: ____ users / ____ min downtime\n\n## Timeline\n- T+0: alert ____\n- T+15: rollback ____\n\n## Root cause\n____ (system, not person)\n\n## Action items\n1. ____",
-      "answers": ["API", "mitigate", "fired", "deploy", "Missing runbook for rollback"],
-      "wordBank": ["API", "mitigate", "fired", "deploy", "Missing runbook for rollback", "junior"],
-      "hints": ["Impact — хто постраждав.", "Root cause — процес/система."]
+      "answers": [
+        "API",
+        "mitigate",
+        "fired",
+        "deploy",
+        "Missing runbook for rollback"
+      ],
+      "wordBank": [
+        "API",
+        "mitigate",
+        "fired",
+        "deploy",
+        "Missing runbook for rollback",
+        "junior"
+      ],
+      "hints": [
+        "Impact — хто постраждав.",
+        "Root cause — процес/система."
+      ]
     }
   ]
 }

@@ -13,11 +13,31 @@
         {
           "type": "pipelineH",
           "nodes": [
-            { "label": "📝 .tf", "hint": "desired", "color": "#8b9cb3" },
-            { "label": "👀 plan", "hint": "preview", "color": "#5b8def" },
-            { "label": "👥 PR", "hint": "review", "color": "#4ecdc4" },
-            { "label": "⚡ apply", "hint": "cloud", "color": "#3d9a6a" },
-            { "label": "💾 state", "hint": "memory", "color": "#e8a84b" }
+            {
+              "label": "📝 .tf",
+              "hint": "desired",
+              "color": "#8b9cb3"
+            },
+            {
+              "label": "👀 plan",
+              "hint": "preview",
+              "color": "#5b8def"
+            },
+            {
+              "label": "👥 PR",
+              "hint": "review",
+              "color": "#4ecdc4"
+            },
+            {
+              "label": "⚡ apply",
+              "hint": "cloud",
+              "color": "#3d9a6a"
+            },
+            {
+              "label": "💾 state",
+              "hint": "memory",
+              "color": "#e8a84b"
+            }
           ]
         },
         {
@@ -30,8 +50,14 @@
               "badge": "read-only",
               "color": "#5b8def",
               "rows": [
-                { "ok": true, "text": "+ / ~ / − in PR" },
-                { "ok": false, "text": "plan changes cloud" }
+                {
+                  "ok": true,
+                  "text": "+ / ~ / − in PR"
+                },
+                {
+                  "ok": false,
+                  "text": "plan changes cloud"
+                }
               ]
             },
             {
@@ -40,8 +66,14 @@
               "badge": "writes",
               "color": "#3d9a6a",
               "rows": [
-                { "ok": true, "text": "after approve" },
-                { "ok": true, "text": "updates state" }
+                {
+                  "ok": true,
+                  "text": "after approve"
+                },
+                {
+                  "ok": true,
+                  "text": "updates state"
+                }
               ]
             },
             {
@@ -50,8 +82,14 @@
               "badge": "least priv",
               "color": "#ff6b6b",
               "rows": [
-                { "ok": true, "text": "prefix/* read" },
-                { "ok": false, "text": "Action * Resource *" }
+                {
+                  "ok": true,
+                  "text": "prefix/* read"
+                },
+                {
+                  "ok": false,
+                  "text": "Action * Resource *"
+                }
               ]
             }
           ],
@@ -63,6 +101,62 @@
         "plan ≠ apply",
         "state = resource memory",
         "remote state + lock"
+      ]
+    },
+    {
+      "id": "T0b",
+      "type": "drag_buckets",
+      "tag": "🏗️ · drag",
+      "title": "Drag: plan / apply / state",
+      "buckets": [
+        {
+          "id": "plan",
+          "icon": "👀",
+          "title": "plan",
+          "color": "#5b8def"
+        },
+        {
+          "id": "apply",
+          "icon": "⚡",
+          "title": "apply",
+          "color": "#3d9a6a"
+        },
+        {
+          "id": "state",
+          "icon": "💾",
+          "title": "state",
+          "color": "#e8a84b"
+        }
+      ],
+      "items": [
+        {
+          "text": "+/-/~ in PR",
+          "bucket": "plan"
+        },
+        {
+          "text": "no cloud change",
+          "bucket": "plan"
+        },
+        {
+          "text": "writes cloud",
+          "bucket": "apply"
+        },
+        {
+          "text": "updates tfstate",
+          "bucket": "apply"
+        },
+        {
+          "text": "resource IDs memory",
+          "bucket": "state"
+        },
+        {
+          "text": "remote + lock",
+          "bucket": "state"
+        }
+      ],
+      "recallTips": [
+        "plan≠apply",
+        "state=memory"
       ]
     },
     {
@@ -102,18 +196,53 @@
           "type": "layerStack",
           "title": "State file — Terraform «memory»",
           "layers": [
-            { "label": "your .tf", "sublabel": "desired config (HCL)", "color": "#5b8def", "icon": "📝" },
-            { "label": "terraform.tfstate", "sublabel": "actual resource IDs", "color": "#e8a84b", "icon": "💾" },
-            { "label": "real cloud", "sublabel": "S3 bucket, IAM role…", "color": "#3d9a6a", "icon": "☁️" }
+            {
+              "label": "your .tf",
+              "sublabel": "desired config (HCL)",
+              "color": "#5b8def",
+              "icon": "📝"
+            },
+            {
+              "label": "terraform.tfstate",
+              "sublabel": "actual resource IDs",
+              "color": "#e8a84b",
+              "icon": "💾"
+            },
+            {
+              "label": "real cloud",
+              "sublabel": "S3 bucket, IAM role…",
+              "color": "#3d9a6a",
+              "icon": "☁️"
+            }
           ]
         }
       ],
       "pairs": [
-        { "left": "terraform plan", "right": "Preview diff without cloud changes", "studyHint": "↑ plan column" },
-        { "left": "terraform apply", "right": "Apply changes + update state", "studyHint": "↑ apply column" },
-        { "left": "terraform.tfstate", "right": "File «what already exists» (resource IDs)", "studyHint": "↑ state layer" },
-        { "left": "Remote backend", "right": "Shared state in S3 + lock (DynamoDB)", "studyHint": "↑ team apply" },
-        { "left": "Drift", "right": "Someone changed cloud manually — ≠ state", "studyHint": "↑ plan shows ~" }
+        {
+          "left": "terraform plan",
+          "right": "Preview diff without cloud changes",
+          "studyHint": "↑ plan column"
+        },
+        {
+          "left": "terraform apply",
+          "right": "Apply changes + update state",
+          "studyHint": "↑ apply column"
+        },
+        {
+          "left": "terraform.tfstate",
+          "right": "File «what already exists» (resource IDs)",
+          "studyHint": "↑ state layer"
+        },
+        {
+          "left": "Remote backend",
+          "right": "Shared state in S3 + lock (DynamoDB)",
+          "studyHint": "↑ team apply"
+        },
+        {
+          "left": "Drift",
+          "right": "Someone changed cloud manually — ≠ state",
+          "studyHint": "↑ plan shows ~"
+        }
       ]
     },
     {
@@ -129,10 +258,22 @@
         "ask": "Fill resource type and label."
       },
       "sampleTable": {
-        "headers": ["HCL label", "cloud object", "DE zone"],
+        "headers": [
+          "HCL label",
+          "cloud object",
+          "DE zone"
+        ],
         "rows": [
-          ["aws_s3_bucket.bronze_lake", "S3 bucket acme-bronze", "bronze / raw"],
-          ["aws_iam_role.etl_reader", "IAM role for Spark", "least privilege read"]
+          [
+            "aws_s3_bucket.bronze_lake",
+            "S3 bucket acme-bronze",
+            "bronze / raw"
+          ],
+          [
+            "aws_iam_role.etl_reader",
+            "IAM role for Spark",
+            "least privilege read"
+          ]
         ],
         "columnGlossary": {
           "HCL label": "resource TYPE.NAME in .tf",
@@ -143,9 +284,21 @@
       },
       "controlTip": "HCL → cloud table above.",
       "template": "resource \"____\" \"____\" {\n  bucket = \"acme-bronze-raw\"\n  tags = { env = \"prod\", zone = \"bronze\" }\n}",
-      "answers": ["aws_s3_bucket", "bronze_lake"],
-      "wordBank": ["aws_s3_bucket", "bronze_lake", "aws_instance", "main", "silver"],
-      "hints": ["S3 = aws_s3_bucket.", "Label = your identifier in module."]
+      "answers": [
+        "aws_s3_bucket",
+        "bronze_lake"
+      ],
+      "wordBank": [
+        "aws_s3_bucket",
+        "bronze_lake",
+        "aws_instance",
+        "main",
+        "silver"
+      ],
+      "hints": [
+        "S3 = aws_s3_bucket.",
+        "Label = your identifier in module."
+      ]
     },
     {
       "id": "T3",
@@ -243,20 +396,45 @@
         "ask": "Fill output block."
       },
       "sampleTable": {
-        "headers": ["step", "who", "what passes"],
+        "headers": [
+          "step",
+          "who",
+          "what passes"
+        ],
         "rows": [
-          ["apply", "Terraform", "output bronze_bucket_name"],
-          ["CI sync", "GitHub Actions", "→ Airflow Variable"],
-          ["DAG run", "DE Lab orch", "S3KeySensor on bronze/"]
+          [
+            "apply",
+            "Terraform",
+            "output bronze_bucket_name"
+          ],
+          [
+            "CI sync",
+            "GitHub Actions",
+            "→ Airflow Variable"
+          ],
+          [
+            "DAG run",
+            "DE Lab orch",
+            "S3KeySensor on bronze/"
+          ]
         ],
         "caption": "DevOps IaC + DE orchestration — one chain."
       },
       "controlTip": "Output chain above.",
       "recallMapRef": "📍 Bridge: DE Lab orchestration · O2 DAG (S3KeySensor → bronze/).",
       "template": "output \"bronze_bucket_name\" {\n  value = aws_s3_bucket.____.bucket\n}",
-      "answers": ["bronze_lake"],
-      "wordBank": ["bronze_lake", "silver_curated", "main", "etl"],
-      "hints": ["Same label as resource aws_s3_bucket.bronze_lake."]
+      "answers": [
+        "bronze_lake"
+      ],
+      "wordBank": [
+        "bronze_lake",
+        "silver_curated",
+        "main",
+        "etl"
+      ],
+      "hints": [
+        "Same label as resource aws_s3_bucket.bronze_lake."
+      ]
     }
   ]
 }

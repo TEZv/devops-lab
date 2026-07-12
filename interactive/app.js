@@ -1,5 +1,5 @@
 const STORAGE_KEY = 'devops-lab-interactive-v1';
-const BUILD = '20260712b';
+const BUILD = '20260712c';
 const GYM_URL = 'https://devops-lab-gym.web.app';
 const DE_LAB_URL = 'https://de-lab-interview-gym.web.app';
 const OPS_QUEST_MD = 'https://github.com/TEZv/devops-lab/blob/main/CHALLENGES.md';

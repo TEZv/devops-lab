@@ -14,10 +14,30 @@
           "type": "layerStack",
           "title": "Шари образу (знизу вгору)",
           "layers": [
-            { "label": "base", "sublabel": "debian / alpine", "color": "#8b9cb3", "icon": "📦" },
-            { "label": "deps", "sublabel": "pip install", "color": "#5b8def", "icon": "📚" },
-            { "label": "app", "sublabel": "COPY . /app", "color": "#4ecdc4", "icon": "📄" },
-            { "label": "run", "sublabel": "container process", "color": "#e8a84b", "icon": "▶️" }
+            {
+              "label": "base",
+              "sublabel": "debian / alpine",
+              "color": "#8b9cb3",
+              "icon": "📦"
+            },
+            {
+              "label": "deps",
+              "sublabel": "pip install",
+              "color": "#5b8def",
+              "icon": "📚"
+            },
+            {
+              "label": "app",
+              "sublabel": "COPY . /app",
+              "color": "#4ecdc4",
+              "icon": "📄"
+            },
+            {
+              "label": "run",
+              "sublabel": "container process",
+              "color": "#e8a84b",
+              "icon": "▶️"
+            }
           ]
         },
         {
@@ -30,8 +50,14 @@
               "badge": "immutable",
               "color": "#5b8def",
               "rows": [
-                { "ok": true, "text": "myapp:1.0.0 pin" },
-                { "ok": false, "text": ":latest у prod" }
+                {
+                  "ok": true,
+                  "text": "myapp:1.0.0 pin"
+                },
+                {
+                  "ok": false,
+                  "text": ":latest у prod"
+                }
               ]
             },
             {
@@ -40,8 +66,14 @@
               "badge": "runtime",
               "color": "#e8a84b",
               "rows": [
-                { "ok": true, "text": "instance образу" },
-                { "ok": true, "text": "можна stop/rm" }
+                {
+                  "ok": true,
+                  "text": "instance образу"
+                },
+                {
+                  "ok": true,
+                  "text": "можна stop/rm"
+                }
               ]
             },
             {
@@ -50,8 +82,14 @@
               "badge": "security",
               "color": "#3d9a6a",
               "rows": [
-                { "ok": true, "text": "non-root у prod" },
-                { "ok": false, "text": "USER root завжди" }
+                {
+                  "ok": true,
+                  "text": "non-root у prod"
+                },
+                {
+                  "ok": false,
+                  "text": "USER root завжди"
+                }
               ]
             }
           ],
@@ -63,6 +101,47 @@
         "image ≠ container",
         "pin tag, не :latest",
         "USER non-root"
+      ]
+    },
+    {
+      "id": "D0b",
+      "type": "drag_buckets",
+      "tag": "🐳 · drag",
+      "title": "Перетягни: image vs container",
+      "buckets": [
+        {
+          "id": "img",
+          "icon": "🧊",
+          "title": "Image",
+          "color": "#5b8def"
+        },
+        {
+          "id": "ctr",
+          "icon": "▶️",
+          "title": "Container",
+          "color": "#e8a84b"
+        }
+      ],
+      "items": [
+        {
+          "text": "myapp:1.0.0 pin",
+          "bucket": "img"
+        },
+        {
+          "text": "immutable layers",
+          "bucket": "img"
+        },
+        {
+          "text": "running process",
+          "bucket": "ctr"
+        },
+        {
+          "text": "docker stop/rm",
+          "bucket": "ctr"
+        }
+      ],
+      "recallTips": [
+        "image≠container"
       ]
     },
     {
@@ -98,11 +177,30 @@
         ]
       },
       "pairs": [
-        { "left": "Dockerfile", "right": "Recipe для image", "studyHint": "↑ image" },
-        { "left": "docker build -t name:tag .", "right": "Зібрати image з контексту", "studyHint": "↑ image" },
-        { "left": "ENTRYPOINT", "right": "Головна команда контейнера", "studyHint": "↑ container" },
-        { "left": "CMD", "right": "Default args / команда (override)", "studyHint": "↑ container" },
-        { "left": "docker compose up", "right": "Multi-container local stack" }
+        {
+          "left": "Dockerfile",
+          "right": "Recipe для image",
+          "studyHint": "↑ image"
+        },
+        {
+          "left": "docker build -t name:tag .",
+          "right": "Зібрати image з контексту",
+          "studyHint": "↑ image"
+        },
+        {
+          "left": "ENTRYPOINT",
+          "right": "Головна команда контейнера",
+          "studyHint": "↑ container"
+        },
+        {
+          "left": "CMD",
+          "right": "Default args / команда (override)",
+          "studyHint": "↑ container"
+        },
+        {
+          "left": "docker compose up",
+          "right": "Multi-container local stack"
+        }
       ]
     },
     {
@@ -146,10 +244,22 @@
         "ask": "Заповни директиви."
       },
       "sampleTable": {
-        "headers": ["директива", "роль", "override?"],
+        "headers": [
+          "директива",
+          "роль",
+          "override?"
+        ],
         "rows": [
-          ["ENTRYPOINT", "python app.py — завжди", "важко змінити"],
-          ["CMD", "default --date yesterday", "docker run … arg перебиває"]
+          [
+            "ENTRYPOINT",
+            "python app.py — завжди",
+            "важко змінити"
+          ],
+          [
+            "CMD",
+            "default --date yesterday",
+            "docker run … arg перебиває"
+          ]
         ],
         "columnGlossary": {
           "директива": "Останні рядки Dockerfile",
@@ -160,9 +270,21 @@
       },
       "controlTip": "Таблиця ENTRYPOINT/CMD — вище.",
       "template": "ENTRYPOINT [\"python\", \"app.py\"]\n____ [\"--date\", \"____\"]",
-      "answers": ["CMD", "yesterday"],
-      "wordBank": ["CMD", "ENTRYPOINT", "yesterday", "today", "RUN"],
-      "hints": ["Default args — CMD.", "Приклад literal для interview."]
+      "answers": [
+        "CMD",
+        "yesterday"
+      ],
+      "wordBank": [
+        "CMD",
+        "ENTRYPOINT",
+        "yesterday",
+        "today",
+        "RUN"
+      ],
+      "hints": [
+        "Default args — CMD.",
+        "Приклад literal для interview."
+      ]
     },
     {
       "id": "D4",

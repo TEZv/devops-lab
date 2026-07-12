@@ -8,36 +8,168 @@
       "type": "theory",
       "tag": "🛡️ · map",
       "title": "SRE triangle",
-      "instruction": "Senior DevOps/SRE: metrics → alerts → runbook → postmortem. Bridge with DE governance E6.",
-      "viz": {
-        "type": "splitCompare",
-        "columns": [
-          {
-            "title": "SLI / SLO / SLA",
-            "color": "#5b8def",
-            "items": [
-              "SLI = what we measure (latency, errors)",
-              "SLO = target (99.9% < 300ms)",
-              "SLA = customer contract (often softer than SLO)"
-            ]
-          },
-          {
-            "title": "Incident loop",
-            "color": "#ff6b6b",
-            "items": [
-              "Alert → ack → triage",
-              "Mitigate → comms",
-              "Root cause → fix",
-              "Blameless postmortem"
-            ]
-          }
-        ]
-      },
-      "bullets": [
-        "Alert without runbook = panic",
-        "Error budget — when to ship fast / when to freeze",
-        "DE mart stale = same triage as empty dashboard"
+      "instruction": "Metrics → alerts → runbook → postmortem. Same muscle as DE governance E6.",
+      "vizs": [
+        {
+          "type": "layerStack",
+          "title": "From signal to learning",
+          "layers": [
+            {
+              "label": "SLI",
+              "sublabel": "what we measure",
+              "color": "#5b8def",
+              "icon": "📊"
+            },
+            {
+              "label": "SLO",
+              "sublabel": "target (99.9%)",
+              "color": "#e8a84b",
+              "icon": "🎯"
+            },
+            {
+              "label": "Alert",
+              "sublabel": "burn / impact",
+              "color": "#ff6b6b",
+              "icon": "🔔"
+            },
+            {
+              "label": "Runbook",
+              "sublabel": "hands-on steps",
+              "color": "#3d9a6a",
+              "icon": "📋"
+            },
+            {
+              "label": "Postmortem",
+              "sublabel": "fix the system",
+              "color": "#c77dff",
+              "icon": "📝"
+            }
+          ]
+        },
+        {
+          "type": "conceptCards",
+          "title": "Interview images",
+          "cards": [
+            {
+              "icon": "📊",
+              "title": "SLI",
+              "badge": "signal",
+              "color": "#5b8def",
+              "rows": [
+                {
+                  "ok": true,
+                  "text": "latency / errors"
+                },
+                {
+                  "ok": false,
+                  "text": "feelings"
+                }
+              ]
+            },
+            {
+              "icon": "📜",
+              "title": "SLA",
+              "badge": "contract",
+              "color": "#8b9cb3",
+              "rows": [
+                {
+                  "ok": true,
+                  "text": "customer promise"
+                },
+                {
+                  "ok": true,
+                  "text": "often softer than SLO"
+                }
+              ]
+            },
+            {
+              "icon": "🧯",
+              "title": "Alert",
+              "badge": "page",
+              "color": "#ff6b6b",
+              "rows": [
+                {
+                  "ok": true,
+                  "text": "user impact"
+                },
+                {
+                  "ok": false,
+                  "text": "CPU 50% staging page"
+                }
+              ]
+            }
+          ],
+          "footnote": "SLI=speedometer · SLO=speed limit · SLA=ticket to customer · runbook=GPS."
+        }
+      ],
+      "bullets": [],
+      "recallTips": [
+        "SLI→SLO→alert",
+        "alert needs runbook",
+        "blameless PM"
       ]
+    },
+    {
+      "id": "R0b",
+      "type": "drag_buckets",
+      "tag": "🛡️ · drag",
+      "title": "Drag term into SRE family",
+      "instruction": "Where does each term live: measure / target / action?",
+      "buckets": [
+        {
+          "id": "measure",
+          "icon": "📊",
+          "title": "Measure",
+          "hint": "SLI",
+          "color": "#5b8def"
+        },
+        {
+          "id": "target",
+          "icon": "🎯",
+          "title": "Target / contract",
+          "hint": "SLO · SLA",
+          "color": "#e8a84b"
+        },
+        {
+          "id": "action",
+          "icon": "📋",
+          "title": "Action",
+          "hint": "runbook · PM",
+          "color": "#3d9a6a"
+        }
+      ],
+      "items": [
+        {
+          "text": "error rate %",
+          "bucket": "measure"
+        },
+        {
+          "text": "latency p99",
+          "bucket": "measure"
+        },
+        {
+          "text": "99.9% uptime goal",
+          "bucket": "target"
+        },
+        {
+          "text": "customer SLA refund",
+          "bucket": "target"
+        },
+        {
+          "text": "rollback steps doc",
+          "bucket": "action"
+        },
+        {
+          "text": "blameless timeline",
+          "bucket": "action"
+        }
+      ],
+      "recallTips": [
+        "SLI=measure",
+        "SLO/SLA=target",
+        "runbook/PM=action"
+      ],
+      "recallMapRef": "📍 Map: R0 SRE triangle."
     },
     {
       "id": "R1",
@@ -50,18 +182,58 @@
         "type": "layerStack",
         "title": "From metric to action",
         "layers": [
-          { "label": "SLI metric", "sublabel": "latency p99, error rate", "color": "#5b8def", "icon": "📊" },
-          { "label": "Alert rule", "sublabel": "threshold / burn rate", "color": "#e8a84b", "icon": "🔔" },
-          { "label": "Runbook", "sublabel": "kubectl / rollback steps", "color": "#3d9a6a", "icon": "📋" },
-          { "label": "Postmortem", "sublabel": "timeline + action items", "color": "#c77dff", "icon": "📝" }
+          {
+            "label": "SLI metric",
+            "sublabel": "latency p99, error rate",
+            "color": "#5b8def",
+            "icon": "📊"
+          },
+          {
+            "label": "Alert rule",
+            "sublabel": "threshold / burn rate",
+            "color": "#e8a84b",
+            "icon": "🔔"
+          },
+          {
+            "label": "Runbook",
+            "sublabel": "kubectl / rollback steps",
+            "color": "#3d9a6a",
+            "icon": "📋"
+          },
+          {
+            "label": "Postmortem",
+            "sublabel": "timeline + action items",
+            "color": "#c77dff",
+            "icon": "📝"
+          }
         ]
       },
       "pairs": [
-        { "left": "SLI", "right": "Measurable signal (errors, latency)", "studyHint": "↑ layer 1" },
-        { "left": "SLO", "right": "Target SLI level over a period", "studyHint": "↑ R0 left" },
-        { "left": "Error budget", "right": "How much «bad» allowed before SLO breach", "studyHint": "" },
-        { "left": "Runbook", "right": "Step-by-step actions on alert (not ad-hoc)", "studyHint": "↑ layer 3" },
-        { "left": "Blameless postmortem", "right": "Timeline + fix system, not «who to blame»", "studyHint": "↑ layer 4" }
+        {
+          "left": "SLI",
+          "right": "Measurable signal (errors, latency)",
+          "studyHint": "↑ layer 1"
+        },
+        {
+          "left": "SLO",
+          "right": "Target SLI level over a period",
+          "studyHint": "↑ R0 left"
+        },
+        {
+          "left": "Error budget",
+          "right": "How much «bad» allowed before SLO breach",
+          "studyHint": ""
+        },
+        {
+          "left": "Runbook",
+          "right": "Step-by-step actions on alert (not ad-hoc)",
+          "studyHint": "↑ layer 3"
+        },
+        {
+          "left": "Blameless postmortem",
+          "right": "Timeline + fix system, not «who to blame»",
+          "studyHint": "↑ layer 4"
+        }
       ]
     },
     {
@@ -156,9 +328,25 @@
         "Action items — owner + due date"
       ],
       "template": "## Summary\nImpact: ____ users / ____ min downtime\n\n## Timeline\n- T+0: alert ____\n- T+15: rollback ____\n\n## Root cause\n____ (system, not person)\n\n## Action items\n1. ____",
-      "answers": ["API", "mitigate", "fired", "deploy", "Missing runbook for rollback"],
-      "wordBank": ["API", "mitigate", "fired", "deploy", "Missing runbook for rollback", "junior"],
-      "hints": ["Impact — who was affected.", "Root cause — process/system."]
+      "answers": [
+        "API",
+        "mitigate",
+        "fired",
+        "deploy",
+        "Missing runbook for rollback"
+      ],
+      "wordBank": [
+        "API",
+        "mitigate",
+        "fired",
+        "deploy",
+        "Missing runbook for rollback",
+        "junior"
+      ],
+      "hints": [
+        "Impact — who was affected.",
+        "Root cause — process/system."
+      ]
     }
   ]
 }

@@ -13,10 +13,26 @@
         {
           "type": "pipelineH",
           "nodes": [
-            { "label": "🌿 branch", "hint": "від main", "color": "#5b8def" },
-            { "label": "💬 commit", "hint": "малі кроки", "color": "#4ecdc4" },
-            { "label": "👀 PR+CI", "hint": "review+tests", "color": "#3d9a6a" },
-            { "label": "✅ merge", "hint": "лише green", "color": "#e8a84b" }
+            {
+              "label": "🌿 branch",
+              "hint": "від main",
+              "color": "#5b8def"
+            },
+            {
+              "label": "💬 commit",
+              "hint": "малі кроки",
+              "color": "#4ecdc4"
+            },
+            {
+              "label": "👀 PR+CI",
+              "hint": "review+tests",
+              "color": "#3d9a6a"
+            },
+            {
+              "label": "✅ merge",
+              "hint": "лише green",
+              "color": "#e8a84b"
+            }
           ]
         },
         {
@@ -44,6 +60,48 @@
       ]
     },
     {
+      "id": "G0b",
+      "type": "drag_buckets",
+      "tag": "🔀 · drag",
+      "title": "Перетягни: робимо vs ні",
+      "buckets": [
+        {
+          "id": "do",
+          "icon": "✅",
+          "title": "Робимо",
+          "color": "#3d9a6a"
+        },
+        {
+          "id": "dont",
+          "icon": "⛔",
+          "title": "Не робимо",
+          "color": "#ff6b6b"
+        }
+      ],
+      "items": [
+        {
+          "text": "feature branch PR",
+          "bucket": "do"
+        },
+        {
+          "text": "green CI before merge",
+          "bucket": "do"
+        },
+        {
+          "text": "force push main",
+          "bucket": "dont"
+        },
+        {
+          "text": "commit у main напряму",
+          "bucket": "dont"
+        }
+      ],
+      "recallTips": [
+        "PR+CI",
+        "no force main"
+      ]
+    },
+    {
       "id": "G1",
       "type": "match_pairs",
       "tag": "🔀 · 1/5",
@@ -53,18 +111,52 @@
       "studyViz": {
         "type": "pipelineH",
         "nodes": [
-          { "label": "feature branch", "hint": "не push у main", "color": "#5b8def" },
-          { "label": "Pull Request", "hint": "review людини", "color": "#4ecdc4" },
-          { "label": "CI pipeline", "hint": "lint + test green", "color": "#3d9a6a" },
-          { "label": "merge → main", "hint": "protected branch", "color": "#e8a84b" }
+          {
+            "label": "feature branch",
+            "hint": "не push у main",
+            "color": "#5b8def"
+          },
+          {
+            "label": "Pull Request",
+            "hint": "review людини",
+            "color": "#4ecdc4"
+          },
+          {
+            "label": "CI pipeline",
+            "hint": "lint + test green",
+            "color": "#3d9a6a"
+          },
+          {
+            "label": "merge → main",
+            "hint": "protected branch",
+            "color": "#e8a84b"
+          }
         ]
       },
       "pairs": [
-        { "left": "Pull Request", "right": "Запит на merge + review", "studyHint": "↑ крок 2" },
-        { "left": "CI pipeline", "right": "Автотести на кожен push", "studyHint": "↑ крок 3" },
-        { "left": "git merge --no-ff", "right": "Зберігає merge commit (історія)" },
-        { "left": "Protected branch", "right": "main без прямого push", "studyHint": "↑ крок 1+4" },
-        { "left": "Rebase", "right": "Переписати коміти поверх main (обережно)" }
+        {
+          "left": "Pull Request",
+          "right": "Запит на merge + review",
+          "studyHint": "↑ крок 2"
+        },
+        {
+          "left": "CI pipeline",
+          "right": "Автотести на кожен push",
+          "studyHint": "↑ крок 3"
+        },
+        {
+          "left": "git merge --no-ff",
+          "right": "Зберігає merge commit (історія)"
+        },
+        {
+          "left": "Protected branch",
+          "right": "main без прямого push",
+          "studyHint": "↑ крок 1+4"
+        },
+        {
+          "left": "Rebase",
+          "right": "Переписати коміти поверх main (обережно)"
+        }
       ]
     },
     {
@@ -80,10 +172,22 @@
         "ask": "Заповни команди."
       },
       "sampleTable": {
-        "headers": ["гілка", "хто merge", "CI"],
+        "headers": [
+          "гілка",
+          "хто merge",
+          "CI"
+        ],
         "rows": [
-          ["main", "лише через PR", "обовʼязково green"],
-          ["feature/DEV-42", "ти → PR", "на кожен push"]
+          [
+            "main",
+            "лише через PR",
+            "обовʼязково green"
+          ],
+          [
+            "feature/DEV-42",
+            "ти → PR",
+            "на кожен push"
+          ]
         ],
         "columnGlossary": {
           "гілка": "main = prod truth; feature/* = твоя робота",
@@ -94,9 +198,21 @@
       },
       "controlTip": "Таблиця ritual — вище.",
       "template": "git checkout ____\ngit pull origin main\ngit checkout -b ____/DEV-42-healthcheck",
-      "answers": ["main", "feature"],
-      "wordBank": ["main", "master", "feature", "fix", "develop"],
-      "hints": ["База — main.", "Префікс feature/ — convention."]
+      "answers": [
+        "main",
+        "feature"
+      ],
+      "wordBank": [
+        "main",
+        "master",
+        "feature",
+        "fix",
+        "develop"
+      ],
+      "hints": [
+        "База — main.",
+        "Префікс feature/ — convention."
+      ]
     },
     {
       "id": "G3",

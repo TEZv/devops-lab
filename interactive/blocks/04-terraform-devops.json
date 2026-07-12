@@ -13,11 +13,31 @@
         {
           "type": "pipelineH",
           "nodes": [
-            { "label": "📝 .tf", "hint": "desired", "color": "#8b9cb3" },
-            { "label": "👀 plan", "hint": "preview", "color": "#5b8def" },
-            { "label": "👥 PR", "hint": "review", "color": "#4ecdc4" },
-            { "label": "⚡ apply", "hint": "cloud", "color": "#3d9a6a" },
-            { "label": "💾 state", "hint": "memory", "color": "#e8a84b" }
+            {
+              "label": "📝 .tf",
+              "hint": "desired",
+              "color": "#8b9cb3"
+            },
+            {
+              "label": "👀 plan",
+              "hint": "preview",
+              "color": "#5b8def"
+            },
+            {
+              "label": "👥 PR",
+              "hint": "review",
+              "color": "#4ecdc4"
+            },
+            {
+              "label": "⚡ apply",
+              "hint": "cloud",
+              "color": "#3d9a6a"
+            },
+            {
+              "label": "💾 state",
+              "hint": "memory",
+              "color": "#e8a84b"
+            }
           ]
         },
         {
@@ -30,8 +50,14 @@
               "badge": "read-only",
               "color": "#5b8def",
               "rows": [
-                { "ok": true, "text": "+ / ~ / − у PR" },
-                { "ok": false, "text": "plan міняє cloud" }
+                {
+                  "ok": true,
+                  "text": "+ / ~ / − у PR"
+                },
+                {
+                  "ok": false,
+                  "text": "plan міняє cloud"
+                }
               ]
             },
             {
@@ -40,8 +66,14 @@
               "badge": "writes",
               "color": "#3d9a6a",
               "rows": [
-                { "ok": true, "text": "після approve" },
-                { "ok": true, "text": "оновлює state" }
+                {
+                  "ok": true,
+                  "text": "після approve"
+                },
+                {
+                  "ok": true,
+                  "text": "оновлює state"
+                }
               ]
             },
             {
@@ -50,8 +82,14 @@
               "badge": "least priv",
               "color": "#ff6b6b",
               "rows": [
-                { "ok": true, "text": "prefix/* read" },
-                { "ok": false, "text": "Action * Resource *" }
+                {
+                  "ok": true,
+                  "text": "prefix/* read"
+                },
+                {
+                  "ok": false,
+                  "text": "Action * Resource *"
+                }
               ]
             }
           ],
@@ -63,6 +101,62 @@
         "plan ≠ apply",
         "state = памʼять ресурсів",
         "remote state + lock"
+      ]
+    },
+    {
+      "id": "T0b",
+      "type": "drag_buckets",
+      "tag": "🏗️ · drag",
+      "title": "Перетягни: plan / apply / state",
+      "buckets": [
+        {
+          "id": "plan",
+          "icon": "👀",
+          "title": "plan",
+          "color": "#5b8def"
+        },
+        {
+          "id": "apply",
+          "icon": "⚡",
+          "title": "apply",
+          "color": "#3d9a6a"
+        },
+        {
+          "id": "state",
+          "icon": "💾",
+          "title": "state",
+          "color": "#e8a84b"
+        }
+      ],
+      "items": [
+        {
+          "text": "+/-/~ in PR",
+          "bucket": "plan"
+        },
+        {
+          "text": "не міняє cloud",
+          "bucket": "plan"
+        },
+        {
+          "text": "пише в cloud",
+          "bucket": "apply"
+        },
+        {
+          "text": "updates tfstate",
+          "bucket": "apply"
+        },
+        {
+          "text": "памʼять resource IDs",
+          "bucket": "state"
+        },
+        {
+          "text": "remote + lock",
+          "bucket": "state"
+        }
+      ],
+      "recallTips": [
+        "plan≠apply",
+        "state=memory"
       ]
     },
     {
@@ -102,18 +196,53 @@
           "type": "layerStack",
           "title": "State file — «памʼять» Terraform",
           "layers": [
-            { "label": "your .tf", "sublabel": "desired config (HCL)", "color": "#5b8def", "icon": "📝" },
-            { "label": "terraform.tfstate", "sublabel": "actual resource IDs", "color": "#e8a84b", "icon": "💾" },
-            { "label": "real cloud", "sublabel": "S3 bucket, IAM role…", "color": "#3d9a6a", "icon": "☁️" }
+            {
+              "label": "your .tf",
+              "sublabel": "desired config (HCL)",
+              "color": "#5b8def",
+              "icon": "📝"
+            },
+            {
+              "label": "terraform.tfstate",
+              "sublabel": "actual resource IDs",
+              "color": "#e8a84b",
+              "icon": "💾"
+            },
+            {
+              "label": "real cloud",
+              "sublabel": "S3 bucket, IAM role…",
+              "color": "#3d9a6a",
+              "icon": "☁️"
+            }
           ]
         }
       ],
       "pairs": [
-        { "left": "terraform plan", "right": "Preview diff без змін у cloud", "studyHint": "↑ plan колонка" },
-        { "left": "terraform apply", "right": "Застосувати зміни + оновити state", "studyHint": "↑ apply колонка" },
-        { "left": "terraform.tfstate", "right": "Файл «що вже існує» (resource IDs)", "studyHint": "↑ state шар" },
-        { "left": "Remote backend", "right": "Спільний state у S3 + lock (DynamoDB)", "studyHint": "↑ team apply" },
-        { "left": "Drift", "right": "Хтось змінив cloud вручну — ≠ state", "studyHint": "↑ plan покаже ~" }
+        {
+          "left": "terraform plan",
+          "right": "Preview diff без змін у cloud",
+          "studyHint": "↑ plan колонка"
+        },
+        {
+          "left": "terraform apply",
+          "right": "Застосувати зміни + оновити state",
+          "studyHint": "↑ apply колонка"
+        },
+        {
+          "left": "terraform.tfstate",
+          "right": "Файл «що вже існує» (resource IDs)",
+          "studyHint": "↑ state шар"
+        },
+        {
+          "left": "Remote backend",
+          "right": "Спільний state у S3 + lock (DynamoDB)",
+          "studyHint": "↑ team apply"
+        },
+        {
+          "left": "Drift",
+          "right": "Хтось змінив cloud вручну — ≠ state",
+          "studyHint": "↑ plan покаже ~"
+        }
       ]
     },
     {
@@ -129,10 +258,22 @@
         "ask": "Заповни resource type і label."
       },
       "sampleTable": {
-        "headers": ["HCL label", "cloud object", "DE zone"],
+        "headers": [
+          "HCL label",
+          "cloud object",
+          "DE zone"
+        ],
         "rows": [
-          ["aws_s3_bucket.bronze_lake", "S3 bucket acme-bronze", "bronze / raw"],
-          ["aws_iam_role.etl_reader", "IAM role для Spark", "least privilege read"]
+          [
+            "aws_s3_bucket.bronze_lake",
+            "S3 bucket acme-bronze",
+            "bronze / raw"
+          ],
+          [
+            "aws_iam_role.etl_reader",
+            "IAM role для Spark",
+            "least privilege read"
+          ]
         ],
         "columnGlossary": {
           "HCL label": "resource TYPE.NAME у .tf",
@@ -143,9 +284,21 @@
       },
       "controlTip": "Таблиця HCL → cloud — вище.",
       "template": "resource \"____\" \"____\" {\n  bucket = \"acme-bronze-raw\"\n  tags = { env = \"prod\", zone = \"bronze\" }\n}",
-      "answers": ["aws_s3_bucket", "bronze_lake"],
-      "wordBank": ["aws_s3_bucket", "bronze_lake", "aws_instance", "main", "silver"],
-      "hints": ["S3 = aws_s3_bucket.", "Label = твій ідентифікатор у модулі."]
+      "answers": [
+        "aws_s3_bucket",
+        "bronze_lake"
+      ],
+      "wordBank": [
+        "aws_s3_bucket",
+        "bronze_lake",
+        "aws_instance",
+        "main",
+        "silver"
+      ],
+      "hints": [
+        "S3 = aws_s3_bucket.",
+        "Label = твій ідентифікатор у модулі."
+      ]
     },
     {
       "id": "T3",
@@ -223,11 +376,31 @@
       "studyViz": {
         "type": "pipelineH",
         "nodes": [
-          { "label": "edit .tf", "hint": "branch", "color": "#8b9cb3" },
-          { "label": "fmt+validate", "hint": "local", "color": "#5b8def" },
-          { "label": "plan in PR", "hint": "review", "color": "#4ecdc4" },
-          { "label": "merge", "hint": "approve", "color": "#3d9a6a" },
-          { "label": "apply", "hint": "lock", "color": "#e8a84b" }
+          {
+            "label": "edit .tf",
+            "hint": "branch",
+            "color": "#8b9cb3"
+          },
+          {
+            "label": "fmt+validate",
+            "hint": "local",
+            "color": "#5b8def"
+          },
+          {
+            "label": "plan in PR",
+            "hint": "review",
+            "color": "#4ecdc4"
+          },
+          {
+            "label": "merge",
+            "hint": "approve",
+            "color": "#3d9a6a"
+          },
+          {
+            "label": "apply",
+            "hint": "lock",
+            "color": "#e8a84b"
+          }
         ]
       },
       "recallMapRef": "📍 Карта: T0 «Terraform ritual» у шарі IaC.",
@@ -253,20 +426,45 @@
         "ask": "Заповни output block."
       },
       "sampleTable": {
-        "headers": ["крок", "хто", "що передає"],
+        "headers": [
+          "крок",
+          "хто",
+          "що передає"
+        ],
         "rows": [
-          ["apply", "Terraform", "output bronze_bucket_name"],
-          ["CI sync", "GitHub Actions", "→ Airflow Variable"],
-          ["DAG run", "DE Lab orch", "S3KeySensor на bronze/"]
+          [
+            "apply",
+            "Terraform",
+            "output bronze_bucket_name"
+          ],
+          [
+            "CI sync",
+            "GitHub Actions",
+            "→ Airflow Variable"
+          ],
+          [
+            "DAG run",
+            "DE Lab orch",
+            "S3KeySensor на bronze/"
+          ]
         ],
         "caption": "DevOps IaC + DE orchestration — один ланцюг."
       },
       "controlTip": "Ланцюг output — вище.",
       "recallMapRef": "📍 Bridge: DE Lab orchestration · O2 DAG (S3KeySensor → bronze/).",
       "template": "output \"bronze_bucket_name\" {\n  value = aws_s3_bucket.____.bucket\n}",
-      "answers": ["bronze_lake"],
-      "wordBank": ["bronze_lake", "silver_curated", "main", "etl"],
-      "hints": ["Той самий label що в resource aws_s3_bucket.bronze_lake."]
+      "answers": [
+        "bronze_lake"
+      ],
+      "wordBank": [
+        "bronze_lake",
+        "silver_curated",
+        "main",
+        "etl"
+      ],
+      "hints": [
+        "Той самий label що в resource aws_s3_bucket.bronze_lake."
+      ]
     }
   ]
 }

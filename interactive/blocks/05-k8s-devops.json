@@ -13,11 +13,31 @@
         {
           "type": "pipelineH",
           "nodes": [
-            { "label": "Deployment", "hint": "desired", "color": "#5b8def" },
-            { "label": "ReplicaSet", "hint": "N copies", "color": "#4ecdc4" },
-            { "label": "Pod", "hint": "process", "color": "#3d9a6a" },
-            { "label": "Service", "hint": "stable DNS", "color": "#e8a84b" },
-            { "label": "Ingress", "hint": "HTTP", "color": "#c77dff" }
+            {
+              "label": "Deployment",
+              "hint": "desired",
+              "color": "#5b8def"
+            },
+            {
+              "label": "ReplicaSet",
+              "hint": "N copies",
+              "color": "#4ecdc4"
+            },
+            {
+              "label": "Pod",
+              "hint": "process",
+              "color": "#3d9a6a"
+            },
+            {
+              "label": "Service",
+              "hint": "stable DNS",
+              "color": "#e8a84b"
+            },
+            {
+              "label": "Ingress",
+              "hint": "HTTP",
+              "color": "#c77dff"
+            }
           ]
         },
         {
@@ -30,8 +50,14 @@
               "badge": "менеджер",
               "color": "#5b8def",
               "rows": [
-                { "ok": true, "text": "replicas + rollout" },
-                { "ok": true, "text": "rollback" }
+                {
+                  "ok": true,
+                  "text": "replicas + rollout"
+                },
+                {
+                  "ok": true,
+                  "text": "rollback"
+                }
               ]
             },
             {
@@ -40,8 +66,14 @@
               "badge": "процес",
               "color": "#3d9a6a",
               "rows": [
-                { "ok": true, "text": "1+ containers" },
-                { "ok": false, "text": "ручний prod Pod" }
+                {
+                  "ok": true,
+                  "text": "1+ containers"
+                },
+                {
+                  "ok": false,
+                  "text": "ручний prod Pod"
+                }
               ]
             },
             {
@@ -50,8 +82,14 @@
               "badge": "адреса",
               "color": "#e8a84b",
               "rows": [
-                { "ok": true, "text": "selector → labels" },
-                { "ok": false, "text": "замінює Deployment" }
+                {
+                  "ok": true,
+                  "text": "selector → labels"
+                },
+                {
+                  "ok": false,
+                  "text": "замінює Deployment"
+                }
               ]
             }
           ],
@@ -65,6 +103,62 @@
         "describe pod → Events"
       ],
       "recallMapRef": "📍 Bridge: DE Lab cloud · A0 lake zones (workloads + object storage)."
+    },
+    {
+      "id": "K0b",
+      "type": "drag_buckets",
+      "tag": "☸️ · drag",
+      "title": "Перетягни роль K8s",
+      "buckets": [
+        {
+          "id": "mgr",
+          "icon": "📋",
+          "title": "Deployment",
+          "color": "#5b8def"
+        },
+        {
+          "id": "run",
+          "icon": "🧬",
+          "title": "Pod",
+          "color": "#3d9a6a"
+        },
+        {
+          "id": "door",
+          "icon": "🚪",
+          "title": "Service",
+          "color": "#e8a84b"
+        }
+      ],
+      "items": [
+        {
+          "text": "replicas + rollout",
+          "bucket": "mgr"
+        },
+        {
+          "text": "rollback",
+          "bucket": "mgr"
+        },
+        {
+          "text": "1+ containers",
+          "bucket": "run"
+        },
+        {
+          "text": "ephemeral IP",
+          "bucket": "run"
+        },
+        {
+          "text": "selector labels",
+          "bucket": "door"
+        },
+        {
+          "text": "stable DNS",
+          "bucket": "door"
+        }
+      ],
+      "recallTips": [
+        "Deployment→Pod",
+        "Service=door"
+      ]
     },
     {
       "id": "K1",
@@ -99,11 +193,31 @@
         ]
       },
       "pairs": [
-        { "left": "Pod", "right": "Найменша runnable одиниця (containers)", "studyHint": "↑ Pod" },
-        { "left": "Deployment", "right": "Desired replicas + rolling update", "studyHint": "↑ K0 pipeline" },
-        { "left": "Service", "right": "Стабільна адреса до Pod по labels", "studyHint": "↑ Service" },
-        { "left": "ConfigMap", "right": "Non-secret config як env/volume", "studyHint": "" },
-        { "left": "livenessProbe", "right": "Restart якщо процес «мертвий»", "studyHint": "" }
+        {
+          "left": "Pod",
+          "right": "Найменша runnable одиниця (containers)",
+          "studyHint": "↑ Pod"
+        },
+        {
+          "left": "Deployment",
+          "right": "Desired replicas + rolling update",
+          "studyHint": "↑ K0 pipeline"
+        },
+        {
+          "left": "Service",
+          "right": "Стабільна адреса до Pod по labels",
+          "studyHint": "↑ Service"
+        },
+        {
+          "left": "ConfigMap",
+          "right": "Non-secret config як env/volume",
+          "studyHint": ""
+        },
+        {
+          "left": "livenessProbe",
+          "right": "Restart якщо процес «мертвий»",
+          "studyHint": ""
+        }
       ]
     },
     {
@@ -124,9 +238,22 @@
         "image tag pin — не :latest"
       ],
       "template": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: web\nspec:\n  replicas: ____\n  selector:\n    matchLabels:\n      app: ____\n  template:\n    metadata:\n      labels:\n        app: ____",
-      "answers": ["3", "web", "web"],
-      "wordBank": ["3", "web", "api", "latest", "1"],
-      "hints": ["Три інстанси.", "Label app=web у selector і template."]
+      "answers": [
+        "3",
+        "web",
+        "web"
+      ],
+      "wordBank": [
+        "3",
+        "web",
+        "api",
+        "latest",
+        "1"
+      ],
+      "hints": [
+        "Три інстанси.",
+        "Label app=web у selector і template."
+      ]
     },
     {
       "id": "K3",
@@ -199,11 +326,31 @@
       "studyViz": {
         "type": "pipelineH",
         "nodes": [
-          { "label": "get pods", "hint": "status", "color": "#8b9cb3" },
-          { "label": "describe", "hint": "Events", "color": "#5b8def" },
-          { "label": "logs", "hint": "app", "color": "#4ecdc4" },
-          { "label": "fix YAML", "hint": "probe/image", "color": "#3d9a6a" },
-          { "label": "rollout status", "hint": "verify", "color": "#e8a84b" }
+          {
+            "label": "get pods",
+            "hint": "status",
+            "color": "#8b9cb3"
+          },
+          {
+            "label": "describe",
+            "hint": "Events",
+            "color": "#5b8def"
+          },
+          {
+            "label": "logs",
+            "hint": "app",
+            "color": "#4ecdc4"
+          },
+          {
+            "label": "fix YAML",
+            "hint": "probe/image",
+            "color": "#3d9a6a"
+          },
+          {
+            "label": "rollout status",
+            "hint": "verify",
+            "color": "#e8a84b"
+          }
         ]
       },
       "recallMapRef": "📍 Карта: K0 «Deployment → Pod» у шарі K8s.",
