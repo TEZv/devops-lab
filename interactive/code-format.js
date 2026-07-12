@@ -9,7 +9,9 @@
   function detectLang(code) {
     const s = String(code || '');
     if (/\b(SELECT|FROM|WHERE|GROUP BY|WITH|CREATE TABLE)\b/i.test(s)) return 'sql';
-    if (/\b(def |import |pd\.|df\.|for |return |\.groupby)/i.test(s)) return 'python';
+    if (/\b(def |import |pd\.|df\.|for |return |\.groupby|counts\[)/i.test(s)) return 'python';
+    if (/\b(resource |output |variable |provider |aws_|google_|azurerm_)/i.test(s)) return 'hcl';
+    if (/^\s*(apiVersion:|kind:|metadata:)/m.test(s)) return 'yaml';
     return 'text';
   }
 

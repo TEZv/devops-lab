@@ -64,7 +64,140 @@
     setTimeout(() => el.remove(), 2200);
   }
 
-  function mountTheory(root, level, onComplete) {
+
+  function isProgressDone(entry) {
+    return entry === true || !!(entry && entry.done);
+  }
+
+  function readSnapshot(entry) {
+    if (!entry || entry === true) return null;
+    return entry.snapshot || null;
+  }
+
+  function idealSnapshot(level) {
+    switch (level.type) {
+      case 'fill_blanks':
+        return { filled: [...(level.answers || [])] };
+      case 'drag_order': {
+        const items = level.items || [];
+        const order = items.map((it) => (typeof it === 'string' ? it : (it.id || it.text || '')));
+        return { order };
+      }
+      case 'drag_buckets':
+        return {
+          placements: Object.fromEntries(
+            (level.items || []).map((it) => [it.id || it.text, it.bucket])
+          ),
+        };
+      case 'match_pairs':
+        return { matched: (level.pairs || []).map((p) => ({ left: p.left, right: p.right })) };
+      case 'whats_wrong':
+      case 'multi_choice':
+      case 'scenario':
+        return { choice: level.correctIndex };
+      case 'pick_rows':
+        return { selected: [...(level.correctIds || [])] };
+      case 'theory':
+      case 'flip_cards':
+      case 'pipeline_build':
+      case 'csv_lab':
+      case 'company_map':
+      case 'aim_range':
+      case 'fog_probe':
+      case 'constellation':
+        return { marked: true };
+      default:
+        return { marked: true };
+    }
+  }
+
+  function finish(onComplete, level, snapshot) {
+    if (typeof onComplete !== 'function') return;
+    onComplete(level.id, snapshot != null ? snapshot : idealSnapshot(level));
+  }
+
+  /** After correct fill: show worked example (input → steps → output). */
+  function mountResultTrace(parent, level) {
+    const trace = level.resultTrace;
+    if (!trace) return null;
+    let box = parent.querySelector('.pl-result-trace');
+    if (box) {
+      box.hidden = false;
+      return box;
+    }
+    box = document.createElement('div');
+    box.className = 'pl-result-trace';
+    const title = document.createElement('p');
+    title.className = 'pl-result-trace-title';
+    title.textContent = trace.title || ui('resultTraceTitle');
+    box.appendChild(title);
+    if (trace.input) {
+      const inp = document.createElement('pre');
+      inp.className = 'pl-result-trace-io';
+      inp.textContent = `${ui('resultTraceInput')}\n${trace.input}`;
+      box.appendChild(inp);
+    }
+    if (Array.isArray(trace.steps) && trace.steps.length) {
+      const ol = document.createElement('ol');
+      ol.className = 'pl-result-trace-steps';
+      trace.steps.forEach((step) => {
+        const li = document.createElement('li');
+        li.textContent = step;
+        ol.appendChild(li);
+      });
+      box.appendChild(ol);
+    }
+    if (trace.output) {
+      const out = document.createElement('pre');
+      out.className = 'pl-result-trace-io out';
+      out.textContent = `${ui('resultTraceOutput')}\n${trace.output}`;
+      box.appendChild(out);
+    }
+    if (trace.note) {
+      const note = document.createElement('p');
+      note.className = 'pl-tip';
+      note.textContent = trace.note;
+      box.appendChild(note);
+    }
+    parent.appendChild(box);
+    return box;
+  }
+
+  function lockReview(root) {
+    root.classList.add('pl-review-lock');
+    root.querySelectorAll('button, input, select, textarea').forEach((el) => {
+      if (el.classList.contains('pl-review-keep')) return;
+      el.disabled = true;
+    });
+  }
+
+  /** Tip under fill_blanks: SQL tip only for SQL, Python for py, etc. */
+  function resolveFillTip(level) {
+    if (level.controlTip) return level.controlTip;
+    const detected = (global.DeLabCodeFormat && level.template)
+      ? DeLabCodeFormat.detectLang(level.template)
+      : '';
+    const lang = String(level.codeLang || detected || '').toLowerCase();
+    const tag = String(level.tag || '').toLowerCase();
+    if (lang === 'python' || lang === 'py' || /\bpy\b|python|pandas/.test(tag)) {
+      return ui('fillTipPython');
+    }
+    if (lang === 'hcl' || lang === 'terraform' || /terraform|\bhcl\b|\btf\b/.test(tag)) {
+      return ui('fillTipHcl');
+    }
+    if (lang === 'bash' || lang === 'shell' || /shell|bash|linux/.test(tag)) {
+      return ui('fillTipShell');
+    }
+    if (lang === 'yaml' || lang === 'yml' || /yaml|k8s|kubectl/.test(tag)) {
+      return ui('fillTipYaml');
+    }
+    if (lang === 'sql' || /\bsql\b/.test(tag)) {
+      return ui('fillTipSql');
+    }
+    return ui('fillTipDefault');
+  }
+
+  function mountTheory(root, level, onComplete, opts) {
     const wrap = document.createElement('div');
     wrap.className = 'pl-theory';
 
@@ -163,14 +296,15 @@
       mark.textContent = ui('theoryMarked');
       mark.classList.add('marked');
       toast(root, ui('theorySaved'), true);
-      if (onComplete) onComplete(level.id);
+      finish(onComplete, level);
     });
+    // revisit: keep interactive
     actions.appendChild(mark);
     wrap.appendChild(actions);
     root.appendChild(wrap);
   }
 
-  function mountFlipCards(root, level, onComplete) {
+  function mountFlipCards(root, level, onComplete, opts) {
     const wrap = document.createElement('div');
     wrap.className = 'pl-flip-grid';
     let opened = 0;
@@ -188,19 +322,20 @@
         if (el.classList.contains('flipped')) return;
         el.classList.add('flipped');
         opened += 1;
-        feedback.textContent = `Відкрито ${opened}/${need}`;
+        feedback.textContent = ui('flipOpened', opened, need);
         if (opened === need) {
           feedback.textContent = ui('flipDone');
-          toast(root, 'Картки пройдено', true);
-          if (onComplete) onComplete(level.id);
+          toast(root, ui('flipToast'), true);
+          finish(onComplete, level);
         }
       });
       wrap.appendChild(el);
     });
+    // revisit: play again
     root.append(wrap, feedback);
   }
 
-  function mountPipelineBuild(root, level, onComplete) {
+  function mountPipelineBuild(root, level, onComplete, opts) {
     const stages = level.stages || [];
     const pool = shuffle([...(level.pool || stages.map((s) => s.label))]);
     const placed = stages.map(() => '');
@@ -213,7 +348,7 @@
     feedback.className = 'pl-feedback';
     const tip = document.createElement('p');
     tip.className = 'pl-tip';
-    tip.textContent = level.instruction || 'Перетягни етапи на конвеєр зліва → направо.';
+    tip.textContent = level.instruction || ui('pipeTipDefault');
 
     function renderBoard() {
       board.innerHTML = '';
@@ -275,7 +410,7 @@
         : '❌ Ще не той порядок / етап. Клік по слоту — очистити.';
       if (ok) {
         toast(root, 'Пайплайн ОК', true);
-        if (onComplete) onComplete(level.id);
+        finish(onComplete, level);
       }
     });
 
@@ -283,14 +418,14 @@
     root.append(tip, board, bank, check, feedback);
   }
 
-  function mountScenario(root, level, onComplete) {
+  function mountScenario(root, level, onComplete, progressOpts) {
     const wrap = document.createElement('div');
     wrap.className = 'pl-scenario';
     const scene = document.createElement('div');
     scene.className = 'pl-story';
     scene.innerHTML = `<span class="pl-story-emoji">${escapeHtml(level.emoji || '🧭')}</span><p>${escapeHtml(level.scene)}</p>`;
-    const opts = document.createElement('div');
-    opts.className = 'pl-options';
+    const choiceBox = document.createElement('div');
+    choiceBox.className = 'pl-options';
     const feedback = document.createElement('p');
     feedback.className = 'pl-feedback';
 
@@ -300,22 +435,35 @@
       btn.className = 'pl-option-btn';
       btn.textContent = choice.label;
       btn.addEventListener('click', () => {
-        opts.querySelectorAll('.pl-option-btn').forEach((b) => { b.disabled = true; });
+        choiceBox.querySelectorAll('.pl-option-btn').forEach((b) => { b.disabled = true; });
         const best = idx === level.bestIndex;
         btn.classList.add(best ? 'ok' : 'bad');
         feedback.textContent = `${best ? '✅' : '⚠️'} ${choice.feedback}`;
         if (best) {
-          toast(root, 'Сильне рішення', true);
-          if (onComplete) onComplete(level.id);
+          toast(root, ui('scenarioToastOk'), true);
+          finish(onComplete, level, { choice: idx });
         } else if (choice.stillPass) {
-          toast(root, 'Можна краще, але зараховано', true);
-          if (onComplete) onComplete(level.id);
+          toast(root, ui('scenarioToastPass'), true);
+          finish(onComplete, level, { choice: idx });
         }
       });
-      opts.appendChild(btn);
+      choiceBox.appendChild(btn);
     });
 
-    wrap.append(scene, opts, feedback);
+    wrap.append(scene, choiceBox, feedback);
+    if (progressOpts && progressOpts.review) {
+      const idx = (progressOpts.snap && progressOpts.snap.choice != null)
+        ? progressOpts.snap.choice
+        : level.bestIndex;
+      [...choiceBox.querySelectorAll('.pl-option-btn')].forEach((btn, i) => {
+        if (i === idx) btn.classList.add('sel');
+      });
+      const choice = (level.choices || [])[idx];
+      if (choice) {
+        feedback.className = 'pl-feedback ok';
+        feedback.textContent = '✅ ' + (choice.feedback || '');
+      }
+    }
     root.appendChild(wrap);
   }
 
@@ -374,7 +522,7 @@
   }
 
   function mountMissionBrief(root, level) {
-    if (!level.mission && !level.sampleTable && !level.why && !level.joinTables && !level.columnGlossary) return;
+    if (!level.mission && !level.sampleTable && !level.why && !level.joinTables && !level.columnGlossary && !level.given) return;
     const brief = document.createElement('div');
     brief.className = 'pl-mission';
     if (level.mission) {
@@ -392,6 +540,33 @@
         ask.textContent = level.mission.ask;
         brief.appendChild(ask);
       }
+    }
+    if (level.given) {
+      const givenBox = document.createElement('div');
+      givenBox.className = 'pl-given';
+      const gTitle = document.createElement('p');
+      gTitle.className = 'pl-given-title';
+      gTitle.textContent = level.given.label || ui('givenTitle');
+      givenBox.appendChild(gTitle);
+      if (level.given.note) {
+        const note = document.createElement('p');
+        note.className = 'pl-tip';
+        note.textContent = level.given.note;
+        givenBox.appendChild(note);
+      }
+      if (level.given.code) {
+        const pre = document.createElement('pre');
+        pre.className = 'pl-given-code';
+        pre.textContent = level.given.code;
+        givenBox.appendChild(pre);
+      }
+      if (level.given.expect) {
+        const exp = document.createElement('p');
+        exp.className = 'pl-given-expect';
+        exp.innerHTML = `<strong>${escapeHtml(ui('givenExpect'))}</strong> ${escapeHtml(level.given.expect)}`;
+        givenBox.appendChild(exp);
+      }
+      brief.appendChild(givenBox);
     }
     if (level.why) {
       const why = document.createElement('p');
@@ -473,7 +648,7 @@
     parent.appendChild(box);
   }
 
-  function mountPickRows(root, level, onComplete) {
+  function mountPickRows(root, level, onComplete, opts) {
     mountMissionBrief(root, level);
     appendRecallPanel(root, level);
     const selected = new Set();
@@ -524,7 +699,7 @@
           if (need.includes(id)) tr.classList.add('hl');
           else if (selected.has(id)) tr.classList.add('bad-pick');
         });
-        if (onComplete) onComplete(level.id);
+        finish(onComplete, level, { selected: [...selected] });
       } else {
         feedback.textContent = '❌ Не той набір. Підказка: спочатку відкинь evil, потім найдешевшу в кожній парі (power, age).';
         toast(root, ui('pickRowsMiss') || 'Wrong set', false);
@@ -532,13 +707,29 @@
     });
 
     root.append(table, check, feedback);
+    if (opts && opts.review) {
+      const ids = (opts.snap && Array.isArray(opts.snap.selected)) ? opts.snap.selected : need;
+      ids.forEach((id) => {
+        selected.add(String(id));
+        const tr = tbody.querySelector(`tr[data-id="${id}"]`);
+        if (tr) {
+          tr.classList.add('picked', 'hl');
+          const mark = tr.querySelector('.pick-mark');
+          if (mark) mark.textContent = '●';
+        }
+      });
+      // selection restored; keep interactive
+    }
   }
 
-  function mountFillBlanks(root, level, onComplete) {
+  function mountFillBlanks(root, level, onComplete, opts) {
     mountMissionBrief(root, level);
     appendRecallPanel(root, level);
     const answers = level.answers || [];
     const filled = answers.map(() => '');
+    if (opts && opts.snap && Array.isArray(opts.snap.filled)) {
+      opts.snap.filled.forEach((v, i) => { if (i < filled.length) filled[i] = v; });
+    }
     let activeSlot = 0;
     const bank = shuffle([...(level.wordBank || answers)]);
 
@@ -548,7 +739,7 @@
     feedback.className = 'pl-feedback';
     const tip = document.createElement('p');
     tip.className = 'pl-tip';
-    tip.textContent = level.controlTip || ui('fillTipDefault');
+    tip.textContent = resolveFillTip(level);
 
     function nextEmpty(from = 0) {
       for (let i = from; i < answers.length; i += 1) if (!filled[i]) return i;
@@ -647,7 +838,8 @@
           : ui('fillMissReveal', answers.join(', ')));
       if (ok) {
         toast(root, ui('fillCredited'), true);
-        if (onComplete) onComplete(level.id);
+        mountResultTrace(root, level);
+        finish(onComplete, level, { filled: [...filled] });
       }
     });
     reset.addEventListener('click', () => {
@@ -655,25 +847,34 @@
       activeSlot = 0;
       renderTemplate();
       feedback.textContent = '';
+      const tr = root.querySelector('.pl-result-trace');
+      if (tr) tr.hidden = true;
     });
     hint.addEventListener('click', () => {
-      if (hints[hintsUsed]) {
+      feedback.className = 'pl-feedback';
+      if (!hints.length) {
+        feedback.textContent = ui('hintsNone');
+      } else if (hints[hintsUsed]) {
         feedback.textContent = `💡 ${hints[hintsUsed]}`;
         hintsUsed += 1;
       } else {
         feedback.textContent = ui('hintsDone');
       }
+      feedback.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     });
 
     actions.append(check, reset, hint);
     renderTemplate();
     root.append(tip, templateEl, bankEl, actions, feedback);
+    // revisit: snap restored; Check/Reset/Hint stay active
   }
 
-  function mountDragOrder(root, level, onComplete) {
+  function mountDragOrder(root, level, onComplete, opts) {
     mountMissionBrief(root, level);
     appendRecallPanel(root, level);
-    const order = shuffle(level.items);
+    const order = (opts && opts.review && opts.snap && Array.isArray(opts.snap.order))
+      ? opts.snap.order
+      : shuffle([...(level.items || [])]);
     const list = document.createElement('div');
     list.className = 'pl-drag-list';
     order.forEach((text) => {
@@ -706,13 +907,14 @@
       feedback.textContent = ok ? ui('dragOrderOk') : ui('dragOrderFail');
       if (ok) {
         toast(root, ui('dragOrderToast'), true);
-        if (onComplete) onComplete(level.id);
+        finish(onComplete, level, { order: current });
       }
     });
     root.append(list, check, feedback);
+    // revisit: order restored; keep interactive
   }
 
-  function mountDragBuckets(root, level, onComplete) {
+  function mountDragBuckets(root, level, onComplete, opts) {
     mountMissionBrief(root, level);
     appendRecallPanel(root, level);
 
@@ -817,14 +1019,28 @@
       feedback.textContent = ok ? ui('bucketOk') : ui('bucketFail');
       if (ok) {
         toast(root, ui('bucketToast'), true);
-        if (onComplete) onComplete(level.id);
+        const placements = {};
+        Object.values(chipById).forEach((chip) => {
+          const zone = chip.parentElement;
+          if (zone && zone.classList.contains('pl-bucket-drop')) {
+            placements[chip.dataset.id] = zone.dataset.bucket;
+          }
+        });
+        finish(onComplete, level, { placements });
       }
     });
     wrap.append(check, feedback);
+    if (opts && opts.review && opts.snap && opts.snap.placements) {
+      Object.entries(opts.snap.placements).forEach(([id, bucketId]) => {
+        const chip = chipById[id];
+        const drop = board.querySelector('.pl-bucket-drop[data-bucket="' + bucketId + '"]');
+        if (chip && drop) drop.appendChild(chip);
+      });
+    }
     root.appendChild(wrap);
   }
 
-  function mountMatch(root, level, onComplete) {
+  function mountMatch(root, level, onComplete, opts) {
     const PAIR_COLORS = ['#3d9a6a', '#e8a84b', '#5b8def', '#c77dff', '#4ecdc4', '#ff6b6b'];
     const wrap = document.createElement('div');
     wrap.className = 'pl-match-wrap';
@@ -952,7 +1168,9 @@
               : ui('matchPairOk', matched, level.pairs.length);
             if (matched === level.pairs.length) {
               toast(root, ui('matchCompleteToast'), true);
-              if (onComplete) onComplete(level.id);
+              finish(onComplete, level, {
+                matched: (level.pairs || []).map((p) => ({ left: p.left, right: p.right })),
+              });
             }
           } else {
             feedback.textContent = ui('matchWrong');
@@ -1020,7 +1238,7 @@
     root.appendChild(wrap);
   }
 
-  function mountWhatsWrong(root, level, onComplete) {
+  function mountWhatsWrong(root, level, onComplete, progressOpts) {
     mountMissionBrief(root, level);
     appendRecallPanel(root, level);
     const wrap = document.createElement('div');
@@ -1044,8 +1262,8 @@
     prompt.className = 'pl-tip';
     prompt.textContent = level.prompt || ui('whatsWrongPrompt');
     wrap.appendChild(prompt);
-    const opts = document.createElement('div');
-    opts.className = 'pl-options';
+    const choiceBox = document.createElement('div');
+    choiceBox.className = 'pl-options';
     const feedback = document.createElement('p');
     feedback.className = 'pl-feedback';
 
@@ -1056,24 +1274,33 @@
       btn.textContent = opt;
       btn.addEventListener('click', () => {
         const ok = idx === level.correctIndex;
-        opts.querySelectorAll('.pl-option-btn').forEach((b) => { b.disabled = true; });
+        choiceBox.querySelectorAll('.pl-option-btn').forEach((b) => { b.disabled = true; });
         btn.classList.add(ok ? 'ok' : 'bad');
         feedback.textContent = ok
           ? `✅ ${level.explainOk || ui('explainOkDefault')}`
           : `❌ ${level.explainFail || ui('explainFailDefault')} ${level.explanation || ''}`;
         if (ok) {
           toast(root, ui('toastDiagOk'), true);
-          if (onComplete) onComplete(level.id);
+          finish(onComplete, level, { choice: idx });
         }
       });
-      opts.appendChild(btn);
+      choiceBox.appendChild(btn);
     });
 
-    wrap.append(opts, feedback);
+    wrap.append(choiceBox, feedback);
+    if (progressOpts && progressOpts.review) {
+      const idx = (progressOpts.snap && progressOpts.snap.choice != null)
+        ? progressOpts.snap.choice
+        : level.correctIndex;
+      [...choiceBox.querySelectorAll('.pl-option-btn')].forEach((btn, i) => {
+        if (i === idx) btn.classList.add('sel');
+      });
+      feedback.textContent = '';
+    }
     root.appendChild(wrap);
   }
 
-  function mountMultiChoice(root, level, onComplete) {
+  function mountMultiChoice(root, level, onComplete, progressOpts) {
     mountMissionBrief(root, level);
     appendRecallPanel(root, level);
     const wrap = document.createElement('div');
@@ -1091,8 +1318,8 @@
     }
     const q = document.createElement('p');
     q.textContent = level.question || '';
-    const opts = document.createElement('div');
-    opts.className = 'pl-options';
+    const choiceBox = document.createElement('div');
+    choiceBox.className = 'pl-options';
     const feedback = document.createElement('p');
     feedback.className = 'pl-feedback';
     (level.options || []).forEach((opt, idx) => {
@@ -1102,23 +1329,32 @@
       btn.textContent = opt;
       btn.addEventListener('click', () => {
         const ok = idx === level.correctIndex;
-        opts.querySelectorAll('.pl-option-btn').forEach((b) => { b.disabled = true; });
+        choiceBox.querySelectorAll('.pl-option-btn').forEach((b) => { b.disabled = true; });
         btn.classList.add(ok ? 'ok' : 'bad');
         feedback.textContent = ok
           ? `✅ ${level.explanation || ui('mcOkDefault')}`
           : `❌ ${level.explanation || ui('mcFailDefault')}`;
         if (ok) {
           toast(root, 'OK', true);
-          if (onComplete) onComplete(level.id);
+          finish(onComplete, level, { choice: idx });
         }
       });
-      opts.appendChild(btn);
+      choiceBox.appendChild(btn);
     });
-    wrap.append(q, opts, feedback);
+    wrap.append(q, choiceBox, feedback);
+    if (progressOpts && progressOpts.review) {
+      const idx = (progressOpts.snap && progressOpts.snap.choice != null)
+        ? progressOpts.snap.choice
+        : level.correctIndex;
+      [...choiceBox.querySelectorAll('.pl-option-btn')].forEach((btn, i) => {
+        if (i === idx) btn.classList.add('sel');
+      });
+      feedback.textContent = '';
+    }
     root.appendChild(wrap);
   }
 
-  function renderLevel(container, level, onComplete) {
+  function renderLevel(container, level, onComplete, progressEntry) {
     const head = document.createElement('div');
     head.className = 'pl-level-head';
     const tag = level.tag ? `<span class="pl-tag">${escapeHtml(labelCap(level.tag))}</span>` : '';
@@ -1126,61 +1362,65 @@
     const body = document.createElement('div');
     container.append(head, body);
 
+    const review = isProgressDone(progressEntry);
+    const snap = readSnapshot(progressEntry) || (review ? idealSnapshot(level) : null);
+    const opts = { review, snap };
+
+
     switch (level.type) {
       case 'theory':
-        mountTheory(body, level, onComplete);
+        mountTheory(body, level, onComplete, opts);
         break;
       case 'flip_cards':
-        mountFlipCards(body, level, onComplete);
+        mountFlipCards(body, level, onComplete, opts);
         break;
       case 'pipeline_build':
-        mountPipelineBuild(body, level, onComplete);
+        mountPipelineBuild(body, level, onComplete, opts);
         break;
       case 'scenario':
-        mountScenario(body, level, onComplete);
+        mountScenario(body, level, onComplete, opts);
         break;
       case 'pick_rows':
-        mountPickRows(body, level, onComplete);
+        mountPickRows(body, level, onComplete, opts);
         break;
       case 'fill_blanks':
-        mountFillBlanks(body, level, onComplete);
+        mountFillBlanks(body, level, onComplete, opts);
         break;
       case 'drag_order':
-        mountDragOrder(body, level, onComplete);
+        mountDragOrder(body, level, onComplete, opts);
         break;
       case 'drag_buckets':
-        mountDragBuckets(body, level, onComplete);
+        mountDragBuckets(body, level, onComplete, opts);
         break;
       case 'match_pairs':
-        mountMatch(body, level, onComplete);
+        mountMatch(body, level, onComplete, opts);
         break;
       case 'whats_wrong':
-        mountWhatsWrong(body, level, onComplete);
+        mountWhatsWrong(body, level, onComplete, opts);
         break;
       case 'multi_choice':
-        mountMultiChoice(body, level, onComplete);
+        mountMultiChoice(body, level, onComplete, opts);
         break;
       case 'csv_lab':
-        mountCsvLab(body, level, onComplete);
+        mountCsvLab(body, level, onComplete, opts);
         break;
       case 'company_map':
-        mountCompanyMap(body, level, onComplete);
+        mountCompanyMap(body, level, onComplete, opts);
         break;
       case 'aim_range':
-        mountAimRange(body, level, onComplete);
+        mountAimRange(body, level, onComplete, opts);
         break;
       case 'fog_probe':
-        mountFogProbe(body, level, onComplete);
+        mountFogProbe(body, level, onComplete, opts);
         break;
       case 'constellation':
-        mountConstellation(body, level, onComplete);
+        mountConstellation(body, level, onComplete, opts);
         break;
       default:
-        body.textContent = 'Невідомий тип рівня.';
+        body.textContent = ui('unknownLevel');
     }
   }
-
-  function mountAimRange(root, level, onComplete) {
+  function mountAimRange(root, level, onComplete, opts) {
     const wrap = document.createElement('div');
     wrap.className = 'pl-aim';
     const story = document.createElement('p');
@@ -1286,7 +1526,7 @@
       if (ok) {
         feedback.textContent = `✅ ${level.hitText || sectors[idx]?.meaning || 'Влучання!'}`;
         toast(root, 'Влучний постріл', true);
-        if (onComplete) onComplete(level.id);
+        finish(onComplete, level);
       } else {
         feedback.textContent = `❌ ${level.missText || sectors[idx]?.meaning || 'Не той сектор.'} Спроба ${shots}.`;
         toast(root, 'Мимо', false);
@@ -1307,7 +1547,7 @@
     root.appendChild(wrap);
   }
 
-  function mountFogProbe(root, level, onComplete) {
+  function mountFogProbe(root, level, onComplete, opts) {
     const wrap = document.createElement('div');
     wrap.className = 'pl-fog';
     const tip = document.createElement('p');
@@ -1341,7 +1581,7 @@
             if (found.size >= need.size) {
               feedback.textContent = `✅ ${level.success || 'Усі аномалії спіймано ліхтариком!'}`;
               toast(root, 'Fog cleared', true);
-              if (onComplete) onComplete(level.id);
+              finish(onComplete, level);
             }
           } else {
             td.classList.add('false-hit');
@@ -1371,7 +1611,7 @@
     root.appendChild(wrap);
   }
 
-  function mountConstellation(root, level, onComplete) {
+  function mountConstellation(root, level, onComplete, opts) {
     const wrap = document.createElement('div');
     wrap.className = 'pl-constellation';
     const tip = document.createElement('p');
@@ -1457,7 +1697,7 @@
         if (picked.length === order.length) {
           feedback.textContent = `✅ ${level.success || 'Сузірʼя зібрано — потік даних правильний!'}`;
           toast(root, 'Constellation lock', true);
-          if (onComplete) onComplete(level.id);
+          finish(onComplete, level);
         }
       } else {
         picked.length = 0;
@@ -1496,7 +1736,7 @@
     return { headers, rows };
   }
 
-  function mountCsvLab(root, level, onComplete) {
+  function mountCsvLab(root, level, onComplete, opts) {
     mountMissionBrief(root, level);
     const { headers, rows } = parseCsv(level.csv);
     const wrap = document.createElement('div');
@@ -1566,7 +1806,7 @@
           feedback.textContent = ok ? `✅ ${level.success || 'Вибірка вірна!'}` : '❌ Результат ще не той — порівняй з питанням.';
           if (ok) {
             toast(root, 'CSV lab passed', true);
-            if (onComplete) onComplete(level.id);
+            finish(onComplete, level);
           }
         } catch (err) {
           out.textContent = String(err.message || err);
@@ -1589,7 +1829,7 @@
           : `❌ Немає. ${level.hintOnFail || 'Перерахуй по таблиці ще раз.'}`;
         if (ok) {
           toast(root, 'OK', true);
-          if (onComplete) onComplete(level.id);
+          finish(onComplete, level);
         }
       });
       wrap.append(input, check, feedback);
@@ -1597,7 +1837,7 @@
     root.appendChild(wrap);
   }
 
-  function mountCompanyMap(root, level, onComplete) {
+  function mountCompanyMap(root, level, onComplete, opts) {
     const wrap = document.createElement('div');
     wrap.className = 'pl-company-map pl-sigil-atlas-wrap';
     if (level.intro) {
@@ -1702,7 +1942,7 @@
           if (opened >= cards.length) {
             core.classList.add('lit');
             toast(root, ui('atlasLitToast'), true);
-            if (onComplete) onComplete(level.id);
+            finish(onComplete, level);
           }
         }
       });
