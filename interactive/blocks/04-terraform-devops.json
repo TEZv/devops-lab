@@ -8,22 +8,61 @@
       "type": "theory",
       "tag": "🏗️ · карта",
       "title": "Terraform ritual",
-      "instruction": "Middle DevOps: HCL описує бажаний стан → plan показує diff → apply міняє cloud. Bridge з DE cloud IAM.",
-      "viz": {
-        "type": "pipelineH",
-        "nodes": [
-          { "label": "Write .tf", "hint": "HCL resources", "color": "#8b9cb3" },
-          { "label": "terraform plan", "hint": "read-only preview", "color": "#5b8def" },
-          { "label": "PR review", "hint": "team approves diff", "color": "#4ecdc4" },
-          { "label": "terraform apply", "hint": "real changes", "color": "#3d9a6a" },
-          { "label": "state file", "hint": "tracks reality", "color": "#e8a84b" }
-        ]
-      },
-      "bullets": [
-        "plan ≠ apply: спочатку бачиш +/~/−, потім міняєш cloud",
-        "State = «що вже створено» — без нього Terraform «забуває»",
-        "Remote state (S3 + lock) — команда не ламає одна одній apply",
-        "Least privilege IAM — як DE Lab cloud A3, не `*` на все"
+      "instruction": "HCL = бажаний стан. Plan = диф. Apply = реальність. State = памʼять.",
+      "vizs": [
+        {
+          "type": "pipelineH",
+          "nodes": [
+            { "label": "📝 .tf", "hint": "desired", "color": "#8b9cb3" },
+            { "label": "👀 plan", "hint": "preview", "color": "#5b8def" },
+            { "label": "👥 PR", "hint": "review", "color": "#4ecdc4" },
+            { "label": "⚡ apply", "hint": "cloud", "color": "#3d9a6a" },
+            { "label": "💾 state", "hint": "memory", "color": "#e8a84b" }
+          ]
+        },
+        {
+          "type": "conceptCards",
+          "title": "Образи для інтервʼю",
+          "cards": [
+            {
+              "icon": "👀",
+              "title": "plan",
+              "badge": "read-only",
+              "color": "#5b8def",
+              "rows": [
+                { "ok": true, "text": "+ / ~ / − у PR" },
+                { "ok": false, "text": "plan міняє cloud" }
+              ]
+            },
+            {
+              "icon": "⚡",
+              "title": "apply",
+              "badge": "writes",
+              "color": "#3d9a6a",
+              "rows": [
+                { "ok": true, "text": "після approve" },
+                { "ok": true, "text": "оновлює state" }
+              ]
+            },
+            {
+              "icon": "🔐",
+              "title": "IAM",
+              "badge": "least priv",
+              "color": "#ff6b6b",
+              "rows": [
+                { "ok": true, "text": "prefix/* read" },
+                { "ok": false, "text": "Action * Resource *" }
+              ]
+            }
+          ],
+          "footnote": "plan = примірка · apply = покупка · state = чек у гаманці команди (remote + lock)."
+        }
+      ],
+      "bullets": [],
+      "recallTips": [
+        "plan ≠ apply",
+        "state = памʼять ресурсів",
+        "remote state + lock"
       ]
     },
     {

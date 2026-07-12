@@ -8,21 +8,61 @@
       "type": "theory",
       "tag": "🐳 · map",
       "title": "Image → container",
-      "instruction": "Docker on interviews: isolated process + FS snapshot, not magic.",
-      "viz": {
-        "type": "layerStack",
-        "title": "Image layers (simplified)",
-        "layers": [
-          { "label": "base image", "sublabel": "debian / alpine", "color": "#8b9cb3", "icon": "📦" },
-          { "label": "deps", "sublabel": "pip install", "color": "#5b8def", "icon": "📚" },
-          { "label": "app code", "sublabel": "COPY . /app", "color": "#4ecdc4", "icon": "📄" },
-          { "label": "container", "sublabel": "running process", "color": "#e8a84b", "icon": "▶️" }
-        ]
-      },
-      "bullets": [
-        "Image immutable; container — instance",
-        "`:latest` in prod — trap (non-reproducible deploy)",
-        "Non-root USER in Dockerfile — security baseline"
+      "instruction": "Image = frozen recipe. Container = running process.",
+      "vizs": [
+        {
+          "type": "layerStack",
+          "title": "Image layers (bottom → top)",
+          "layers": [
+            { "label": "base", "sublabel": "debian / alpine", "color": "#8b9cb3", "icon": "📦" },
+            { "label": "deps", "sublabel": "pip install", "color": "#5b8def", "icon": "📚" },
+            { "label": "app", "sublabel": "COPY . /app", "color": "#4ecdc4", "icon": "📄" },
+            { "label": "run", "sublabel": "container process", "color": "#e8a84b", "icon": "▶️" }
+          ]
+        },
+        {
+          "type": "conceptCards",
+          "title": "Interview memory",
+          "cards": [
+            {
+              "icon": "🧊",
+              "title": "Image",
+              "badge": "immutable",
+              "color": "#5b8def",
+              "rows": [
+                { "ok": true, "text": "myapp:1.0.0 pin" },
+                { "ok": false, "text": ":latest in prod" }
+              ]
+            },
+            {
+              "icon": "▶️",
+              "title": "Container",
+              "badge": "runtime",
+              "color": "#e8a84b",
+              "rows": [
+                { "ok": true, "text": "instance of image" },
+                { "ok": true, "text": "can stop/rm" }
+              ]
+            },
+            {
+              "icon": "👤",
+              "title": "USER",
+              "badge": "security",
+              "color": "#3d9a6a",
+              "rows": [
+                { "ok": true, "text": "non-root in prod" },
+                { "ok": false, "text": "USER root always" }
+              ]
+            }
+          ],
+          "footnote": "Image: recipe in the fridge · container: dish on the stove · :latest = today's special."
+        }
+      ],
+      "bullets": [],
+      "recallTips": [
+        "image ≠ container",
+        "pin tag, not :latest",
+        "USER non-root"
       ]
     },
     {

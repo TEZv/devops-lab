@@ -8,17 +8,39 @@
       "type": "theory",
       "tag": "🔀 · map",
       "title": "Git flow lite",
-      "instruction": "DevOps + DE: code in git, changes via PR, CI green.",
-      "flow": [
-        { "title": "Branch", "desc": "feature/fix off main" },
-        { "title": "Commit", "desc": "small atomic changes" },
-        { "title": "PR", "desc": "review + CI" },
-        { "title": "Merge", "desc": "only green + approve" }
+      "instruction": "Code in git → changes via PR → CI green. One ritual.",
+      "vizs": [
+        {
+          "type": "pipelineH",
+          "nodes": [
+            { "label": "🌿 branch", "hint": "off main", "color": "#5b8def" },
+            { "label": "💬 commit", "hint": "small steps", "color": "#4ecdc4" },
+            { "label": "👀 PR+CI", "hint": "review+tests", "color": "#3d9a6a" },
+            { "label": "✅ merge", "hint": "green only", "color": "#e8a84b" }
+          ]
+        },
+        {
+          "type": "coverageSplit",
+          "yesTitle": "Do",
+          "noTitle": "Don't",
+          "yes": [
+            "feature/* off main",
+            "PR + green CI",
+            "approve → merge"
+          ],
+          "no": [
+            "force push to main",
+            "commit straight to main",
+            "merge red CI"
+          ]
+        }
       ],
-      "bullets": [
-        "main/master — protected branch",
-        "CI = automated test/lint on push/PR",
-        "force push main — red flag on interviews"
+      "flow": [],
+      "bullets": [],
+      "recallTips": [
+        "main is protected",
+        "CI = lint+test on PR",
+        "force push main = red flag"
       ]
     },
     {

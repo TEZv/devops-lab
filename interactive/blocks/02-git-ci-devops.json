@@ -8,17 +8,39 @@
       "type": "theory",
       "tag": "🔀 · карта",
       "title": "Git flow lite",
-      "instruction": "DevOps + DE: код у git, зміни через PR, CI green.",
-      "flow": [
-        { "title": "Branch", "desc": "feature/fix від main" },
-        { "title": "Commit", "desc": "малі атомарні зміни" },
-        { "title": "PR", "desc": "review + CI" },
-        { "title": "Merge", "desc": "лише green + approve" }
+      "instruction": "Код у git → зміни через PR → CI green. Один ритуал.",
+      "vizs": [
+        {
+          "type": "pipelineH",
+          "nodes": [
+            { "label": "🌿 branch", "hint": "від main", "color": "#5b8def" },
+            { "label": "💬 commit", "hint": "малі кроки", "color": "#4ecdc4" },
+            { "label": "👀 PR+CI", "hint": "review+tests", "color": "#3d9a6a" },
+            { "label": "✅ merge", "hint": "лише green", "color": "#e8a84b" }
+          ]
+        },
+        {
+          "type": "coverageSplit",
+          "yesTitle": "Робимо",
+          "noTitle": "Не робимо",
+          "yes": [
+            "feature/* від main",
+            "PR + green CI",
+            "approve → merge"
+          ],
+          "no": [
+            "force push у main",
+            "commit напряму в main",
+            "merge червоного CI"
+          ]
+        }
       ],
-      "bullets": [
-        "main/master — захищена гілка",
-        "CI = автоматичні test/lint на push/PR",
-        "force push main — red flag на інтервʼю"
+      "flow": [],
+      "bullets": [],
+      "recallTips": [
+        "main захищена",
+        "CI = lint+test на PR",
+        "force push main = red flag"
       ]
     },
     {

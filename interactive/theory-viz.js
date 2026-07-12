@@ -165,9 +165,9 @@
     wrap.appendChild(tableWrap);
     const legend = el('div', 'pl-viz-rank-legend');
     (spec.notes || [
-      { fn: 'RANK()', note: 'tie → однаковий номер, наступний стрибає (…2,2,4)' },
-      { fn: 'DENSE_RANK()', note: 'tie → однаковий номер, без пропуску (…2,2,3)' },
-      { fn: 'ROW_NUMBER()', note: 'завжди 1,2,3,4 — навіть при tie' },
+      { fn: 'RANK()', note: 'tie → однаковий ранг; наступний стрибає (1,1,3,3 — немає 2)' },
+      { fn: 'DENSE_RANK()', note: 'tie → однаковий ранг; без пропуску (1,1,2,2)' },
+      { fn: 'ROW_NUMBER()', note: 'завжди 1,2,3,4 — tie не ділить номер рядка' },
     ]).forEach((n) => {
       legend.innerHTML += `<div class="pl-viz-rank-note"><strong>${esc(n.fn)}</strong><span>${esc(n.note)}</span></div>`;
     });
@@ -267,6 +267,89 @@
     return wrap;
   }
 
+  function conceptCards(spec) {
+    const wrap = el('div', 'pl-viz pl-viz-concept-cards');
+    if (spec.title) wrap.appendChild(el('p', 'pl-viz-caption', esc(spec.title)));
+    const grid = el('div', 'pl-viz-concept-grid');
+    (spec.cards || []).forEach((card) => {
+      const c = el('div', 'pl-viz-concept-card');
+      c.style.setProperty('--hub', card.color || '#5b8def');
+      const rows = (card.rows || []).map((r) => {
+        const mark = r.ok === false ? '❌' : r.ok === true ? '✅' : '·';
+        const cls = r.ok === false ? 'bad' : r.ok === true ? 'ok' : '';
+        return `<li class="${cls}"><span class="pl-viz-mark">${mark}</span><code>${esc(r.text || r)}</code></li>`;
+      }).join('');
+      c.innerHTML = `
+        <div class="pl-viz-concept-head">
+          <span class="pl-viz-concept-ico">${esc(card.icon || '◇')}</span>
+          <div>
+            <strong>${esc(card.title || '')}</strong>
+            ${card.badge ? `<span class="pl-viz-concept-badge">${esc(card.badge)}</span>` : ''}
+          </div>
+        </div>
+        ${card.hint ? `<p class="pl-viz-concept-hint">${esc(card.hint)}</p>` : ''}
+        <ul>${rows}</ul>`;
+      grid.appendChild(c);
+    });
+    wrap.appendChild(grid);
+    if (spec.footnote) wrap.appendChild(el('p', 'pl-viz-footnote', esc(spec.footnote)));
+    return wrap;
+  }
+
+  function typeFamily(spec) {
+    const wrap = el('div', 'pl-viz pl-viz-type-family');
+    if (spec.title) wrap.appendChild(el('p', 'pl-viz-caption', esc(spec.title)));
+    const grid = el('div', 'pl-viz-type-grid');
+    (spec.families || []).forEach((fam) => {
+      const col = el('div', 'pl-viz-type-col');
+      col.style.setProperty('--hub', fam.color || '#5b8def');
+      const traits = (fam.traits || []).map((t) => {
+        const icon = t.yes === false ? '⛔' : t.yes === true ? '✅' : '→';
+        return `<li><span>${icon}</span><span><b>${esc(t.label)}</b> ${esc(t.value || '')}</span></li>`;
+      }).join('');
+      const nest = (fam.canHold || []).map((h) => `<span class="pl-viz-type-chip">${esc(h)}</span>`).join('');
+      const notHold = (fam.cannotHold || []).map((h) => `<span class="pl-viz-type-chip no">${esc(h)}</span>`).join('');
+      col.innerHTML = `
+        <div class="pl-viz-type-head">
+          <span class="pl-viz-type-ico">${esc(fam.icon || '◇')}</span>
+          <div>
+            <strong>${esc(fam.title)}</strong>
+            <small>${esc(fam.types || '')}</small>
+          </div>
+        </div>
+        <ul class="pl-viz-type-traits">${traits}</ul>
+        ${nest ? `<div class="pl-viz-type-hold"><span class="pl-viz-type-hold-label">${esc(fam.holdLabel || 'всередині ✅')}</span><div>${nest}</div></div>` : ''}
+        ${notHold ? `<div class="pl-viz-type-hold"><span class="pl-viz-type-hold-label">${esc(fam.noHoldLabel || 'не можна ⛔')}</span><div>${notHold}</div></div>` : ''}`;
+      grid.appendChild(col);
+    });
+    wrap.appendChild(grid);
+    if (spec.footnote) wrap.appendChild(el('p', 'pl-viz-footnote', esc(spec.footnote)));
+    return wrap;
+  }
+
+  function accessRules(spec) {
+    const wrap = el('div', 'pl-viz pl-viz-access-rules');
+    if (spec.title) wrap.appendChild(el('p', 'pl-viz-caption', esc(spec.title)));
+    const table = el('div', 'pl-viz-access-table');
+    table.innerHTML = `
+      <div class="pl-viz-access-head">
+        <span>${esc(spec.colA || 'доступ')}</span>
+        <span>${esc(spec.colB || 'що треба')}</span>
+        <span>${esc(spec.colC || 'приклад')}</span>
+      </div>`;
+    (spec.rows || []).forEach((r) => {
+      table.innerHTML += `
+        <div class="pl-viz-access-row" style="--hub:${esc(r.color || '#5b8def')}">
+          <span class="pl-viz-access-who"><b>${esc(r.icon || '')} ${esc(r.who)}</b></span>
+          <span>${esc(r.need)}</span>
+          <code>${esc(r.example)}</code>
+        </div>`;
+    });
+    wrap.appendChild(table);
+    if (spec.footnote) wrap.appendChild(el('p', 'pl-viz-footnote', esc(spec.footnote)));
+    return wrap;
+  }
+
   const renderers = {
     layerStack,
     pipelineH,
@@ -279,6 +362,9 @@
     dqGrid,
     sqlGroupVsWindow,
     rankCompare,
+    conceptCards,
+    typeFamily,
+    accessRules,
   };
 
   function mount(parent, spec) {

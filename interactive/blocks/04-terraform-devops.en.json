@@ -8,22 +8,61 @@
       "type": "theory",
       "tag": "🏗️ · map",
       "title": "Terraform ritual",
-      "instruction": "Middle DevOps: HCL describes desired state → plan shows diff → apply changes cloud. Bridge with DE cloud IAM.",
-      "viz": {
-        "type": "pipelineH",
-        "nodes": [
-          { "label": "Write .tf", "hint": "HCL resources", "color": "#8b9cb3" },
-          { "label": "terraform plan", "hint": "read-only preview", "color": "#5b8def" },
-          { "label": "PR review", "hint": "team approves diff", "color": "#4ecdc4" },
-          { "label": "terraform apply", "hint": "real changes", "color": "#3d9a6a" },
-          { "label": "state file", "hint": "tracks reality", "color": "#e8a84b" }
-        ]
-      },
-      "bullets": [
-        "plan ≠ apply: see +/~/− first, then change cloud",
-        "State = «what already exists» — without it Terraform «forgets»",
-        "Remote state (S3 + lock) — team does not break each other's apply",
-        "Least privilege IAM — like DE Lab cloud A3, not `*` on everything"
+      "instruction": "HCL = desired state. Plan = diff. Apply = reality. State = memory.",
+      "vizs": [
+        {
+          "type": "pipelineH",
+          "nodes": [
+            { "label": "📝 .tf", "hint": "desired", "color": "#8b9cb3" },
+            { "label": "👀 plan", "hint": "preview", "color": "#5b8def" },
+            { "label": "👥 PR", "hint": "review", "color": "#4ecdc4" },
+            { "label": "⚡ apply", "hint": "cloud", "color": "#3d9a6a" },
+            { "label": "💾 state", "hint": "memory", "color": "#e8a84b" }
+          ]
+        },
+        {
+          "type": "conceptCards",
+          "title": "Interview images",
+          "cards": [
+            {
+              "icon": "👀",
+              "title": "plan",
+              "badge": "read-only",
+              "color": "#5b8def",
+              "rows": [
+                { "ok": true, "text": "+ / ~ / − in PR" },
+                { "ok": false, "text": "plan changes cloud" }
+              ]
+            },
+            {
+              "icon": "⚡",
+              "title": "apply",
+              "badge": "writes",
+              "color": "#3d9a6a",
+              "rows": [
+                { "ok": true, "text": "after approve" },
+                { "ok": true, "text": "updates state" }
+              ]
+            },
+            {
+              "icon": "🔐",
+              "title": "IAM",
+              "badge": "least priv",
+              "color": "#ff6b6b",
+              "rows": [
+                { "ok": true, "text": "prefix/* read" },
+                { "ok": false, "text": "Action * Resource *" }
+              ]
+            }
+          ],
+          "footnote": "plan = fitting room · apply = purchase · state = team receipt (remote + lock)."
+        }
+      ],
+      "bullets": [],
+      "recallTips": [
+        "plan ≠ apply",
+        "state = resource memory",
+        "remote state + lock"
       ]
     },
     {

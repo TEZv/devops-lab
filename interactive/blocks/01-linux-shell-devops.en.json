@@ -8,20 +8,62 @@
       "type": "theory",
       "tag": "🐧 · map",
       "title": "Shell pipeline",
-      "instruction": "DevOps day-1: logs, grep, permissions, not rm -rf /.",
-      "viz": {
-        "type": "pipelineH",
-        "nodes": [
-          { "label": "log file", "hint": "raw text", "color": "#8b9cb3" },
-          { "label": "grep | awk", "hint": "filter", "color": "#4ecdc4" },
-          { "label": "wc -l", "hint": "count", "color": "#5b8def" },
-          { "label": "alert", "hint": "if threshold", "color": "#ff6b6b" }
-        ]
-      },
-      "bullets": [
-        "`|` — stdout → stdin of next command",
-        "`chmod` — rwx for owner/group/other (755 ≠ 777)",
-        "On interviews: `less`/`tail` first, then grep — not cat 10GB"
+      "instruction": "DevOps day-1: logs → filter → count → alert. Not rm -rf /.",
+      "vizs": [
+        {
+          "type": "pipelineH",
+          "nodes": [
+            { "label": "📄 log", "hint": "raw text", "color": "#8b9cb3" },
+            { "label": "🔎 grep|awk", "hint": "filter", "color": "#4ecdc4" },
+            { "label": "🔢 wc -l", "hint": "count", "color": "#5b8def" },
+            { "label": "🚨 alert", "hint": "threshold", "color": "#ff6b6b" }
+          ]
+        },
+        {
+          "type": "conceptCards",
+          "title": "Permissions & triage — images, not paragraphs",
+          "cards": [
+            {
+              "icon": "🔐",
+              "title": "chmod 755",
+              "badge": "safe script",
+              "color": "#3d9a6a",
+              "hint": "owner rwx · group/other r-x",
+              "rows": [
+                { "ok": true, "text": "you run deploy.sh" },
+                { "ok": false, "text": "stranger cannot overwrite script" }
+              ]
+            },
+            {
+              "icon": "☠️",
+              "title": "chmod 777",
+              "badge": "hole",
+              "color": "#ff6b6b",
+              "hint": "world-writable",
+              "rows": [
+                { "ok": false, "text": "anyone can replace it" },
+                { "ok": false, "text": "interview red flag" }
+              ]
+            },
+            {
+              "icon": "🩺",
+              "title": "triage order",
+              "badge": "prod",
+              "color": "#e8a84b",
+              "rows": [
+                { "ok": true, "text": "tail/less → then grep" },
+                { "ok": false, "text": "cat 10GB into terminal" }
+              ]
+            }
+          ],
+          "footnote": "Memory: pipe = conveyor · 755 = lock with your key · 777 = doors wide open."
+        }
+      ],
+      "bullets": [],
+      "recallTips": [
+        "| = stdout → next stdin",
+        "755 ≠ 777",
+        "less/tail first, then grep"
       ]
     },
     {

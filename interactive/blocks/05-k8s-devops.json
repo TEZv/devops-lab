@@ -8,26 +8,61 @@
       "type": "theory",
       "tag": "☸️ · карта",
       "title": "Deployment → Pod",
-      "instruction": "Middle DevOps: не весь CKA — але Pod/Service/Deployment на інтервʼю must-have.",
-      "viz": {
-        "type": "pipelineH",
-        "nodes": [
-          { "label": "Deployment", "hint": "desired state", "color": "#5b8def" },
-          { "label": "ReplicaSet", "hint": "keeps N pods", "color": "#4ecdc4" },
-          { "label": "Pod", "hint": "1+ containers", "color": "#3d9a6a" },
-          { "label": "Service", "hint": "stable IP/DNS", "color": "#e8a84b" },
-          { "label": "Ingress", "hint": "HTTP route", "color": "#c77dff" }
-        ]
-      },
-      "bullets": [
-        "Pod — найменша одиниця; часто не чіпають напряму в prod",
-        "Service — стабільна адреса до набору Pod (selector labels)",
-        "Deployment — rolling update, rollback, replicas"
+      "instruction": "Хто кого тримає: Deployment → ReplicaSet → Pod; Service = двері.",
+      "vizs": [
+        {
+          "type": "pipelineH",
+          "nodes": [
+            { "label": "Deployment", "hint": "desired", "color": "#5b8def" },
+            { "label": "ReplicaSet", "hint": "N copies", "color": "#4ecdc4" },
+            { "label": "Pod", "hint": "process", "color": "#3d9a6a" },
+            { "label": "Service", "hint": "stable DNS", "color": "#e8a84b" },
+            { "label": "Ingress", "hint": "HTTP", "color": "#c77dff" }
+          ]
+        },
+        {
+          "type": "conceptCards",
+          "title": "Ролі одним образом",
+          "cards": [
+            {
+              "icon": "📋",
+              "title": "Deployment",
+              "badge": "менеджер",
+              "color": "#5b8def",
+              "rows": [
+                { "ok": true, "text": "replicas + rollout" },
+                { "ok": true, "text": "rollback" }
+              ]
+            },
+            {
+              "icon": "🧬",
+              "title": "Pod",
+              "badge": "процес",
+              "color": "#3d9a6a",
+              "rows": [
+                { "ok": true, "text": "1+ containers" },
+                { "ok": false, "text": "ручний prod Pod" }
+              ]
+            },
+            {
+              "icon": "🚪",
+              "title": "Service",
+              "badge": "адреса",
+              "color": "#e8a84b",
+              "rows": [
+                { "ok": true, "text": "selector → labels" },
+                { "ok": false, "text": "замінює Deployment" }
+              ]
+            }
+          ],
+          "footnote": "Deployment = режисер · Pod = актор на сцені · Service = постійна адреса зали."
+        }
       ],
+      "bullets": [],
       "recallTips": [
-        "Deployment керує ReplicaSet → Pod",
-        "Service selector = labels на Pod template",
-        "kubectl describe pod — Events + probe failures"
+        "Deployment → RS → Pod",
+        "Service = labels selector",
+        "describe pod → Events"
       ],
       "recallMapRef": "📍 Bridge: DE Lab cloud · A0 lake zones (workloads + object storage)."
     },

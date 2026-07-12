@@ -75,11 +75,17 @@
       wrap.appendChild(story);
     }
 
-    if (level.viz && global.TheoryViz) {
-      const vizBox = document.createElement('div');
-      vizBox.className = 'pl-viz-mount';
-      TheoryViz.mount(vizBox, level.viz);
-      wrap.appendChild(vizBox);
+    const vizSpecs = [
+      ...(level.viz ? [level.viz] : []),
+      ...(level.vizs || []),
+    ];
+    if (vizSpecs.length && global.TheoryViz) {
+      vizSpecs.forEach((vizSpec) => {
+        const vizBox = document.createElement('div');
+        vizBox.className = 'pl-viz-mount';
+        TheoryViz.mount(vizBox, vizSpec);
+        wrap.appendChild(vizBox);
+      });
     }
 
     if (level.flow?.length) {

@@ -8,20 +8,62 @@
       "type": "theory",
       "tag": "🐧 · карта",
       "title": "Shell pipeline",
-      "instruction": "DevOps day-1: логи, grep, права, не rm -rf /.",
-      "viz": {
-        "type": "pipelineH",
-        "nodes": [
-          { "label": "log file", "hint": "raw text", "color": "#8b9cb3" },
-          { "label": "grep | awk", "hint": "filter", "color": "#4ecdc4" },
-          { "label": "wc -l", "hint": "count", "color": "#5b8def" },
-          { "label": "alert", "hint": "if threshold", "color": "#ff6b6b" }
-        ]
-      },
-      "bullets": [
-        "`|` — stdout → stdin наступної команди",
-        "`chmod` — rwx для owner/group/other (755 ≠ 777)",
-        "На інтервʼю: спочатку `less`/`tail`, потім grep — не cat 10GB"
+      "instruction": "DevOps day-1: логи → filter → count → alert. Не rm -rf /.",
+      "vizs": [
+        {
+          "type": "pipelineH",
+          "nodes": [
+            { "label": "📄 log", "hint": "raw text", "color": "#8b9cb3" },
+            { "label": "🔎 grep|awk", "hint": "filter", "color": "#4ecdc4" },
+            { "label": "🔢 wc -l", "hint": "count", "color": "#5b8def" },
+            { "label": "🚨 alert", "hint": "threshold", "color": "#ff6b6b" }
+          ]
+        },
+        {
+          "type": "conceptCards",
+          "title": "Права і triage — образи, не абзаци",
+          "cards": [
+            {
+              "icon": "🔐",
+              "title": "chmod 755",
+              "badge": "safe script",
+              "color": "#3d9a6a",
+              "hint": "owner rwx · group/other r-x",
+              "rows": [
+                { "ok": true, "text": "ти запускаєш deploy.sh" },
+                { "ok": false, "text": "чужий не перезапише скрипт" }
+              ]
+            },
+            {
+              "icon": "☠️",
+              "title": "chmod 777",
+              "badge": "дірка",
+              "color": "#ff6b6b",
+              "hint": "world-writable",
+              "rows": [
+                { "ok": false, "text": "будь-хто може підмінити" },
+                { "ok": false, "text": "red flag на інтервʼю" }
+              ]
+            },
+            {
+              "icon": "🩺",
+              "title": "triage order",
+              "badge": "prod",
+              "color": "#e8a84b",
+              "rows": [
+                { "ok": true, "text": "tail/less → потім grep" },
+                { "ok": false, "text": "cat 10GB у термінал" }
+              ]
+            }
+          ],
+          "footnote": "Памʼять: pipe = конвеєр · 755 = замок з ключем у тебе · 777 = двері навстіж."
+        }
+      ],
+      "bullets": [],
+      "recallTips": [
+        "| = stdout → stdin наступної",
+        "755 ≠ 777",
+        "спочатку less/tail, потім grep"
       ]
     },
     {

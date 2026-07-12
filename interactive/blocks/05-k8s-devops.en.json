@@ -8,26 +8,61 @@
       "type": "theory",
       "tag": "☸️ · map",
       "title": "Deployment → Pod",
-      "instruction": "Middle DevOps: not full CKA — but Pod/Service/Deployment are interview must-haves.",
-      "viz": {
-        "type": "pipelineH",
-        "nodes": [
-          { "label": "Deployment", "hint": "desired state", "color": "#5b8def" },
-          { "label": "ReplicaSet", "hint": "keeps N pods", "color": "#4ecdc4" },
-          { "label": "Pod", "hint": "1+ containers", "color": "#3d9a6a" },
-          { "label": "Service", "hint": "stable IP/DNS", "color": "#e8a84b" },
-          { "label": "Ingress", "hint": "HTTP route", "color": "#c77dff" }
-        ]
-      },
-      "bullets": [
-        "Pod — smallest unit; rarely touched directly in prod",
-        "Service — stable address to a set of Pods (selector labels)",
-        "Deployment — rolling update, rollback, replicas"
+      "instruction": "Who owns whom: Deployment → ReplicaSet → Pod; Service = the door.",
+      "vizs": [
+        {
+          "type": "pipelineH",
+          "nodes": [
+            { "label": "Deployment", "hint": "desired", "color": "#5b8def" },
+            { "label": "ReplicaSet", "hint": "N copies", "color": "#4ecdc4" },
+            { "label": "Pod", "hint": "process", "color": "#3d9a6a" },
+            { "label": "Service", "hint": "stable DNS", "color": "#e8a84b" },
+            { "label": "Ingress", "hint": "HTTP", "color": "#c77dff" }
+          ]
+        },
+        {
+          "type": "conceptCards",
+          "title": "Roles as one image",
+          "cards": [
+            {
+              "icon": "📋",
+              "title": "Deployment",
+              "badge": "manager",
+              "color": "#5b8def",
+              "rows": [
+                { "ok": true, "text": "replicas + rollout" },
+                { "ok": true, "text": "rollback" }
+              ]
+            },
+            {
+              "icon": "🧬",
+              "title": "Pod",
+              "badge": "process",
+              "color": "#3d9a6a",
+              "rows": [
+                { "ok": true, "text": "1+ containers" },
+                { "ok": false, "text": "manual prod Pod" }
+              ]
+            },
+            {
+              "icon": "🚪",
+              "title": "Service",
+              "badge": "address",
+              "color": "#e8a84b",
+              "rows": [
+                { "ok": true, "text": "selector → labels" },
+                { "ok": false, "text": "replaces Deployment" }
+              ]
+            }
+          ],
+          "footnote": "Deployment = director · Pod = actor on stage · Service = permanent lobby address."
+        }
       ],
+      "bullets": [],
       "recallTips": [
-        "Deployment manages ReplicaSet → Pod",
-        "Service selector = labels on Pod template",
-        "kubectl describe pod — Events + probe failures"
+        "Deployment → RS → Pod",
+        "Service = labels selector",
+        "describe pod → Events"
       ],
       "recallMapRef": "📍 Bridge: DE Lab cloud · A0 lake zones (workloads + object storage)."
     },
