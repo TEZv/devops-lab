@@ -160,6 +160,46 @@
       ]
     },
     {
+      "id": "G1b",
+      "type": "drag_buckets",
+      "tag": "drag · MATCH",
+      "title": "Закріпи MATCH: Git/CI",
+      "instruction": "Після MATCH study — розклади чіпи.",
+      "buckets": [
+        {
+          "id": "do",
+          "icon": "✅",
+          "title": "Do",
+          "color": "#3d9a6a"
+        },
+        {
+          "id": "dont",
+          "icon": "⛔",
+          "title": "Don't",
+          "color": "#ff6b6b"
+        }
+      ],
+      "items": [
+        {
+          "text": "feature PR",
+          "bucket": "do"
+        },
+        {
+          "text": "green CI",
+          "bucket": "do"
+        },
+        {
+          "text": "force push main",
+          "bucket": "dont"
+        },
+        {
+          "text": "merge red CI",
+          "bucket": "dont"
+        }
+      ],
+      "recallMapRef": "📍 After G1 MATCH."
+    },
+    {
       "id": "G2",
       "type": "fill_blanks",
       "tag": "🔀 · 2/5",

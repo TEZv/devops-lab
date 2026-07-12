@@ -200,6 +200,46 @@
       ]
     },
     {
+      "id": "L1b",
+      "type": "drag_buckets",
+      "tag": "drag · MATCH",
+      "title": "Lock MATCH: chmod",
+      "instruction": "After MATCH study — sort chips.",
+      "buckets": [
+        {
+          "id": "ok",
+          "icon": "🔐",
+          "title": "755",
+          "color": "#3d9a6a"
+        },
+        {
+          "id": "bad",
+          "icon": "☠️",
+          "title": "777",
+          "color": "#ff6b6b"
+        }
+      ],
+      "items": [
+        {
+          "text": "owner rwx",
+          "bucket": "ok"
+        },
+        {
+          "text": "other r-x",
+          "bucket": "ok"
+        },
+        {
+          "text": "world writable",
+          "bucket": "bad"
+        },
+        {
+          "text": "anyone overwrites script",
+          "bucket": "bad"
+        }
+      ],
+      "recallMapRef": "📍 After L1 MATCH."
+    },
+    {
       "id": "L2",
       "type": "fill_blanks",
       "tag": "🐧 · 2/6",

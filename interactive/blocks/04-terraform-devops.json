@@ -246,6 +246,60 @@
       ]
     },
     {
+      "id": "T1b",
+      "type": "drag_buckets",
+      "tag": "drag · MATCH",
+      "title": "Закріпи MATCH: plan/apply/state",
+      "instruction": "Після MATCH study — розклади чіпи.",
+      "buckets": [
+        {
+          "id": "p",
+          "icon": "👀",
+          "title": "plan",
+          "color": "#5b8def"
+        },
+        {
+          "id": "a",
+          "icon": "⚡",
+          "title": "apply",
+          "color": "#3d9a6a"
+        },
+        {
+          "id": "s",
+          "icon": "💾",
+          "title": "state",
+          "color": "#e8a84b"
+        }
+      ],
+      "items": [
+        {
+          "text": "preview +/-/~",
+          "bucket": "p"
+        },
+        {
+          "text": "no cloud change",
+          "bucket": "p"
+        },
+        {
+          "text": "writes cloud",
+          "bucket": "a"
+        },
+        {
+          "text": "updates tfstate",
+          "bucket": "a"
+        },
+        {
+          "text": "resource IDs",
+          "bucket": "s"
+        },
+        {
+          "text": "remote + lock",
+          "bucket": "s"
+        }
+      ],
+      "recallMapRef": "📍 After T1 MATCH."
+    },
+    {
       "id": "T2",
       "type": "fill_blanks",
       "tag": "🏗️ · 2/7",

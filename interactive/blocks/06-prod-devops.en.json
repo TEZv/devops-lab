@@ -237,6 +237,60 @@
       ]
     },
     {
+      "id": "R1b",
+      "type": "drag_buckets",
+      "tag": "drag · MATCH",
+      "title": "Lock MATCH: SRE term",
+      "instruction": "After MATCH study — sort chips.",
+      "buckets": [
+        {
+          "id": "m",
+          "icon": "📊",
+          "title": "Measure",
+          "color": "#5b8def"
+        },
+        {
+          "id": "t",
+          "icon": "🎯",
+          "title": "Target",
+          "color": "#e8a84b"
+        },
+        {
+          "id": "a",
+          "icon": "📋",
+          "title": "Action",
+          "color": "#3d9a6a"
+        }
+      ],
+      "items": [
+        {
+          "text": "SLI",
+          "bucket": "m"
+        },
+        {
+          "text": "error rate",
+          "bucket": "m"
+        },
+        {
+          "text": "SLO",
+          "bucket": "t"
+        },
+        {
+          "text": "error budget",
+          "bucket": "t"
+        },
+        {
+          "text": "Runbook",
+          "bucket": "a"
+        },
+        {
+          "text": "blameless PM",
+          "bucket": "a"
+        }
+      ],
+      "recallMapRef": "📍 After R1 MATCH."
+    },
+    {
       "id": "R2",
       "type": "scenario",
       "tag": "🛡️ · 2/6",

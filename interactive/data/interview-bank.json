@@ -129,6 +129,26 @@
       "source": "blocks/01-linux-shell-devops.json"
     },
     {
+      "id": "gym-01-linux-shell-devops-L1b",
+      "archetype": "sre",
+      "kind": "gym",
+      "blockId": "01-linux-shell-devops",
+      "levelId": "L1b",
+      "tag": "drag · MATCH",
+      "skill": "linux",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Закріпи MATCH: chmod",
+        "en": "Закріпи MATCH: chmod"
+      },
+      "prompt": {
+        "ua": "Після MATCH study — розклади чіпи.",
+        "en": "Після MATCH study — розклади чіпи."
+      },
+      "source": "blocks/01-linux-shell-devops.json"
+    },
+    {
       "id": "gym-01-linux-shell-devops-L2",
       "archetype": "sre",
       "kind": "gym",
@@ -289,6 +309,26 @@
       "source": "blocks/02-git-ci-devops.json"
     },
     {
+      "id": "gym-02-git-ci-devops-G1b",
+      "archetype": "cicd",
+      "kind": "gym",
+      "blockId": "02-git-ci-devops",
+      "levelId": "G1b",
+      "tag": "drag · MATCH",
+      "skill": "git",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Закріпи MATCH: Git/CI",
+        "en": "Закріпи MATCH: Git/CI"
+      },
+      "prompt": {
+        "ua": "Після MATCH study — розклади чіпи.",
+        "en": "Після MATCH study — розклади чіпи."
+      },
+      "source": "blocks/02-git-ci-devops.json"
+    },
+    {
       "id": "gym-02-git-ci-devops-G2",
       "archetype": "cicd",
       "kind": "gym",
@@ -425,6 +465,26 @@
       "prompt": {
         "ua": "Терміни container world — спочатку image vs container.",
         "en": "Терміни container world — спочатку image vs container."
+      },
+      "source": "blocks/03-docker-devops.json"
+    },
+    {
+      "id": "gym-03-docker-devops-D1b",
+      "archetype": "startup",
+      "kind": "gym",
+      "blockId": "03-docker-devops",
+      "levelId": "D1b",
+      "tag": "drag · MATCH",
+      "skill": "docker",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Закріпи MATCH: image/container",
+        "en": "Закріпи MATCH: image/container"
+      },
+      "prompt": {
+        "ua": "Після MATCH study — розклади чіпи.",
+        "en": "Після MATCH study — розклади чіпи."
       },
       "source": "blocks/03-docker-devops.json"
     },
@@ -585,6 +645,26 @@
       "prompt": {
         "ua": "Терміни IaC screen — спочатку plan vs apply, не стрілки в повітрі.",
         "en": "Терміни IaC screen — спочатку plan vs apply, не стрілки в повітрі."
+      },
+      "source": "blocks/04-terraform-devops.json"
+    },
+    {
+      "id": "gym-04-terraform-devops-T1b",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "04-terraform-devops",
+      "levelId": "T1b",
+      "tag": "drag · MATCH",
+      "skill": "iac",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Закріпи MATCH: plan/apply/state",
+        "en": "Закріпи MATCH: plan/apply/state"
+      },
+      "prompt": {
+        "ua": "Після MATCH study — розклади чіпи.",
+        "en": "Після MATCH study — розклади чіпи."
       },
       "source": "blocks/04-terraform-devops.json"
     },
@@ -769,6 +849,26 @@
       "source": "blocks/05-k8s-devops.json"
     },
     {
+      "id": "gym-05-k8s-devops-K1b",
+      "archetype": "platform",
+      "kind": "gym",
+      "blockId": "05-k8s-devops",
+      "levelId": "K1b",
+      "tag": "drag · MATCH",
+      "skill": "k8s",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Закріпи MATCH: K8s роль",
+        "en": "Закріпи MATCH: K8s роль"
+      },
+      "prompt": {
+        "ua": "Після MATCH study — розклади чіпи.",
+        "en": "Після MATCH study — розклади чіпи."
+      },
+      "source": "blocks/05-k8s-devops.json"
+    },
+    {
       "id": "gym-05-k8s-devops-K2",
       "archetype": "platform",
       "kind": "gym",
@@ -925,6 +1025,26 @@
       "prompt": {
         "ua": "On-call screen — спочатку схема SRE triangle.",
         "en": "On-call screen — спочатку схема SRE triangle."
+      },
+      "source": "blocks/06-prod-devops.json"
+    },
+    {
+      "id": "gym-06-prod-devops-R1b",
+      "archetype": "sre",
+      "kind": "gym",
+      "blockId": "06-prod-devops",
+      "levelId": "R1b",
+      "tag": "drag · MATCH",
+      "skill": "prod",
+      "difficulty": "medium",
+      "minutes": 12,
+      "title": {
+        "ua": "Закріпи MATCH: SRE термін",
+        "en": "Закріпи MATCH: SRE термін"
+      },
+      "prompt": {
+        "ua": "Після MATCH study — розклади чіпи.",
+        "en": "Після MATCH study — розклади чіпи."
       },
       "source": "blocks/06-prod-devops.json"
     },

@@ -237,6 +237,60 @@
       ]
     },
     {
+      "id": "R1b",
+      "type": "drag_buckets",
+      "tag": "drag · MATCH",
+      "title": "Закріпи MATCH: SRE термін",
+      "instruction": "Після MATCH study — розклади чіпи.",
+      "buckets": [
+        {
+          "id": "m",
+          "icon": "📊",
+          "title": "Вимір",
+          "color": "#5b8def"
+        },
+        {
+          "id": "t",
+          "icon": "🎯",
+          "title": "Ціль",
+          "color": "#e8a84b"
+        },
+        {
+          "id": "a",
+          "icon": "📋",
+          "title": "Дія",
+          "color": "#3d9a6a"
+        }
+      ],
+      "items": [
+        {
+          "text": "SLI",
+          "bucket": "m"
+        },
+        {
+          "text": "error rate",
+          "bucket": "m"
+        },
+        {
+          "text": "SLO",
+          "bucket": "t"
+        },
+        {
+          "text": "error budget",
+          "bucket": "t"
+        },
+        {
+          "text": "Runbook",
+          "bucket": "a"
+        },
+        {
+          "text": "blameless PM",
+          "bucket": "a"
+        }
+      ],
+      "recallMapRef": "📍 After R1 MATCH."
+    },
+    {
       "id": "R2",
       "type": "scenario",
       "tag": "🛡️ · 2/6",

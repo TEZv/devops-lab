@@ -204,6 +204,46 @@
       ]
     },
     {
+      "id": "D1b",
+      "type": "drag_buckets",
+      "tag": "drag · MATCH",
+      "title": "Lock MATCH: image/container",
+      "instruction": "After MATCH study — sort chips.",
+      "buckets": [
+        {
+          "id": "img",
+          "icon": "🧊",
+          "title": "Image",
+          "color": "#5b8def"
+        },
+        {
+          "id": "ctr",
+          "icon": "▶️",
+          "title": "Container",
+          "color": "#e8a84b"
+        }
+      ],
+      "items": [
+        {
+          "text": "immutable layers",
+          "bucket": "img"
+        },
+        {
+          "text": "pin tag",
+          "bucket": "img"
+        },
+        {
+          "text": "running process",
+          "bucket": "ctr"
+        },
+        {
+          "text": "stop/rm",
+          "bucket": "ctr"
+        }
+      ],
+      "recallMapRef": "📍 After D1 MATCH."
+    },
+    {
       "id": "D2",
       "type": "whats_wrong",
       "tag": "🐳 · 2/6",

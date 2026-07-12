@@ -221,6 +221,60 @@
       ]
     },
     {
+      "id": "K1b",
+      "type": "drag_buckets",
+      "tag": "drag · MATCH",
+      "title": "Lock MATCH: K8s role",
+      "instruction": "After MATCH study — sort chips.",
+      "buckets": [
+        {
+          "id": "d",
+          "icon": "📋",
+          "title": "Deployment",
+          "color": "#5b8def"
+        },
+        {
+          "id": "p",
+          "icon": "🧬",
+          "title": "Pod",
+          "color": "#3d9a6a"
+        },
+        {
+          "id": "s",
+          "icon": "🚪",
+          "title": "Service",
+          "color": "#e8a84b"
+        }
+      ],
+      "items": [
+        {
+          "text": "desired replicas",
+          "bucket": "d"
+        },
+        {
+          "text": "rolling update",
+          "bucket": "d"
+        },
+        {
+          "text": "1+ containers",
+          "bucket": "p"
+        },
+        {
+          "text": "ephemeral",
+          "bucket": "p"
+        },
+        {
+          "text": "stable DNS",
+          "bucket": "s"
+        },
+        {
+          "text": "selector labels",
+          "bucket": "s"
+        }
+      ],
+      "recallMapRef": "📍 After K1 MATCH."
+    },
+    {
       "id": "K2",
       "type": "fill_blanks",
       "tag": "☸️ · 2/7",
