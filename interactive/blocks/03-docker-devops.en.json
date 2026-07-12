@@ -71,6 +71,11 @@
       "tag": "🐳 · 2/6",
       "title": "What is wrong in Dockerfile?",
       "instruction": "Python ETL for prod.",
+      "recallTips": [
+        "Pin base image tag/digest — not :latest",
+        "USER non-root in prod",
+        "COPY after deps = better layer cache"
+      ],
       "mission": {
         "emoji": "🐳",
         "title": "Image review",

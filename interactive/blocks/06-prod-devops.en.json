@@ -93,6 +93,11 @@
       "tag": "🛡️ · 3/6",
       "title": "Alert fatigue",
       "instruction": "Team ignores Slack #alerts.",
+      "recallTips": [
+        "Page only on user impact / SLO burn",
+        "Noise → fatigue → miss P1",
+        "Alert + runbook link (like DE E6)"
+      ],
       "buggyCode": "Alert: CPU > 50% on staging\nAlert: Pod restarted once (self-healed)\nAlert: Disk 70% (threshold 90%)\nPager: ALL channels, severity=page",
       "prompt": "Main process problem?",
       "options": [

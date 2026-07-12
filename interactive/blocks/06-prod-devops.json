@@ -93,6 +93,11 @@
       "tag": "🛡️ · 3/6",
       "title": "Alert fatigue",
       "instruction": "Команда ігнорує Slack #alerts.",
+      "recallTips": [
+        "Page лише на user impact / SLO burn",
+        "Шум → fatigue → miss P1",
+        "Alert + runbook link (як DE E6)"
+      ],
       "buggyCode": "Alert: CPU > 50% on staging\nAlert: Pod restarted once (self-healed)\nAlert: Disk 70% (threshold 90%)\nPager: ALL channels, severity=page",
       "prompt": "Головна проблема process?",
       "options": [

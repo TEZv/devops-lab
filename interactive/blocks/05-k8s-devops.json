@@ -99,6 +99,11 @@
       "tag": "☸️ · 3/7",
       "title": "Probe trap",
       "instruction": "App слухає :8080/health, але…",
+      "recallTips": [
+        "liveness fail → kubelet restart → CrashLoop",
+        "port/path мають = app listen",
+        "initialDelaySeconds > cold start"
+      ],
       "buggyCode": "livenessProbe:\n  httpGet:\n    path: /health\n    port: 80\n  initialDelaySeconds: 0\n  periodSeconds: 1",
       "prompt": "Чому Pod CrashLoop?",
       "options": [

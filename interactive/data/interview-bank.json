@@ -1,6 +1,6 @@
 {
-  "version": 1,
-  "updated": "2026-07-11",
+  "version": 2,
+  "updated": "2026-07-12",
   "ethics": {
     "ua": "Без брендів роботодавців. Архетипи DevOps/SRE + публічні патерни. DE Mage Gym — окремий data-трек.",
     "en": "No employer brands. DevOps/SRE archetypes + public patterns. DE Mage Gym is a separate data track."
@@ -903,17 +903,17 @@
         "en": "df -h, du, /var/log — 3 steps aloud, no rm -rf."
       },
       "source": "interview-sprint/01-Linux-Networking-Sprint-30.md",
-      "kind": "stub",
       "resources": [
+        {
+          "label": "Gym · Shell runbook L6",
+          "url": "https://devops-lab-gym.web.app/#/block/01-linux-shell-devops/L6"
+        },
         {
           "label": "DevOps Quest MD",
           "url": "https://github.com/TEZv/devops-lab/blob/main/CHALLENGES.md"
-        },
-        {
-          "label": "DE Cloud (bridge)",
-          "url": "https://de-lab-interview-gym.web.app/#/block/13-cloud-storage-de/A0"
         }
-      ]
+      ],
+      "kind": "stub"
     },
     {
       "id": "ops-dockerfile-review",
@@ -930,17 +930,17 @@
         "en": "Find :latest and USER root. Propose fix."
       },
       "source": "interview-sprint/02-Docker-K8s-Live.md",
-      "kind": "stub",
       "resources": [
+        {
+          "label": "Gym · Dockerfile D2",
+          "url": "https://devops-lab-gym.web.app/#/block/03-docker-devops/D2"
+        },
         {
           "label": "DevOps Quest MD",
           "url": "https://github.com/TEZv/devops-lab/blob/main/CHALLENGES.md"
-        },
-        {
-          "label": "DE Cloud (bridge)",
-          "url": "https://de-lab-interview-gym.web.app/#/block/13-cloud-storage-de/A0"
         }
-      ]
+      ],
+      "kind": "stub"
     },
     {
       "id": "ops-terraform-plan",
@@ -957,17 +957,17 @@
         "en": "Draw .tf → plan → apply → state. Where is drift?"
       },
       "source": "interview-sprint/03-Infrastructure-Case.md",
-      "kind": "stub",
       "resources": [
         {
-          "label": "DevOps Quest MD",
-          "url": "https://github.com/TEZv/devops-lab/blob/main/CHALLENGES.md"
+          "label": "Gym · Terraform MATCH T1",
+          "url": "https://devops-lab-gym.web.app/#/block/04-terraform-devops/T1"
         },
         {
-          "label": "DE Cloud (bridge)",
-          "url": "https://de-lab-interview-gym.web.app/#/block/13-cloud-storage-de/A0"
+          "label": "Bridge · DE orch O2",
+          "url": "https://de-lab-interview-gym.web.app/#/block/14-orchestration-de/O2"
         }
-      ]
+      ],
+      "kind": "stub"
     },
     {
       "id": "ops-k8s-crashloop",
@@ -984,17 +984,17 @@
         "en": "describe + logs + probe. No delete namespace."
       },
       "source": "interview-sprint/02-Docker-K8s-Live.md",
-      "kind": "stub",
       "resources": [
         {
-          "label": "DevOps Quest MD",
-          "url": "https://github.com/TEZv/devops-lab/blob/main/CHALLENGES.md"
+          "label": "Gym · CrashLoop K5",
+          "url": "https://devops-lab-gym.web.app/#/block/05-k8s-devops/K5"
         },
         {
-          "label": "DE Cloud (bridge)",
-          "url": "https://de-lab-interview-gym.web.app/#/block/13-cloud-storage-de/A0"
+          "label": "Gym · Probe trap K3",
+          "url": "https://devops-lab-gym.web.app/#/block/05-k8s-devops/K3"
         }
-      ]
+      ],
+      "kind": "stub"
     },
     {
       "id": "ops-incident-comms",
@@ -1011,17 +1011,17 @@
         "en": "3 sentences for #incidents: impact, action, ETA."
       },
       "source": "CHALLENGES.md",
-      "kind": "stub",
       "resources": [
         {
-          "label": "DevOps Quest MD",
-          "url": "https://github.com/TEZv/devops-lab/blob/main/CHALLENGES.md"
+          "label": "Gym · Incident R4",
+          "url": "https://devops-lab-gym.web.app/#/block/06-prod-devops/R4"
         },
         {
-          "label": "DE Cloud (bridge)",
-          "url": "https://de-lab-interview-gym.web.app/#/block/13-cloud-storage-de/A0"
+          "label": "Bridge · DE gov E6",
+          "url": "https://de-lab-interview-gym.web.app/#/block/17-governance-ops-de/E6"
         }
-      ]
+      ],
+      "kind": "stub"
     },
     {
       "id": "ops-iam-least-priv",
@@ -1038,17 +1038,17 @@
         "en": "Rewrite policy to one S3 prefix read-only."
       },
       "source": "blocks/04-terraform-devops.json",
-      "kind": "stub",
       "resources": [
         {
-          "label": "DevOps Quest MD",
-          "url": "https://github.com/TEZv/devops-lab/blob/main/CHALLENGES.md"
+          "label": "Gym · IAM trap T3",
+          "url": "https://devops-lab-gym.web.app/#/block/04-terraform-devops/T3"
         },
         {
-          "label": "DE Cloud (bridge)",
-          "url": "https://de-lab-interview-gym.web.app/#/block/13-cloud-storage-de/A0"
+          "label": "Bridge · DE cloud A3",
+          "url": "https://de-lab-interview-gym.web.app/#/block/13-cloud-storage-de/A3"
         }
-      ]
+      ],
+      "kind": "stub"
     }
   ]
 }

@@ -114,6 +114,11 @@
       "tag": "🏗️ · 3/7",
       "title": "What is wrong in IAM policy?",
       "instruction": "ETL role to read bronze bucket.",
+      "recallTips": [
+        "Least privilege: narrow Action + Resource",
+        "s3:GetObject on prefix/*, not *",
+        "Bridge: DE cloud A3 public * trap"
+      ],
       "mission": {
         "emoji": "🔐",
         "title": "Least privilege review",
