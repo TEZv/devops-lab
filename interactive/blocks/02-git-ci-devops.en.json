@@ -252,7 +252,16 @@
       "hints": [
         "Base — main.",
         "Prefix feature/ — convention."
-      ]
+      ],
+      "resultTrace": {
+        "title": "Local result",
+        "input": "clean clone on main",
+        "steps": [
+          "checkout main + pull — fresh origin",
+          "checkout -b feature/DEV-42-healthcheck"
+        ],
+        "output": "branch feature/DEV-42-healthcheck ready"
+      }
     },
     {
       "id": "G3",

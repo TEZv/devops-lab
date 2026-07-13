@@ -324,7 +324,16 @@
       "hints": [
         "Default args — CMD.",
         "Приклад literal для interview."
-      ]
+      ],
+      "resultTrace": {
+        "title": "Як стартує контейнер",
+        "input": "ENTRYPOINT python app.py",
+        "steps": [
+          "CMD додає дефолтні аргументи",
+          "--date yesterday можна перевизначити docker run"
+        ],
+        "output": "python app.py --date yesterday (якщо CMD не override)"
+      }
     },
     {
       "id": "D4",

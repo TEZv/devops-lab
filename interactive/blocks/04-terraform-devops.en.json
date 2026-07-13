@@ -352,7 +352,16 @@
       "hints": [
         "S3 = aws_s3_bucket.",
         "Label = your identifier in module."
-      ]
+      ],
+      "resultTrace": {
+        "title": "Resource in state",
+        "input": "bucket acme-bronze-raw",
+        "steps": [
+          "type aws_s3_bucket",
+          "TF name bronze_lake → aws_s3_bucket.bronze_lake"
+        ],
+        "output": "S3 bucket in state with env/zone tags"
+      }
     },
     {
       "id": "T3",
@@ -488,7 +497,16 @@
       ],
       "hints": [
         "Same label as resource aws_s3_bucket.bronze_lake."
-      ]
+      ],
+      "resultTrace": {
+        "title": "What DE sees",
+        "input": "after terraform apply",
+        "steps": [
+          "output reads .bucket from bronze_lake",
+          "CI puts value into Airflow Variable / env"
+        ],
+        "output": "bronze_bucket_name = real S3 bucket name"
+      }
     }
   ]
 }

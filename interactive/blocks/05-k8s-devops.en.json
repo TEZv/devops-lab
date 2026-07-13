@@ -307,7 +307,16 @@
       "hints": [
         "Three instances.",
         "Label app=web in selector and template."
-      ]
+      ],
+      "resultTrace": {
+        "title": "Deployment in cluster",
+        "input": "web app",
+        "steps": [
+          "replicas: 3 — three Pods",
+          "selector/template labels: app=web"
+        ],
+        "output": "Deployment web with 3 Pods, label app=web"
+      }
     },
     {
       "id": "K3",

@@ -400,7 +400,17 @@
       "hints": [
         "Impact — who was affected.",
         "Root cause — process/system."
-      ]
+      ],
+      "resultTrace": {
+        "title": "Postmortem header",
+        "input": "API incident",
+        "steps": [
+          "Impact: who / minutes down",
+          "Timeline: alert fired → rollback deploy",
+          "Root: Missing runbook for rollback"
+        ],
+        "output": "structured PM: Summary + Timeline + Root"
+      }
     }
   ]
 }

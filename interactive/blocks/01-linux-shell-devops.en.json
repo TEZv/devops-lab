@@ -302,7 +302,16 @@
       "hints": [
         "Pattern ERROR in quotes.",
         "wc -l = line count."
-      ]
+      ],
+      "resultTrace": {
+        "title": "What the command shows",
+        "input": "app.log with ERROR / INFO lines",
+        "steps": [
+          "grep 'ERROR' keeps matching lines",
+          "wc -l counts them"
+        ],
+        "output": "number = ERROR line count"
+      }
     },
     {
       "id": "L3",

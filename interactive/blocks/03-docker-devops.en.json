@@ -324,7 +324,16 @@
       "hints": [
         "Default args — CMD.",
         "Literal example for interview."
-      ]
+      ],
+      "resultTrace": {
+        "title": "How the container starts",
+        "input": "ENTRYPOINT python app.py",
+        "steps": [
+          "CMD supplies default args",
+          "--date yesterday overridable via docker run"
+        ],
+        "output": "python app.py --date yesterday (unless CMD overridden)"
+      }
     },
     {
       "id": "D4",

@@ -302,7 +302,16 @@
       "hints": [
         "Патерн ERROR у лапках.",
         "wc -l = line count."
-      ]
+      ],
+      "resultTrace": {
+        "title": "Що покаже команда",
+        "input": "app.log з рядками ERROR / INFO",
+        "steps": [
+          "grep 'ERROR' — лише рядки з ERROR",
+          "wc -l — порахувати рядки"
+        ],
+        "output": "число = кількість ERROR у логу"
+      }
     },
     {
       "id": "L3",

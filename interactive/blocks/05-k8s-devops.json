@@ -307,7 +307,16 @@
       "hints": [
         "Три інстанси.",
         "Label app=web у selector і template."
-      ]
+      ],
+      "resultTrace": {
+        "title": "Deployment у кластері",
+        "input": "web app",
+        "steps": [
+          "replicas: 3 — три Pod",
+          "selector/template labels: app=web"
+        ],
+        "output": "Deployment web з 3 Pod і label app=web"
+      }
     },
     {
       "id": "K3",

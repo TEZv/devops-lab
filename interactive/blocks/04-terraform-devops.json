@@ -352,7 +352,16 @@
       "hints": [
         "S3 = aws_s3_bucket.",
         "Label = твій ідентифікатор у модулі."
-      ]
+      ],
+      "resultTrace": {
+        "title": "Ресурс у state",
+        "input": "bucket acme-bronze-raw",
+        "steps": [
+          "тип aws_s3_bucket",
+          "імʼя в TF: bronze_lake → aws_s3_bucket.bronze_lake"
+        ],
+        "output": "S3 bucket у state з tags env/zone"
+      }
     },
     {
       "id": "T3",
@@ -518,7 +527,16 @@
       ],
       "hints": [
         "Той самий label що в resource aws_s3_bucket.bronze_lake."
-      ]
+      ],
+      "resultTrace": {
+        "title": "Що побачить DE",
+        "input": "після terraform apply",
+        "steps": [
+          "output читає .bucket з ресурсу bronze_lake",
+          "CI кладе значення в Airflow Variable / env"
+        ],
+        "output": "bronze_bucket_name = імʼя реального S3 bucket"
+      }
     }
   ]
 }

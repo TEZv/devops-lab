@@ -252,7 +252,16 @@
       "hints": [
         "База — main.",
         "Префікс feature/ — convention."
-      ]
+      ],
+      "resultTrace": {
+        "title": "Що отримаєш локально",
+        "input": "чистий clone на main",
+        "steps": [
+          "checkout main + pull — свіжий origin",
+          "checkout -b feature/DEV-42-healthcheck — нова гілка від main"
+        ],
+        "output": "гілка feature/DEV-42-healthcheck готова до комітів"
+      }
     },
     {
       "id": "G3",

@@ -400,7 +400,17 @@
       "hints": [
         "Impact — хто постраждав.",
         "Root cause — процес/система."
-      ]
+      ],
+      "resultTrace": {
+        "title": "Заголовок postmortem",
+        "input": "інцидент з API",
+        "steps": [
+          "Impact: кого зачепило / скільки хвилин",
+          "Timeline: alert fired → rollback deploy",
+          "Root: Missing runbook for rollback"
+        ],
+        "output": "структурований PM: Summary + Timeline + Root"
+      }
     }
   ]
 }
