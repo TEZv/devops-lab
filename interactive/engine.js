@@ -198,6 +198,7 @@
   }
 
   function mountTheory(root, level, onComplete, opts) {
+    mountMissionBrief(root, level);
     const wrap = document.createElement('div');
     wrap.className = 'pl-theory';
 
@@ -1281,6 +1282,7 @@
           : `❌ ${level.explainFail || ui('explainFailDefault')} ${level.explanation || ''}`;
         if (ok) {
           toast(root, ui('toastDiagOk'), true);
+          mountResultTrace(root, level);
           finish(onComplete, level, { choice: idx });
         }
       });
@@ -1296,6 +1298,7 @@
         if (i === idx) btn.classList.add('sel');
       });
       feedback.textContent = '';
+      mountResultTrace(root, level);
     }
     root.appendChild(wrap);
   }
@@ -1335,7 +1338,8 @@
           ? `✅ ${level.explanation || ui('mcOkDefault')}`
           : `❌ ${level.explanation || ui('mcFailDefault')}`;
         if (ok) {
-          toast(root, 'OK', true);
+          toast(root, ui('mcOkDefault'), true);
+          mountResultTrace(root, level);
           finish(onComplete, level, { choice: idx });
         }
       });
@@ -1350,6 +1354,7 @@
         if (i === idx) btn.classList.add('sel');
       });
       feedback.textContent = '';
+      mountResultTrace(root, level);
     }
     root.appendChild(wrap);
   }
