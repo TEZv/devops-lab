@@ -98,7 +98,8 @@
         "| = stdout → stdin наступної",
         "755 ≠ 777",
         "спочатку less/tail, потім grep"
-      ]
+      ],
+      "pathNext": "Маршрут: Linux → Git/CI → Docker → Terraform → K8s → Prod. Не стрибай у K8s, доки shell не «сидить»."
     },
     {
       "id": "L0b",

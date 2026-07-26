@@ -98,7 +98,8 @@
         "| = stdout → next stdin",
         "755 ≠ 777",
         "less/tail first, then grep"
-      ]
+      ],
+      "pathNext": "Path: Linux → Git/CI → Docker → Terraform → K8s → Prod. Do not jump to K8s until shell feels solid."
     },
     {
       "id": "L0b",

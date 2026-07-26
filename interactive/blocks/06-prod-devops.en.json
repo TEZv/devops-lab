@@ -410,7 +410,8 @@
           "Root: Missing runbook for rollback"
         ],
         "output": "structured PM: Summary + Timeline + Root"
-      }
+      },
+      "pathNext": "Gym path done. Next — “After Gym · what next” on home (Bandit, Docker docs, Killercoda, SRE book) + Arena."
     }
   ]
 }

@@ -285,6 +285,13 @@
       wrap.appendChild(note);
     }
 
+    if (level.pathNext) {
+      const next = document.createElement('p');
+      next.className = 'pl-path-next';
+      next.textContent = level.pathNext;
+      wrap.appendChild(next);
+    }
+
     appendRecallPanel(wrap, level);
 
     const actions = document.createElement('div');
@@ -306,37 +313,49 @@
   }
 
   function mountFlipCards(root, level, onComplete, opts) {
+    mountMissionBrief(root, level);
     const wrap = document.createElement('div');
     wrap.className = 'pl-flip-grid';
-    let opened = 0;
+    const seen = new Set();
     const need = (level.cards || []).length;
+    let finished = false;
     const feedback = document.createElement('p');
     feedback.className = 'pl-feedback';
     feedback.textContent = ui('flipHint');
 
-    (level.cards || []).forEach((card) => {
+    (level.cards || []).forEach((card, idx) => {
       const el = document.createElement('button');
       el.type = 'button';
       el.className = 'pl-flip-card';
-      el.innerHTML = `<span class="front">${escapeHtml(card.front)}</span><span class="back">${escapeHtml(card.back)}</span>`;
+      el.setAttribute('aria-pressed', 'false');
+      el.innerHTML = `
+        <span class="pl-flip-term">${escapeHtml(card.front)}</span>
+        <span class="pl-flip-def">${escapeHtml(card.back)}</span>
+        <span class="pl-flip-hint">${escapeHtml(ui('flipTapAgain'))}</span>`;
       el.addEventListener('click', () => {
-        if (el.classList.contains('flipped')) return;
-        el.classList.add('flipped');
-        opened += 1;
-        feedback.textContent = ui('flipOpened', opened, need);
-        if (opened === need) {
-          feedback.textContent = ui('flipDone');
-          toast(root, ui('flipToast'), true);
-          finish(onComplete, level);
+        const nowFlipped = !el.classList.contains('flipped');
+        el.classList.toggle('flipped', nowFlipped);
+        el.setAttribute('aria-pressed', nowFlipped ? 'true' : 'false');
+        if (nowFlipped && !seen.has(idx)) {
+          seen.add(idx);
+          feedback.textContent = ui('flipOpened', seen.size, need);
+          if (!finished && seen.size === need) {
+            finished = true;
+            feedback.textContent = ui('flipDone');
+            toast(root, ui('flipToast'), true);
+            finish(onComplete, level);
+          }
+        } else if (seen.size < need) {
+          feedback.textContent = ui('flipOpened', seen.size, need);
         }
       });
       wrap.appendChild(el);
     });
-    // revisit: play again
     root.append(wrap, feedback);
   }
 
   function mountPipelineBuild(root, level, onComplete, opts) {
+    mountMissionBrief(root, level);
     const stages = level.stages || [];
     const pool = shuffle([...(level.pool || stages.map((s) => s.label))]);
     const placed = stages.map(() => '');

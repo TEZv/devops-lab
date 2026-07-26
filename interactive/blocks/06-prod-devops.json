@@ -410,7 +410,8 @@
           "Root: Missing runbook for rollback"
         ],
         "output": "структурований PM: Summary + Timeline + Root"
-      }
+      },
+      "pathNext": "Маршрут Gym закрито. Далі — блок «Після Gym · куди далі» на home (Bandit, Docker docs, Killercoda, SRE book) + Arena."
     }
   ]
 }

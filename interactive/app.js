@@ -1,5 +1,5 @@
 const STORAGE_KEY = 'devops-lab-interactive-v1';
-const BUILD = '20260712m';
+const BUILD = '20260726d';
 const GYM_URL = 'https://devops-lab-gym.web.app';
 const DE_LAB_URL = 'https://de-lab-interview-gym.web.app';
 const OPS_QUEST_MD = 'https://github.com/TEZv/devops-lab/blob/main/CHALLENGES.md';
@@ -16,6 +16,73 @@ const BLOCK_REGISTRY = [
 ];
 
 const ROADS = [];
+
+const BEGINNER_PATH = [
+  { id: '01-linux-shell-devops', metaKey: 'pathMetaLinux' },
+  { id: '02-git-ci-devops', metaKey: 'pathMetaGit' },
+  { id: '03-docker-devops', metaKey: 'pathMetaDocker' },
+  { id: '04-terraform-devops', metaKey: 'pathMetaTf' },
+  { id: '05-k8s-devops', metaKey: 'pathMetaK8s' },
+  { id: '06-prod-devops', metaKey: 'pathMetaProd' },
+];
+
+/** After ~1 month Gym — public practice only (no leaked employer tests). */
+const CONTINUE_OUTSIDE = [
+  {
+    kindKey: 'continueKindPractice',
+    title: { ua: 'OverTheWire · Bandit', en: 'OverTheWire · Bandit' },
+    blurb: {
+      ua: 'Безкоштовні shell-квести — глибше за Linux-блок Gym.',
+      en: 'Free shell quests — deeper than the Gym Linux block.',
+    },
+    href: 'https://overthewire.org/wargames/bandit/',
+  },
+  {
+    kindKey: 'continueKindDocs',
+    title: { ua: 'Docker Get Started', en: 'Docker Get Started' },
+    blurb: {
+      ua: 'Офіційний туторіал: images → containers → compose.',
+      en: 'Official tutorial: images → containers → compose.',
+    },
+    href: 'https://docs.docker.com/get-started/',
+  },
+  {
+    kindKey: 'continueKindDocs',
+    title: { ua: 'HashiCorp Terraform tutorials', en: 'HashiCorp Terraform tutorials' },
+    blurb: {
+      ua: 'plan/apply/state на їхніх пісочницях — після блоку 04.',
+      en: 'plan/apply/state in their sandboxes — after block 04.',
+    },
+    href: 'https://developer.hashicorp.com/terraform/tutorials',
+  },
+  {
+    kindKey: 'continueKindPractice',
+    title: { ua: 'Killercoda · Kubernetes', en: 'Killercoda · Kubernetes' },
+    blurb: {
+      ua: 'Браузерні K8s-лаби (публічні сценарії), не секретні тести роботодавців.',
+      en: 'In-browser K8s labs (public scenarios), not leaked employer tests.',
+    },
+    href: 'https://killercoda.com/kubernetes',
+  },
+  {
+    kindKey: 'continueKindRead',
+    title: { ua: 'Google SRE Book (безкоштовно)', en: 'Google SRE Book (free)' },
+    blurb: {
+      ua: 'SLI/SLO, toil, postmortem — теорія під prod-блок.',
+      en: 'SLI/SLO, toil, postmortem — theory for the prod block.',
+    },
+    href: 'https://sre.google/sre-book/table-of-contents/',
+  },
+  {
+    kindKey: 'continueKindCross',
+    title: { ua: 'DE Mage Gym', en: 'DE Mage Gym' },
+    blurb: {
+      ua: 'SQL/Python/modeling — міст, якщо співбесіда ближче до data.',
+      en: 'SQL/Python/modeling — bridge if the interview leans data.',
+    },
+    href: 'https://de-lab-interview-gym.web.app',
+  },
+];
 
 function t(key, ...args) {
   return (window.DeLabI18n && DeLabI18n.t(key, ...args)) || key;
@@ -476,6 +543,55 @@ function wireHero(root) {
   });
 }
 
+function Lpair(obj) {
+  if (!obj) return '';
+  if (typeof obj === 'string') return obj;
+  const lang = (window.DeLabI18n && DeLabI18n.getLang && DeLabI18n.getLang()) || 'ua';
+  return obj[lang] || obj.ua || obj.en || '';
+}
+
+function renderBeginnerPath() {
+  const items = BEGINNER_PATH.map((step, i) => {
+    const prog = loadProgress()[step.id] || {};
+    const done = countDone(prog);
+    return `
+      <li>
+        <button type="button" class="pl-path-link" data-block="${step.id}">
+          <span class="pl-path-num">${i + 1}</span>
+          <span>
+            <span class="pl-path-label">${blockTitle(step.id)}</span>
+            <span class="pl-path-meta">${t(step.metaKey)} · ${t('progress', done)}</span>
+          </span>
+        </button>
+      </li>`;
+  }).join('');
+  return `
+    <section class="pl-card pl-path-card">
+      <h2>${t('pathTitle')}</h2>
+      <p style="color:var(--muted)">${t('pathLede')}</p>
+      <ol class="pl-path-list">${items}</ol>
+    </section>`;
+}
+
+function renderContinueOutside() {
+  const items = CONTINUE_OUTSIDE.map((r) => `
+    <li>
+      <a class="pl-continue-link" href="${r.href}" target="_blank" rel="noopener">
+        <span class="pl-continue-kind">${t(r.kindKey)}</span>
+        <span>
+          <span class="pl-continue-title">${PrepLevelsEngine.escapeHtml(Lpair(r.title))}</span>
+          <span class="pl-continue-blurb">${PrepLevelsEngine.escapeHtml(Lpair(r.blurb))}</span>
+        </span>
+      </a>
+    </li>`).join('');
+  return `
+    <section class="pl-card pl-path-card">
+      <h2>${t('continueTitle')}</h2>
+      <p style="color:var(--muted)">${t('continueLede')}</p>
+      <ul class="pl-continue-list">${items}</ul>
+    </section>`;
+}
+
 function renderHome(root) {
   const homeBody = t('homeBody')
     .replace('{opsQuest}', OPS_QUEST_MD)
@@ -483,7 +599,9 @@ function renderHome(root) {
   root.innerHTML = `
     ${renderHeroCabin()}
     ${renderCareerPicker()}
+    ${renderBeginnerPath()}
     ${renderStaircase()}
+    ${renderContinueOutside()}
     <section class="pl-card">
       <h2>${t('homeTitle')}</h2>
       <p style="color:var(--muted)">${homeBody}</p>
