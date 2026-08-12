@@ -1,9 +1,15 @@
 const STORAGE_KEY = 'devops-lab-interactive-v1';
-const BUILD = '20260726d';
+const BUILD = '20260812j';
 const GYM_URL = 'https://devops-lab-gym.web.app';
 const DE_LAB_URL = 'https://de-lab-interview-gym.web.app';
 const OPS_QUEST_MD = 'https://github.com/TEZv/devops-lab/blob/main/CHALLENGES.md';
-const MENTORSHIP = 'https://sphere-mentorship-hub.vercel.app';
+const OPS_PROGRAM_MD = 'https://github.com/TEZv/devops-lab/blob/main/PROGRAM.md';
+const MENTORSHIP = 'https://k-mentorship-hub.vercel.app/';
+const RND_LAB = 'https://k-rnd-lab.vercel.app/';
+const VENTURE_STUDIO = 'https://k-venture-studio.vercel.app/';
+const KOSATIKS_GROUP = 'https://kosatiks-group.pp.ua/';
+const LINKEDIN_PROFILE = 'https://www.linkedin.com/in/oksana-kolisnyk-%F0%9F%A7%99-0b9632247';
+const INSTAGRAM_PROFILE = 'https://www.instagram.com/is_zazera/';
 
 /** Block registry for skill orbs (from staircase layers). */
 const BLOCK_REGISTRY = [
@@ -13,6 +19,78 @@ const BLOCK_REGISTRY = [
   { id: '04-terraform-devops', ready: true, skill: 'iac' },
   { id: '05-k8s-devops', ready: true, skill: 'k8s' },
   { id: '06-prod-devops', ready: true, skill: 'prod' },
+];
+
+/** Canonical skill journey - capability stages, not a weekly calendar. */
+const COURSE_PROGRAM = [
+  {
+    code: 'HOST',
+    title: { ua: 'Керувати хостом', en: 'Operate a host' },
+    summary: { ua: 'Linux, shell, процеси, мережа, permissions і системні логи.', en: 'Linux, shell, processes, networking, permissions, and system logs.' },
+    artifact: { ua: 'Діагностичний скрипт і runbook для “service unavailable”.', en: 'A diagnostic script and a service-unavailable runbook.' },
+    gate: { ua: 'Знайти причину збою без перезапуску навмання.', en: 'Find a failure cause without random restarts.' },
+    blocks: ['01-linux-shell-devops'],
+  },
+  {
+    code: 'DELIVERY',
+    title: { ua: 'Будувати delivery flow', en: 'Build a delivery flow' },
+    summary: { ua: 'Git history, CI gates, artifacts, secrets і rollback.', en: 'Git history, CI gates, artifacts, secrets, and rollback.' },
+    artifact: { ua: 'Pipeline з quality gates, immutable artifact і release note.', en: 'A pipeline with quality gates, an immutable artifact, and a release note.' },
+    gate: { ua: 'Невдалий deploy не ламає main і має шлях відкату.', en: 'A failed deploy does not break main and has a rollback path.' },
+    blocks: ['02-git-ci-devops'],
+  },
+  {
+    code: 'RUNTIME',
+    title: { ua: 'Пакувати runtime', en: 'Package the runtime' },
+    summary: { ua: 'Images, containers, networks, volumes і supply-chain basics.', en: 'Images, containers, networks, volumes, and supply-chain basics.' },
+    artifact: { ua: 'Малий multi-service stack із healthcheck і non-root image.', en: 'A small multi-service stack with health checks and a non-root image.' },
+    gate: { ua: 'Збірка відтворювана, образ мінімальний, конфіг зовні.', en: 'The build is reproducible, the image minimal, and config external.' },
+    blocks: ['03-docker-devops'],
+  },
+  {
+    code: 'PROVISION',
+    title: { ua: 'Описувати інфраструктуру', en: 'Describe infrastructure' },
+    summary: { ua: 'Terraform state, modules, environments, drift і review plan.', en: 'Terraform state, modules, environments, drift, and plan review.' },
+    artifact: { ua: 'Модульний IaC stack із remote-state strategy та policy checks.', en: 'A modular IaC stack with remote-state strategy and policy checks.' },
+    gate: { ua: 'Plan передбачуваний; state і secrets не потрапляють у Git.', en: 'Plans are predictable; state and secrets never enter Git.' },
+    blocks: ['04-terraform-devops'],
+  },
+  {
+    code: 'ORCHESTRATE',
+    title: { ua: 'Оркеструвати workloads', en: 'Orchestrate workloads' },
+    summary: { ua: 'Kubernetes resources, probes, rollout, capacity і debugging.', en: 'Kubernetes resources, probes, rollouts, capacity, and debugging.' },
+    artifact: { ua: 'Deployment package із probes, config, limits і rollback.', en: 'A deployment package with probes, config, limits, and rollback.' },
+    gate: { ua: 'Оновлення проходить без downtime; broken pod діагностується.', en: 'Updates avoid downtime; broken pods are diagnosable.' },
+    blocks: ['05-k8s-devops'],
+  },
+  {
+    code: 'RELIABILITY',
+    title: { ua: 'Експлуатувати сервіс', en: 'Operate a service' },
+    summary: { ua: 'SLI/SLO, observability, incidents, capacity і security habits.', en: 'SLI/SLO, observability, incidents, capacity, and security habits.' },
+    artifact: { ua: 'Service dashboard, alert policy, incident drill і postmortem.', en: 'A service dashboard, alert policy, incident drill, and postmortem.' },
+    gate: { ua: 'Сигнали actionable; incident має timeline, cause і follow-ups.', en: 'Signals are actionable; incidents have timelines, causes, and follow-ups.' },
+    blocks: ['06-prod-devops'],
+    arena: true,
+  },
+];
+
+const PROGRAM_COPY = {
+  eyebrow: { ua: 'Навчальний маршрут', en: 'Learning journey' },
+  title: { ua: 'Від процесу на ноутбуці до надійного сервісу', en: 'From a laptop process to a reliable service' },
+  lede: {
+    ua: 'Етапи йдуть за життєвим циклом системи. Кожен завершується артефактом і gate-перевіркою.',
+    en: 'Stages follow the system lifecycle. Each ends with an artifact and a readiness gate.',
+  },
+  artifact: { ua: 'Що створиш', en: 'What you build' },
+  gate: { ua: 'Gate переходу', en: 'Exit gate' },
+  archive: { ua: 'Довідник, старі маршрути та зовнішня практика', en: 'Reference, legacy routes, and external practice' },
+};
+
+const LEARNING_PROTOCOL = [
+  { n: '01', title: { ua: 'Спостерігати', en: 'Observe' }, text: { ua: 'Зібрати факти до будь-яких змін.', en: 'Collect evidence before changing anything.' } },
+  { n: '02', title: { ua: 'Змінити', en: 'Change' }, text: { ua: 'Мала, відтворювана зміна через код.', en: 'A small, reproducible change through code.' } },
+  { n: '03', title: { ua: 'Зламати', en: 'Break' }, text: { ua: 'Контрольований збій, відкат і відновлення.', en: 'Failure injection, rollback, and recovery.' } },
+  { n: '04', title: { ua: 'Зафіксувати', en: 'Document' }, text: { ua: 'Інструкція реагування, докази перевірки й наступні кроки.', en: 'Runbook, verification evidence, and follow-up.' } },
 ];
 
 const ROADS = [];
@@ -344,7 +422,7 @@ function paintChrome() {
   const h1 = document.getElementById('hdr-title');
   const lede = document.getElementById('hdr-lede');
   if (h1) h1.textContent = t('headerTitle');
-  if (lede) lede.textContent = t('headerLede');
+  if (lede) lede.textContent = t('headerLede').replace('SPHERE', 'K Mentorship');
   let build = document.getElementById('build-tag');
   if (!build) {
     build = document.createElement('span');
@@ -364,7 +442,10 @@ function paintChrome() {
     if (el) el.textContent = t(key);
   });
   const m = document.getElementById('nav-mentorship');
-  if (m) m.href = withLang(MENTORSHIP);
+  if (m) {
+    m.href = withLang(MENTORSHIP);
+    m.textContent = 'K Mentorship';
+  }
   if (window.DeLabI18n) DeLabI18n.mountToggle(document.getElementById('lang-slot'));
 }
 
@@ -427,8 +508,10 @@ function layerProgress(layer) {
 
 function renderHeroCabin() {
   const rank = archerRank();
-  const career = currentCareer();
   const scores = skillScores();
+  const totalDone = Object.values(scores).reduce((sum, score) => sum + score.done, 0);
+  const totalLevels = Object.values(scores).reduce((sum, score) => sum + score.total, 0);
+  const totalPct = totalLevels ? Math.round((totalDone / totalLevels) * 100) : 0;
   const orbs = SKILLS.map((s) => {
     const sc = scores[s.id];
     const pct = sc.total ? Math.round((sc.done / sc.total) * 100) : 0;
@@ -442,18 +525,25 @@ function renderHeroCabin() {
   }).join('');
 
   return `
-    <aside class="hero-cabin" id="hero-cabin">
-      <div class="hero-visual">${mageSvg(rank.tier)}</div>
-      <div class="hero-meta">
-        <p class="hero-eyebrow">${t('heroEyebrow')}</p>
-        <h2 class="hero-rank">${rank.title}</h2>
-        <p class="hero-aim">${t('aimingAt', career.label || career.devopsLabel || '')}</p>
-        <p class="hero-tip">${t('heroTip')}</p>
-        <div class="skill-orb-row">${orbs}</div>
+    <aside class="hero-cabin track-hero" id="hero-cabin">
+      <div class="track-hero-copy">
+        <p class="hero-eyebrow">DEVOPS · OPERATIONS FIELD LAB</p>
+        <h2>${Lpair({ ua: 'Будуй системи, які витримують зміни', en: 'Build systems that survive change' })}</h2>
+        <p class="track-hero-lede">${Lpair({ ua: 'Маршрут від Linux-хоста й пайплайна доставки до Kubernetes, спостережуваності, реагування на інциденти та безпечного відновлення.', en: 'A route from Linux hosts and delivery pipelines to Kubernetes, observability, incident response, and safe recovery.' })}</p>
         <div class="hero-actions">
-          <a class="nav-pill hub-cta" href="#/interview">${t('btnInterviewHub')}</a>
+          <button type="button" class="nav-pill hub-cta" data-scroll-program>${Lpair({ ua: 'Почати маршрут', en: 'Start the route' })}</button>
+          <a class="nav-pill" href="#/interview">${t('btnInterviewHub')}</a>
           <a class="nav-pill" href="${DE_LAB_URL}" target="_blank" rel="noopener">${t('btnDeLab')}</a>
           <button type="button" class="ghost" id="btn-share">${t('btnShare')}</button>
+        </div>
+      </div>
+      <div class="hero-status">
+        <div class="hero-visual">${mageSvg(rank.tier)}</div>
+        <div class="hero-meta">
+          <p class="hero-eyebrow">${t('heroEyebrow')}</p>
+          <h3 class="hero-rank">${rank.title}</h3>
+          <div class="hero-total"><strong>${totalPct}%</strong><span>${Lpair({ ua: 'маршруту розвідано', en: 'of route scouted' })}</span></div>
+          <div class="skill-orb-row">${orbs}</div>
         </div>
       </div>
     </aside>`;
@@ -550,6 +640,122 @@ function Lpair(obj) {
   return obj[lang] || obj.ua || obj.en || '';
 }
 
+function stageProgress(blockIds) {
+  const allProg = loadProgress();
+  let doneLevels = 0;
+  blockIds.forEach((id) => {
+    doneLevels += countDone(allProg[id] || {});
+  });
+  const finishedBlocks = blockIds.filter((id) => countDone(allProg[id] || {}) > 0).length;
+  return { doneLevels, finishedBlocks, totalBlocks: blockIds.length };
+}
+
+function renderCourseProgram() {
+  const progress = COURSE_PROGRAM.map((stage) => stageProgress(stage.blocks));
+  const firstOpen = progress.findIndex(({ finishedBlocks, totalBlocks }) => finishedBlocks < totalBlocks);
+  const activeIndex = firstOpen === -1 ? COURSE_PROGRAM.length - 1 : firstOpen;
+  const rail = COURSE_PROGRAM.map((stage, i) => `
+    <button type="button" class="pl-journey-stop ${i === activeIndex ? 'active' : ''}" data-stage-tab="${i}" aria-selected="${i === activeIndex}">
+      <span>${String(i + 1).padStart(2, '0')}</span>
+      <strong>${PrepLevelsEngine.escapeHtml(Lpair(stage.title))}</strong>
+    </button>`).join('');
+  const stages = COURSE_PROGRAM.map((stage, i) => {
+    const { finishedBlocks, totalBlocks, doneLevels } = stageProgress(stage.blocks);
+    const pct = totalBlocks ? Math.round((finishedBlocks / totalBlocks) * 100) : 0;
+    const mods = stage.blocks.map((id) => {
+      const done = countDone(loadProgress()[id] || {});
+      return `
+        <button type="button" class="pl-prog-mod" data-block="${id}">
+          <strong>${blockTitle(id)}</strong>
+          <span>${t('progress', done)}</span>
+        </button>`;
+    }).join('');
+    const arena = stage.arena
+      ? `<a class="pl-prog-arena" href="#/interview">${t('btnInterviewHub')}</a>`
+      : '';
+    return `
+      <li class="pl-prog-stage ${i === activeIndex ? 'active' : ''}" id="stage-${i + 1}" data-stage-panel="${i}" ${i === activeIndex ? '' : 'hidden'}>
+        <div class="pl-prog-stage-head">
+          <span class="pl-prog-num">${String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <p class="pl-prog-code">${stage.code}</p>
+            <h3>${PrepLevelsEngine.escapeHtml(Lpair(stage.title))}</h3>
+            <p class="pl-prog-summary">${PrepLevelsEngine.escapeHtml(Lpair(stage.summary))}</p>
+          </div>
+        </div>
+        <div class="pl-prog-progress" aria-label="${pct}%"><span style="width:${pct}%"></span></div>
+        <p class="pl-prog-meta">${t('progStageMeta', finishedBlocks, totalBlocks, doneLevels)}</p>
+        <div class="pl-prog-contract">
+          <div><span>${Lpair(PROGRAM_COPY.artifact)}</span><strong>${PrepLevelsEngine.escapeHtml(Lpair(stage.artifact))}</strong></div>
+          <div><span>${Lpair(PROGRAM_COPY.gate)}</span><strong>${PrepLevelsEngine.escapeHtml(Lpair(stage.gate))}</strong></div>
+        </div>
+        <div class="pl-prog-mods">${mods}${arena}</div>
+      </li>`;
+  }).join('');
+  return `
+    <section class="pl-card pl-program-card">
+      <div class="pl-program-intro">
+        <div>
+          <p class="hub-eyebrow">${Lpair(PROGRAM_COPY.eyebrow)}</p>
+          <h2>${Lpair(PROGRAM_COPY.title)}</h2>
+          <p>${Lpair(PROGRAM_COPY.lede)}</p>
+        </div>
+        <a class="pl-program-doc" href="${OPS_PROGRAM_MD}" target="_blank" rel="noopener">PROGRAM.md ↗</a>
+      </div>
+      <nav class="pl-journey-rail" aria-label="${Lpair(PROGRAM_COPY.eyebrow)}">${rail}</nav>
+      <ol class="pl-program-list">${stages}</ol>
+    </section>`;
+}
+
+function stageForBlock(blockId) {
+  return COURSE_PROGRAM.find((stage) => stage.blocks.includes(blockId));
+}
+
+function renderBlockContract(blockId) {
+  const stage = stageForBlock(blockId);
+  if (!stage) return '';
+  return `
+    <aside class="pl-block-contract">
+      <div>
+        <span>${stage.code} · ${PrepLevelsEngine.escapeHtml(Lpair(stage.title))}</span>
+        <strong>${PrepLevelsEngine.escapeHtml(Lpair(stage.summary))}</strong>
+      </div>
+      <div>
+        <span>${Lpair(PROGRAM_COPY.artifact)}</span>
+        <strong>${PrepLevelsEngine.escapeHtml(Lpair(stage.artifact))}</strong>
+      </div>
+      <div>
+        <span>${Lpair(PROGRAM_COPY.gate)}</span>
+        <strong>${PrepLevelsEngine.escapeHtml(Lpair(stage.gate))}</strong>
+      </div>
+      <a href="${OPS_QUEST_MD}" target="_blank" rel="noopener">${Lpair({ ua: 'Повний lab sprint ↗', en: 'Full lab sprint ↗' })}</a>
+    </aside>`;
+}
+
+function renderLearningProtocol() {
+  return `
+    <section class="pl-card pl-protocol-card">
+      <p class="hub-eyebrow">${Lpair({ ua: 'ПРОТОКОЛ ЛАБОРАТОРІЇ', en: 'LAB PROTOCOL' })}</p>
+      <h2>${Lpair({ ua: 'Як проходити кожен етап', en: 'How to work through every stage' })}</h2>
+      <div class="pl-protocol-grid">
+        ${LEARNING_PROTOCOL.map((step) => `
+          <article>
+            <span>${step.n}</span>
+            <h3>${PrepLevelsEngine.escapeHtml(Lpair(step.title))}</h3>
+            <p>${PrepLevelsEngine.escapeHtml(Lpair(step.text))}</p>
+          </article>`).join('')}
+      </div>
+    </section>`;
+}
+
+function renderProgramCta() {
+  return `
+    <section class="pl-card pl-program-cta">
+      <a class="nav-pill hub-cta" href="#/interview">${t('btnInterviewHub')}</a>
+      <a class="ghost" href="${OPS_QUEST_MD}" target="_blank" rel="noopener">${t('navOpsMd')}</a>
+    </section>`;
+}
+
 function renderBeginnerPath() {
   const items = BEGINNER_PATH.map((step, i) => {
     const prog = loadProgress()[step.id] || {};
@@ -592,20 +798,46 @@ function renderContinueOutside() {
     </section>`;
 }
 
+function renderKosatiksNetwork() {
+  const links = [
+    ['K Mentorship Hub', MENTORSHIP],
+    ['K RnD Lab', RND_LAB],
+    ['K Venture Studio', VENTURE_STUDIO],
+    ['KOSATIKS Group', KOSATIKS_GROUP],
+    ['K Mentorship · GitHub', 'https://github.com/K-Mentorship-Hub'],
+    ['K RnD · GitHub', 'https://github.com/K-RnD-Lab'],
+    ['K Venture Studio · GitHub', 'https://github.com/K-Venture-Studio-Hub'],
+    ['Oksana · LinkedIn', LINKEDIN_PROFILE],
+    ['@is_zazera · Instagram', INSTAGRAM_PROFILE],
+  ];
+  return `
+    <section class="pl-card pl-network-card">
+      <p class="hub-eyebrow">KOSATIKS NETWORK</p>
+      <h2>${Lpair({ ua: 'Інші простори екосистеми', en: 'More spaces in the ecosystem' })}</h2>
+      <div class="pl-network-links">
+        ${links.map(([label, href]) => `<a href="${href}" target="_blank" rel="noopener">${label} <span>↗</span></a>`).join('')}
+      </div>
+    </section>`;
+}
+
 function renderHome(root) {
   const homeBody = t('homeBody')
     .replace('{opsQuest}', OPS_QUEST_MD)
     .replace('{deLab}', DE_LAB_URL);
   root.innerHTML = `
     ${renderHeroCabin()}
-    ${renderCareerPicker()}
-    ${renderBeginnerPath()}
-    ${renderStaircase()}
-    ${renderContinueOutside()}
-    <section class="pl-card">
-      <h2>${t('homeTitle')}</h2>
-      <p style="color:var(--muted)">${homeBody}</p>
-    </section>`;
+    ${renderCourseProgram()}
+    ${renderLearningProtocol()}
+    ${renderProgramCta()}
+    <details class="pl-more-paths">
+      <summary>${Lpair(PROGRAM_COPY.archive)}</summary>
+      ${renderContinueOutside()}
+      ${renderKosatiksNetwork()}
+      <section class="pl-card">
+        <h2>${t('homeTitle')}</h2>
+        <p style="color:var(--muted)">${homeBody}</p>
+      </section>
+    </details>`;
 
   wireHero(root);
   root.querySelectorAll('[data-career]').forEach((btn) => {
@@ -613,6 +845,24 @@ function renderHome(root) {
       if (window.LabLadder) LabLadder.saveCareerTier(btn.dataset.career);
       render();
     });
+  });
+  root.querySelectorAll('[data-stage-tab]').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const index = tab.dataset.stageTab;
+      root.querySelectorAll('[data-stage-tab]').forEach((item) => {
+        const active = item.dataset.stageTab === index;
+        item.classList.toggle('active', active);
+        item.setAttribute('aria-selected', String(active));
+      });
+      root.querySelectorAll('[data-stage-panel]').forEach((panel) => {
+        const active = panel.dataset.stagePanel === index;
+        panel.toggleAttribute('hidden', !active);
+        panel.classList.toggle('active', active);
+      });
+    });
+  });
+  root.querySelector('[data-scroll-program]')?.addEventListener('click', () => {
+    root.querySelector('.pl-program-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
   root.querySelectorAll('[data-expand]').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -670,6 +920,7 @@ async function renderBlock(root, blockId, levelId) {
       <h2>${PrepLevelsEngine.escapeHtml(displayTitle)}</h2>
       <p style="color:var(--muted)">${PrepLevelsEngine.escapeHtml(block.subtitle || '')}
         ${meta?.skill ? ` · ${t('orb')}: <strong>${meta.skill}</strong>` : ''}</p>
+      ${renderBlockContract(blockId)}
       <p class="pl-progress-line" id="pl-prog">${t('saved', countDone(prog), block.levels.length)}</p>
       <div class="pl-level-tabs" id="pl-tabs"></div>
       <div id="pl-level-body"></div>
@@ -786,8 +1037,6 @@ function renderShare(root) {
         <button type="button" id="btn-dl">${t('btnDl')}</button>
         <button type="button" class="share-li" id="btn-li">${t('btnLi')}</button>
         <button type="button" class="share-ig" id="btn-ig">${t('btnIg')}</button>
-        <button type="button" class="share-x" id="btn-x">${t('btnX')}</button>
-        <button type="button" class="share-th" id="btn-th">${t('btnThreads')}</button>
         <button type="button" class="ghost" id="btn-copy">${t('btnCopy')}</button>
         <button type="button" class="ghost" id="btn-native" hidden>${t('btnNative')}</button>
       </div>
@@ -816,33 +1065,15 @@ function renderShare(root) {
 
   root.querySelector('#btn-li').addEventListener('click', async () => {
     await copyText(getCaption());
-    // LinkedIn feed share only accepts URL; body text must be pasted (API restriction).
-    const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(GYM_URL)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+    window.open(LINKEDIN_PROFILE, '_blank', 'noopener,noreferrer');
     setHint(t('hintLi'));
   });
 
   root.querySelector('#btn-ig').addEventListener('click', async () => {
     await copyText(getCaption());
     downloadCanvasPng(canvas, `de-mage-${rank.tier}.png`);
-    window.open('https://www.instagram.com/', '_blank', 'noopener,noreferrer');
+    window.open(INSTAGRAM_PROFILE, '_blank', 'noopener,noreferrer');
     setHint(t('hintIg'));
-  });
-
-  root.querySelector('#btn-x').addEventListener('click', async () => {
-    const text = getCaption();
-    await copyText(text);
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
-    setHint(t('hintX'));
-  });
-
-  root.querySelector('#btn-th').addEventListener('click', async () => {
-    const text = getCaption();
-    await copyText(text);
-    // Threads has no stable compose autofill URL from web; open + paste.
-    window.open('https://www.threads.net/', '_blank', 'noopener,noreferrer');
-    setHint(t('hintThreads'));
   });
 
   const nativeBtn = root.querySelector('#btn-native');

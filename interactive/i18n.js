@@ -23,6 +23,18 @@
       recommended: 'для тебе',
       layerMode: (mode) => (mode === 'theory' ? '📚 переважно теорія' : mode === 'practice' ? '⚔️ переважно практика' : '📚⚔️ теорія + практика'),
       archiveRoads: 'Архів: Theory / Practice списком',
+      programEyebrow: 'Програма курсу',
+      programTitle: 'Етапи навичок · DevOps',
+      programLede: 'Один логічний трек зверху вниз (не календар). Канон у markdown: ',
+      programMdLink: 'PROGRAM.md',
+      morePaths: 'Більше шляхів · сходинка, маршрут новачка',
+      progStage1: 'Linux & shell',
+      progStage2: 'Git & CI',
+      progStage3: 'Docker',
+      progStage4: 'IaC · Terraform',
+      progStage5: 'Kubernetes lite',
+      progStage6: 'Production habits',
+      progStageMeta: (fb, tb, lv) => `блоків з прогресом: ${fb}/${tb} · рівнів ✓: ${lv}`,
       btnDeLab: '🧙 DE Mage Gym',
       btnShare: '🪪 Забери лучника · share',
       homeTitle: 'DevOps Lab · кабінет лучника',
@@ -113,7 +125,7 @@
       hubOpenGym: 'Відкрити в Gym →',
       hubMarkDone: 'Позначила (локально)',
       hubMarked: '✓ Позначено',
-      btnInterviewHub: '⚔️ Interview Arena',
+      btnInterviewHub: '⚔️ Арена співбесід',
       btnCheck: 'Перевірити',
       btnReset: 'Скинути',
       btnHint: 'Підказка',
@@ -165,8 +177,8 @@
       dragOrderToast: 'Порядок OK',
       flipHint: 'Клікай картки. Термін лишається зверху; тап знову — згорнути визначення.',
       flipTapAgain: 'тапни ще раз — згорнути',
-      pathTitle: 'Маршрут новачка',
-      pathLede: 'Один порядок: Linux → Git/CI → Docker → Terraform → K8s → Prod. Arena — окремо для скрінінгу.',
+      pathTitle: 'Маршрут новачка · тренуйся тут',
+      pathLede: 'Тренування = цей список зверху вниз. Не стрибай у Arena, доки не закрила Linux → Git.',
       pathMetaLinux: 'shell / процеси',
       pathMetaGit: 'гілки + CI',
       pathMetaDocker: 'images / compose',
@@ -210,6 +222,18 @@
       stairBase: '↑ Foundations · one step at a time',
       recommended: 'for you',
       layerMode: (mode) => (mode === 'theory' ? '📚 mostly theory' : mode === 'practice' ? '⚔️ mostly practice' : '📚⚔️ theory + practice'),
+      programEyebrow: 'Course program',
+      programTitle: 'Skill stages · DevOps',
+      programLede: 'One logical track top to bottom (not a calendar). Canonical markdown: ',
+      programMdLink: 'PROGRAM.md',
+      morePaths: 'More paths · staircase, beginner route',
+      progStage1: 'Linux & shell',
+      progStage2: 'Git & CI',
+      progStage3: 'Docker',
+      progStage4: 'IaC · Terraform',
+      progStage5: 'Kubernetes lite',
+      progStage6: 'Production habits',
+      progStageMeta: (fb, tb, lv) => `blocks with progress: ${fb}/${tb} · levels ✓: ${lv}`,
       btnDeLab: '🧙 DE Mage Gym',
       btnShare: '🪪 Claim archer · share',
       homeTitle: 'DevOps Lab · archer cabin',
@@ -267,7 +291,7 @@
       atlasCompleteHint: 'Open all portals. Hook + Sigil = what Match will test.',
       matchTipDefault: 'Click LEFT (type), then RIGHT (focus). A correct pair draws a colored line.',
       matchPickRight: 'Now pick screening focus on the right →',
-      matchPickLeftFirst: 'Pick company type on the left first.',
+      matchPickLeftFirst: 'Pick the system context on the left first.',
       matchAllDone: '✅ All pairs locked — lines show the links.',
       matchPairOk: (m, total) => `✅ Pair locked (${m}/${total}).`,
       matchWrong: '❌ Wrong pair. Recall study / type Map — left pick stays.',
@@ -352,8 +376,8 @@
       dragOrderToast: 'Order OK',
       flipHint: 'Click cards. The term stays on top; tap again to hide the definition.',
       flipTapAgain: 'tap again to collapse',
-      pathTitle: 'Beginner path',
-      pathLede: 'One order: Linux → Git/CI → Docker → Terraform → K8s → Prod. Arena is separate screening practice.',
+      pathTitle: 'Beginner path · train here',
+      pathLede: 'Training = this list top to bottom. Do not jump to Arena before Linux → Git.',
       pathMetaLinux: 'shell / processes',
       pathMetaGit: 'branches + CI',
       pathMetaDocker: 'images / compose',
@@ -379,6 +403,8 @@
     },
   };
 
+  const LANG_STORAGE_KEY = 'kosatiks_lab_lang_v1';
+
   function norm(lang) {
     return lang === 'en' ? 'en' : 'ua';
   }
@@ -392,17 +418,12 @@
   }
 
   function getLang() {
-    const fromQ = readQueryLang();
-    if (fromQ) {
-      localStorage.setItem('mt_lang', fromQ);
-      return fromQ;
-    }
-    return norm(localStorage.getItem('mt_lang') || 'ua');
+    return norm(localStorage.getItem(LANG_STORAGE_KEY) || 'ua');
   }
 
   function setLang(lang) {
     const l = norm(lang);
-    localStorage.setItem('mt_lang', l);
+    localStorage.setItem(LANG_STORAGE_KEY, l);
     document.documentElement.lang = l === 'en' ? 'en' : 'uk';
     return l;
   }
@@ -463,7 +484,8 @@
     });
   }
 
-  setLang(getLang());
+  // A shared URL can choose the initial language, but the toggle must remain in control afterwards.
+  setLang(readQueryLang() || getLang());
 
   global.DeLabI18n = { t, getLang, setLang, blockTitle, withLang, mountToggle, STR };
 })(window);

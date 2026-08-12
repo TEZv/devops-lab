@@ -405,7 +405,7 @@
         "Видаляти state після apply"
       ],
       "correctIndex": 0,
-      "explanation": "Local state = race + втрата. Remote + lock = стандарт Middle."
+      "explanation": "Local state = race + втрата. Remote state + locking = базовий production-контракт."
     },
     {
       "id": "T5",

@@ -1,19 +1,21 @@
 # DevOps Interview Sprint — 30 Days
 
-Parallel track to **[CHALLENGES.md](../CHALLENGES.md)**. Focus: technical interviews for **DevOps / Platform / SRE** roles.
+Parallel track to **[CHALLENGES.md](../CHALLENGES.md)** and Gym **[PROGRAM.md](../PROGRAM.md)**. Focus: technical interviews for **DevOps / Platform / SRE** roles.
 
 Same structure as [de-lab interview-sprint](https://github.com/TEZv/de-lab/tree/main/interview-sprint).
 
 ## How to Combine with the Lab
 
-| Week | Lab (quest) | Sprint |
-|------|-------------|--------|
-| 1–2 | Level 1 Docker | 01-Linux days 1–10 |
-| 3–4 | Level 2 Terraform | 01 days 11–14 + 02-Docker-K8s |
-| 5–6 | Level 3 Kubernetes | 02 + 03-Infrastructure cases |
-| 7+ | Level 4–5 CI/CD | 04-Senior DevOps + 05-SRE overview |
+Align with the **6 Gym stages** (not a separate numbering):
 
-**10–15 hrs/week** ≈ 30-day sprint + ~6–7 hours for core quest.
+| Week | Gym / CHALLENGES stage | Sprint |
+|------|------------------------|--------|
+| 1–2 | 1 · Linux & shell | `01-Linux-Networking` days 1–10 |
+| 3–4 | 2 · Git/CI + 3 · Docker | `01` days 11–14 + `02-Docker-K8s` |
+| 5–6 | 4 · Terraform + 5 · K8s | `02` + `03-Infrastructure` |
+| 7+ | 6 · Prod habits | `04-Senior-DevOps` + `05-SRE` |
+
+**10–15 hrs/week** ≈ 30-day sprint + core quest stages.
 
 ## Files
 
@@ -25,7 +27,7 @@ Same structure as [de-lab interview-sprint](https://github.com/TEZv/de-lab/tree/
 
 ## Career levels
 
-See **[CAREER-LEVELS.md](../CAREER-LEVELS.md)** — sprint days map to 🟩 Junior → 🟥 Senior interview prep.
+See **[CAREER-LEVELS.md](../CAREER-LEVELS.md)** — sprint days map to Junior → Senior interview prep.
 
 ## Rules
 

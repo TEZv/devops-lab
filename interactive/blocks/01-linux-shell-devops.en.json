@@ -148,7 +148,7 @@
       "type": "match_pairs",
       "tag": "🐧 · 1/6",
       "title": "MATCH · shell ↔ meaning",
-      "instruction": "Junior DevOps / SRE screen basics — chmod schema first.",
+      "instruction": "Linux operations foundation — start with the chmod permission model.",
       "studyIntro": "<strong>Step 1 · see the difference.</strong> 755 vs 777 on deploy.sh — why world-writable is a hole. Then pairs.",
       "studyViz": {
         "type": "splitCompare",

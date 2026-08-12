@@ -1760,6 +1760,35 @@
     return { headers, rows };
   }
 
+  /** Infer AlaSQL column type from CSV cell strings (was always STRING → MIN/is_active=1 broke). */
+  function inferCsvColumnTypes(headers, rows) {
+    const types = {};
+    headers.forEach((h) => {
+      const vals = rows.map((r) => r[h]).filter((v) => v !== '' && v != null);
+      if (vals.length && vals.every((v) => /^-?\d+$/.test(String(v)))) types[h] = 'INT';
+      else if (vals.length && vals.every((v) => /^-?\d+(\.\d+)?$/.test(String(v)))) types[h] = 'FLOAT';
+      else types[h] = 'STRING';
+    });
+    return types;
+  }
+
+  function coerceCsvRow(row, types) {
+    const out = {};
+    Object.keys(row).forEach((h) => {
+      const raw = row[h];
+      if (types[h] === 'INT') out[h] = raw === '' || raw == null ? null : Number.parseInt(raw, 10);
+      else if (types[h] === 'FLOAT') out[h] = raw === '' || raw == null ? null : Number.parseFloat(raw);
+      else out[h] = raw;
+    });
+    return out;
+  }
+
+  function sqlLiteral(value, type) {
+    if (value === null || value === undefined || value === '') return 'NULL';
+    if (type === 'INT' || type === 'FLOAT') return String(value);
+    return JSON.stringify(String(value));
+  }
+
   function mountCsvLab(root, level, onComplete, opts) {
     mountMissionBrief(root, level);
     const { headers, rows } = parseCsv(level.csv);
@@ -1795,12 +1824,15 @@
     feedback.className = 'pl-feedback';
 
     if (level.mode === 'sql' && global.alasql) {
+      const colTypes = inferCsvColumnTypes(headers, rows);
+      const typedRows = rows.map((r) => coerceCsvRow(r, colTypes));
       const tip = document.createElement('p');
       tip.className = 'pl-tip';
-      tip.textContent = 'Напиши SQL до таблиці data (як у DataCamp-лабі). Приклад: SELECT COUNT(*) FROM data';
+      tip.textContent = level.sqlTip
+        || 'Таблиця data. Числа — INT (is_active=1 ок). AlaSQL: без ROW_NUMBER/OVER — JOIN + MIN.';
       const ta = document.createElement('textarea');
       ta.className = 'pl-sql-input';
-      ta.rows = 5;
+      ta.rows = 8;
       ta.placeholder = level.sqlPlaceholder || 'SELECT ... FROM data';
       const run = document.createElement('button');
       run.type = 'button';
@@ -1810,9 +1842,9 @@
       run.addEventListener('click', () => {
         try {
           global.alasql('DROP TABLE IF EXISTS data');
-          global.alasql(`CREATE TABLE data (${headers.map((h) => `[${h}] STRING`).join(',')})`);
-          rows.forEach((r) => {
-            global.alasql('INSERT INTO data VALUES (' + headers.map((h) => JSON.stringify(r[h] ?? '')).join(',') + ')');
+          global.alasql(`CREATE TABLE data (${headers.map((h) => `[${h}] ${colTypes[h]}`).join(',')})`);
+          typedRows.forEach((r) => {
+            global.alasql('INSERT INTO data VALUES (' + headers.map((h) => sqlLiteral(r[h], colTypes[h])).join(',') + ')');
           });
           const res = global.alasql(ta.value);
           out.textContent = JSON.stringify(res, null, 2);
@@ -1827,6 +1859,11 @@
           if (level.check === 'rowcount') {
             ok = Array.isArray(res) && res.length === Number(level.expected);
           }
+          if (level.check === 'sku_set' && Array.isArray(expected)) {
+            const col = level.skuColumn || 'sku_id';
+            const got = new Set((Array.isArray(res) ? res : []).map((r) => String(r[col])));
+            ok = expected.length === got.size && expected.every((id) => got.has(String(id)));
+          }
           feedback.textContent = ok ? `✅ ${level.success || 'Вибірка вірна!'}` : '❌ Результат ще не той — порівняй з питанням.';
           if (ok) {
             toast(root, 'CSV lab passed', true);
@@ -1834,7 +1871,7 @@
           }
         } catch (err) {
           out.textContent = String(err.message || err);
-          feedback.textContent = '⚠️ SQL error — прав синтаксис.';
+          feedback.textContent = '⚠️ SQL error — у цьому лабі немає window-функцій; спробуй JOIN + MIN(price).';
         }
       });
       wrap.append(tip, ta, run, out, feedback);

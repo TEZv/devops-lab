@@ -36,18 +36,31 @@
           ]
         },
         {
-          "type": "coverageSplit",
-          "yesTitle": "Робимо",
-          "noTitle": "Не робимо",
-          "yes": [
-            "feature/* від main",
-            "PR + green CI",
-            "approve → merge"
-          ],
-          "no": [
-            "force push у main",
-            "commit напряму в main",
-            "merge червоного CI"
+          "type": "conceptCards",
+          "title": "Правила main (коротко)",
+          "cards": [
+            {
+              "icon": "✅",
+              "title": "Робимо",
+              "badge": "ритуал",
+              "color": "#3d9a6a",
+              "rows": [
+                { "ok": true, "text": "feature/* від main" },
+                { "ok": true, "text": "PR + green CI" },
+                { "ok": true, "text": "approve → merge" }
+              ]
+            },
+            {
+              "icon": "⛔",
+              "title": "Не робимо",
+              "badge": "red flag",
+              "color": "#ff6b6b",
+              "rows": [
+                { "ok": false, "text": "force push у main" },
+                { "ok": false, "text": "commit напряму в main" },
+                { "ok": false, "text": "merge червоного CI" }
+              ]
+            }
           ]
         }
       ],

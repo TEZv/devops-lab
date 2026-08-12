@@ -405,7 +405,7 @@
         "Delete state after apply"
       ],
       "correctIndex": 0,
-      "explanation": "Local state = race + loss. Remote + lock = Middle standard."
+      "explanation": "Local state = race + loss. Remote state + locking is a basic production contract."
     },
     {
       "id": "T5",

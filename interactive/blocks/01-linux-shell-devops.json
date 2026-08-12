@@ -148,7 +148,7 @@
       "type": "match_pairs",
       "tag": "🐧 · 1/6",
       "title": "MATCH · shell ↔ сенс",
-      "instruction": "Базові терміни junior DevOps / SRE screen — спочатку схема chmod.",
+      "instruction": "База Linux operations — спочатку модель дозволів chmod.",
       "studyIntro": "<strong>Крок 1 · побач різницю.</strong> 755 vs 777 на deploy.sh — чому world-writable = дірка. Потім пари.",
       "studyViz": {
         "type": "splitCompare",

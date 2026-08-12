@@ -36,18 +36,31 @@
           ]
         },
         {
-          "type": "coverageSplit",
-          "yesTitle": "Do",
-          "noTitle": "Don't",
-          "yes": [
-            "feature/* off main",
-            "PR + green CI",
-            "approve → merge"
-          ],
-          "no": [
-            "force push to main",
-            "commit straight to main",
-            "merge red CI"
+          "type": "conceptCards",
+          "title": "main rules (short)",
+          "cards": [
+            {
+              "icon": "✅",
+              "title": "Do",
+              "badge": "ritual",
+              "color": "#3d9a6a",
+              "rows": [
+                { "ok": true, "text": "feature/* off main" },
+                { "ok": true, "text": "PR + green CI" },
+                { "ok": true, "text": "approve → merge" }
+              ]
+            },
+            {
+              "icon": "⛔",
+              "title": "Don't",
+              "badge": "red flag",
+              "color": "#ff6b6b",
+              "rows": [
+                { "ok": false, "text": "force push to main" },
+                { "ok": false, "text": "commit straight to main" },
+                { "ok": false, "text": "merge red CI" }
+              ]
+            }
           ]
         }
       ],

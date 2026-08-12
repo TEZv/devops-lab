@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated": "2026-07-12",
+  "updated": "2026-08-12",
   "ethics": {
     "ua": "Без брендів роботодавців. Архетипи DevOps/SRE + публічні патерни. DE Mage Gym — окремий data-трек.",
     "en": "No employer brands. DevOps/SRE archetypes + public patterns. DE Mage Gym is a separate data track."
@@ -123,8 +123,8 @@
         "en": "MATCH · shell ↔ сенс"
       },
       "prompt": {
-        "ua": "Базові терміни junior DevOps / SRE screen — спочатку схема chmod.",
-        "en": "Базові терміни junior DevOps / SRE screen — спочатку схема chmod."
+        "ua": "База Linux operations — спочатку модель дозволів chmod.",
+        "en": "База Linux operations — спочатку модель дозволів chmod."
       },
       "source": "blocks/01-linux-shell-devops.json"
     },
